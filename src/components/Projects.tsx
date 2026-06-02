@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { ExternalLink, Star, ArrowUpRight } from "lucide-react";
+import { Star, ArrowUpRight } from "lucide-react";
 import { FaGithub } from "react-icons/fa6";
 
 const projects = [
@@ -349,23 +349,6 @@ function FeaturedCard({
             Source Code
           </a>
 
-          <a
-            href={p.live}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 6,
-              fontSize: 12,
-              fontWeight: 600,
-              color: p.color,
-              textDecoration: "none",
-            }}
-          >
-            <ExternalLink size={13} />
-            Live Demo
-          </a>
         </div>
       </div>
     </motion.div>
@@ -536,23 +519,6 @@ function GridCard({ p, i }: { p: (typeof projects)[0]; i: number }) {
             Source
           </a>
 
-          <a
-            href={p.live}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 5,
-              fontSize: 11,
-              fontWeight: 600,
-              color: p.color,
-              textDecoration: "none",
-            }}
-          >
-            <ExternalLink size={11} />
-            Live Demo
-          </a>
         </div>
       </div>
     </motion.article>
