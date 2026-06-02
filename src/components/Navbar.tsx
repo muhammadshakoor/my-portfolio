@@ -40,15 +40,13 @@ export default function Navbar() {
       className="fixed top-0 left-0 right-0 z-50"
       style={{
         width: "100%",
-        background: "rgba(42,42,46,0.96)",
+        background: scrolled ? "rgba(250,250,247,0.97)" : "rgba(250,250,247,0.92)",
         backdropFilter: "blur(20px)",
         WebkitBackdropFilter: "blur(20px)",
-        borderBottom: scrolled
-          ? "1px solid rgba(255,255,255,0.12)"
-          : "1px solid rgba(255,255,255,0.08)",
+        borderBottom: "1px solid #E8E8E2",
         boxShadow: scrolled
-          ? "0 14px 36px rgba(13,13,13,0.28)"
-          : "0 10px 30px rgba(13,13,13,0.18)",
+          ? "0 4px 24px rgba(13,13,13,0.08)"
+          : "0 2px 12px rgba(13,13,13,0.04)",
       }}
     >
       {/* Main navbar */}
@@ -56,93 +54,81 @@ export default function Navbar() {
         className="navbar-inner"
         style={{
           width: "100%",
-          height: 72,
-          display: "grid",
-          gridTemplateColumns: "220px 1fr 220px",
+          height: 68,
+          display: "flex",
           alignItems: "center",
+          justifyContent: "space-between",
           paddingLeft: 48,
           paddingRight: 48,
         }}
       >
         {/* Logo */}
-        <div style={{ display: "flex", justifyContent: "flex-start" }}>
-          <button
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="font-black text-4xl cursor-pointer select-none"
-            style={{
-              color: "#5B3CF5",
-              letterSpacing: "-0.04em",
-              lineHeight: 1,
-              background: "transparent",
-              border: "none",
-            }}
-          >
-            MS
-          </button>
-        </div>
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="font-black text-3xl cursor-pointer select-none"
+          style={{
+            color: "#5B3CF5",
+            letterSpacing: "-0.04em",
+            lineHeight: 1,
+            background: "transparent",
+            border: "none",
+          }}
+        >
+          MS
+        </button>
 
-        {/* Desktop nav */}
-        <nav className="hidden md:flex items-center justify-center gap-1">
+        {/* Desktop — nav links + CTA grouped on the right */}
+        <div className="hidden md:flex items-center" style={{ gap: 4 }}>
           {links.map((l) => {
             const isActive = active === l.href;
-
             return (
               <button
                 key={l.href}
                 onClick={() => go(l.href)}
                 className="relative px-4 py-2 text-sm rounded-lg transition-colors duration-200"
                 style={{
-                  color: isActive ? "#a78bfa" : "#B8B8BE",
+                  color: isActive ? "#5B3CF5" : "#5A5A5A",
                   fontWeight: isActive ? 600 : 500,
                   background: "transparent",
                   border: "none",
                   cursor: "pointer",
                 }}
                 onMouseEnter={(e) => {
-                  if (!isActive) e.currentTarget.style.color = "#ffffff";
+                  if (!isActive) e.currentTarget.style.color = "#0D0D0D";
                 }}
                 onMouseLeave={(e) => {
-                  if (!isActive) e.currentTarget.style.color = "#B8B8BE";
+                  if (!isActive) e.currentTarget.style.color = "#5A5A5A";
                 }}
               >
                 {isActive && (
                   <motion.span
                     layoutId="nav-indicator"
                     className="absolute inset-0 rounded-lg"
-                    style={{
-                      background: "rgba(91,60,245,0.18)",
-                    }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 350,
-                      damping: 30,
-                    }}
+                    style={{ background: "rgba(91,60,245,0.08)" }}
+                    transition={{ type: "spring", stiffness: 350, damping: 30 }}
                   />
                 )}
-
-                <span style={{ position: "relative", zIndex: 1 }}>
-                  {l.label}
-                </span>
+                <span style={{ position: "relative", zIndex: 1 }}>{l.label}</span>
               </button>
             );
           })}
-        </nav>
 
-        {/* Desktop CTA */}
-        <div className="hidden md:flex items-center justify-end">
+          {/* Divider */}
+          <div style={{ width: 1, height: 20, background: "#E0E0D8", margin: "0 10px" }} />
+
           <motion.button
             onClick={() => go("#contact")}
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.96 }}
             className="text-sm"
             style={{
-              borderRadius: 12,
-              padding: "11px 26px",
+              borderRadius: 10,
+              padding: "9px 22px",
               background: "#5B3CF5",
               color: "#ffffff",
               fontWeight: 700,
               border: "1px solid #5B3CF5",
-              boxShadow: "0 8px 22px rgba(91,60,245,0.35)",
+              boxShadow: "0 4px 14px rgba(91,60,245,0.28)",
               cursor: "pointer",
             }}
           >
@@ -151,20 +137,18 @@ export default function Navbar() {
         </div>
 
         {/* Mobile toggle */}
-        <div className="md:hidden" style={{ justifySelf: "end" }}>
-          <button
-            className="p-2 rounded-lg transition-colors"
-            style={{
-              background: "rgba(255,255,255,0.07)",
-              color: "#ffffff",
-              border: "1px solid rgba(255,255,255,0.10)",
-            }}
-            onClick={() => setOpen(!open)}
-            aria-label="Toggle menu"
-          >
-            {open ? <X size={18} /> : <Menu size={18} />}
-          </button>
-        </div>
+        <button
+          className="md:hidden p-2 rounded-lg transition-colors"
+          style={{
+            background: "rgba(91,60,245,0.07)",
+            color: "#5B3CF5",
+            border: "1px solid rgba(91,60,245,0.18)",
+          }}
+          onClick={() => setOpen(!open)}
+          aria-label="Toggle menu"
+        >
+          {open ? <X size={18} /> : <Menu size={18} />}
+        </button>
       </div>
 
       {/* Mobile dropdown */}
@@ -177,29 +161,26 @@ export default function Navbar() {
             transition={{ duration: 0.2 }}
             className="absolute rounded-2xl p-3 z-50"
             style={{
-              top: 82,
+              top: 78,
               left: 16,
               right: 16,
-              background: "rgba(42,42,46,0.98)",
+              background: "rgba(250,250,247,0.98)",
               backdropFilter: "blur(20px)",
               WebkitBackdropFilter: "blur(20px)",
-              border: "1px solid rgba(255,255,255,0.10)",
-              boxShadow: "0 20px 60px rgba(13,13,13,0.35)",
+              border: "1px solid #E8E8E2",
+              boxShadow: "0 16px 48px rgba(13,13,13,0.12)",
             }}
           >
             {links.map((l) => {
               const isActive = active === l.href;
-
               return (
                 <button
                   key={l.href}
                   onClick={() => go(l.href)}
                   className="w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-colors duration-150"
                   style={{
-                    color: isActive ? "#a78bfa" : "#B8B8BE",
-                    background: isActive
-                      ? "rgba(91,60,245,0.18)"
-                      : "transparent",
+                    color: isActive ? "#5B3CF5" : "#3A3A3A",
+                    background: isActive ? "rgba(91,60,245,0.07)" : "transparent",
                     border: "none",
                     cursor: "pointer",
                   }}
@@ -211,7 +192,7 @@ export default function Navbar() {
 
             <div
               className="mt-2 pt-2"
-              style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
+              style={{ borderTop: "1px solid #E8E8E2" }}
             >
               <button
                 onClick={() => go("#contact")}
@@ -236,7 +217,6 @@ export default function Navbar() {
       <style>{`
         @media (max-width: 1024px) {
           .navbar-inner {
-            grid-template-columns: 160px 1fr 160px !important;
             padding-left: 28px !important;
             padding-right: 28px !important;
           }
@@ -244,10 +224,9 @@ export default function Navbar() {
 
         @media (max-width: 768px) {
           .navbar-inner {
-            grid-template-columns: 1fr auto !important;
-            height: 64px !important;
-            padding-left: 22px !important;
-            padding-right: 22px !important;
+            height: 62px !important;
+            padding-left: 20px !important;
+            padding-right: 20px !important;
           }
         }
       `}</style>
