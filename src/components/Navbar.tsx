@@ -40,13 +40,13 @@ export default function Navbar() {
       className="fixed top-0 left-0 right-0 z-50"
       style={{
         width: "100%",
-        background: scrolled ? "rgba(250,250,247,0.97)" : "rgba(250,250,247,0.92)",
+        background: scrolled ? "rgba(30,30,35,0.97)" : "rgba(30,30,35,0.93)",
         backdropFilter: "blur(20px)",
         WebkitBackdropFilter: "blur(20px)",
-        borderBottom: "1px solid #E8E8E2",
+        borderBottom: "1px solid rgba(255,255,255,0.08)",
         boxShadow: scrolled
-          ? "0 4px 24px rgba(13,13,13,0.08)"
-          : "0 2px 12px rgba(13,13,13,0.04)",
+          ? "0 4px 28px rgba(0,0,0,0.22)"
+          : "0 2px 14px rgba(0,0,0,0.12)",
       }}
     >
       {/* Main navbar */}
@@ -78,33 +78,34 @@ export default function Navbar() {
         </button>
 
         {/* Desktop — nav links + CTA grouped on the right */}
-        <div className="hidden md:flex items-center" style={{ gap: 4 }}>
+        <div className="hidden md:flex items-center" style={{ gap: 6 }}>
           {links.map((l) => {
             const isActive = active === l.href;
             return (
               <button
                 key={l.href}
                 onClick={() => go(l.href)}
-                className="relative px-4 py-2 text-sm rounded-lg transition-colors duration-200"
+                className="relative px-5 py-2 text-sm rounded-lg transition-colors duration-200"
                 style={{
-                  color: isActive ? "#5B3CF5" : "#5A5A5A",
-                  fontWeight: isActive ? 600 : 500,
+                  color: isActive ? "#a78bfa" : "#a0a0b0",
+                  fontWeight: isActive ? 600 : 400,
+                  letterSpacing: "0.01em",
                   background: "transparent",
                   border: "none",
                   cursor: "pointer",
                 }}
                 onMouseEnter={(e) => {
-                  if (!isActive) e.currentTarget.style.color = "#0D0D0D";
+                  if (!isActive) e.currentTarget.style.color = "#ffffff";
                 }}
                 onMouseLeave={(e) => {
-                  if (!isActive) e.currentTarget.style.color = "#5A5A5A";
+                  if (!isActive) e.currentTarget.style.color = "#a0a0b0";
                 }}
               >
                 {isActive && (
                   <motion.span
                     layoutId="nav-indicator"
                     className="absolute inset-0 rounded-lg"
-                    style={{ background: "rgba(91,60,245,0.08)" }}
+                    style={{ background: "rgba(167,139,250,0.14)" }}
                     transition={{ type: "spring", stiffness: 350, damping: 30 }}
                   />
                 )}
@@ -114,7 +115,7 @@ export default function Navbar() {
           })}
 
           {/* Divider */}
-          <div style={{ width: 1, height: 20, background: "#E0E0D8", margin: "0 10px" }} />
+          <div style={{ width: 1, height: 20, background: "rgba(255,255,255,0.15)", margin: "0 10px" }} />
 
           <motion.button
             onClick={() => go("#contact")}
@@ -140,9 +141,9 @@ export default function Navbar() {
         <button
           className="md:hidden p-2 rounded-lg transition-colors"
           style={{
-            background: "rgba(91,60,245,0.07)",
-            color: "#5B3CF5",
-            border: "1px solid rgba(91,60,245,0.18)",
+            background: "rgba(255,255,255,0.07)",
+            color: "#ffffff",
+            border: "1px solid rgba(255,255,255,0.12)",
           }}
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
@@ -164,11 +165,11 @@ export default function Navbar() {
               top: 78,
               left: 16,
               right: 16,
-              background: "rgba(250,250,247,0.98)",
+              background: "rgba(28,28,33,0.98)",
               backdropFilter: "blur(20px)",
               WebkitBackdropFilter: "blur(20px)",
-              border: "1px solid #E8E8E2",
-              boxShadow: "0 16px 48px rgba(13,13,13,0.12)",
+              border: "1px solid rgba(255,255,255,0.1)",
+              boxShadow: "0 16px 48px rgba(0,0,0,0.3)",
             }}
           >
             {links.map((l) => {
@@ -179,8 +180,8 @@ export default function Navbar() {
                   onClick={() => go(l.href)}
                   className="w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-colors duration-150"
                   style={{
-                    color: isActive ? "#5B3CF5" : "#3A3A3A",
-                    background: isActive ? "rgba(91,60,245,0.07)" : "transparent",
+                    color: isActive ? "#a78bfa" : "#a0a0b0",
+                    background: isActive ? "rgba(167,139,250,0.12)" : "transparent",
                     border: "none",
                     cursor: "pointer",
                   }}
@@ -192,7 +193,7 @@ export default function Navbar() {
 
             <div
               className="mt-2 pt-2"
-              style={{ borderTop: "1px solid #E8E8E2" }}
+              style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
             >
               <button
                 onClick={() => go("#contact")}
