@@ -39,7 +39,7 @@ type F = {
   message: string;
 };
 
-type S = "idle" | "sending" | "sent";
+type S = "idle" | "sending" | "sent" | "error";
 
 export default function Contact() {
   const ref = useRef<HTMLElement>(null);
@@ -60,15 +60,36 @@ export default function Contact() {
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     setStatus("sending");
 
-    await new Promise((r) => setTimeout(r, 1500));
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY,
+          from_name: "Portfolio Contact Form",
+          name: form.name,
+          email: form.email,
+          subject: form.subject,
+          message: form.message,
+        }),
+      });
 
-    setStatus("sent");
-    setForm({ name: "", email: "", subject: "", message: "" });
+      const data = await res.json();
 
-    setTimeout(() => setStatus("idle"), 4000);
+      if (data.success) {
+        setStatus("sent");
+        setForm({ name: "", email: "", subject: "", message: "" });
+        setTimeout(() => setStatus("idle"), 5000);
+      } else {
+        setStatus("error");
+        setTimeout(() => setStatus("idle"), 4000);
+      }
+    } catch {
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 4000);
+    }
   };
 
   const fadeUp = (delay = 0) => ({
@@ -582,38 +603,10 @@ export default function Contact() {
                 whileTap={{ scale: 0.98 }}
                 style={
                   status === "sent"
-                    ? {
-                        width: "100%",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: 8,
-                        padding: "14px 18px",
-                        borderRadius: 14,
-                        fontSize: 14,
-                        fontWeight: 700,
-                        background: "rgba(22,163,74,0.08)",
-                        color: "#16a34a",
-                        border: "1px solid rgba(22,163,74,0.18)",
-                        cursor: "default",
-                      }
-                    : {
-                        width: "100%",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: 8,
-                        padding: "14px 18px",
-                        borderRadius: 14,
-                        fontSize: 14,
-                        fontWeight: 700,
-                        background: "#5B3CF5",
-                        color: "#fff",
-                        border: "1px solid #5B3CF5",
-                        boxShadow: "0 10px 24px rgba(91,60,245,0.22)",
-                        cursor: status === "idle" ? "pointer" : "not-allowed",
-                        opacity: status === "sending" ? 0.8 : 1,
-                      }
+                    ? { width:"100%", display:"flex", alignItems:"center", justifyContent:"center", gap:8, padding:"14px 18px", borderRadius:14, fontSize:14, fontWeight:700, background:"rgba(22,163,74,0.08)", color:"#16a34a", border:"1px solid rgba(22,163,74,0.18)", cursor:"default" }
+                    : status === "error"
+                    ? { width:"100%", display:"flex", alignItems:"center", justifyContent:"center", gap:8, padding:"14px 18px", borderRadius:14, fontSize:14, fontWeight:700, background:"rgba(220,38,38,0.08)", color:"#dc2626", border:"1px solid rgba(220,38,38,0.2)", cursor:"default" }
+                    : { width:"100%", display:"flex", alignItems:"center", justifyContent:"center", gap:8, padding:"14px 18px", borderRadius:14, fontSize:14, fontWeight:700, background:"#5B3CF5", color:"#fff", border:"1px solid #5B3CF5", boxShadow:"0 10px 24px rgba(91,60,245,0.22)", cursor: status === "idle" ? "pointer" : "not-allowed", opacity: status === "sending" ? 0.8 : 1 }
                 }
               >
                 {status === "sending" && (
@@ -639,13 +632,13 @@ export default function Contact() {
                   </svg>
                 )}
 
-                {status === "sent" && <CheckCircle size={16} />}
-                {status === "idle" && <Send size={15} />}
+                {status === "sent"   && <CheckCircle size={16} />}
+                {status === "idle"   && <Send size={15} />}
+                {status === "error"  && <span>✕</span>}
 
-                {status === "sending"
-                  ? "Sending..."
-                  : status === "sent"
-                  ? "Message Sent!"
+                {status === "sending" ? "Sending..."
+                  : status === "sent"  ? "Message Sent!"
+                  : status === "error" ? "Failed — Try Again"
                   : "Send Message"}
               </motion.button>
             </form>
