@@ -19,11 +19,24 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 60);
+
+      // Scroll spy — find which section's top is closest above the navbar
+      const navHeight = 90;
+      let current = "";
+      for (const { href } of links) {
+        const el = document.getElementById(href.slice(1));
+        if (!el) continue;
+        if (el.getBoundingClientRect().top <= navHeight) {
+          current = href;
+        }
+      }
+      if (current) setActive(current);
+    };
 
     onScroll();
-    window.addEventListener("scroll", onScroll);
-
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
