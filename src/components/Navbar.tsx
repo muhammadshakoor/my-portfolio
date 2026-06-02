@@ -1,0 +1,256 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
+
+const links = [
+  { label: "About", href: "#about" },
+  { label: "Skills", href: "#skills" },
+  { label: "Projects", href: "#projects" },
+  { label: "Experience", href: "#experience" },
+  { label: "Contact", href: "#contact" },
+];
+
+export default function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState("");
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60);
+
+    onScroll();
+    window.addEventListener("scroll", onScroll);
+
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const go = (href: string) => {
+    setActive(href);
+    setOpen(false);
+    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  return (
+    <motion.header
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="fixed top-0 left-0 right-0 z-50"
+      style={{
+        width: "100%",
+        background: "rgba(42,42,46,0.96)",
+        backdropFilter: "blur(20px)",
+        WebkitBackdropFilter: "blur(20px)",
+        borderBottom: scrolled
+          ? "1px solid rgba(255,255,255,0.12)"
+          : "1px solid rgba(255,255,255,0.08)",
+        boxShadow: scrolled
+          ? "0 14px 36px rgba(13,13,13,0.28)"
+          : "0 10px 30px rgba(13,13,13,0.18)",
+      }}
+    >
+      {/* Main navbar */}
+      <div
+        className="navbar-inner"
+        style={{
+          width: "100%",
+          height: 72,
+          display: "grid",
+          gridTemplateColumns: "220px 1fr 220px",
+          alignItems: "center",
+          paddingLeft: 48,
+          paddingRight: 48,
+        }}
+      >
+        {/* Logo */}
+        <div style={{ display: "flex", justifyContent: "flex-start" }}>
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="font-black text-4xl cursor-pointer select-none"
+            style={{
+              color: "#5B3CF5",
+              letterSpacing: "-0.04em",
+              lineHeight: 1,
+              background: "transparent",
+              border: "none",
+            }}
+          >
+            MS
+          </button>
+        </div>
+
+        {/* Desktop nav */}
+        <nav className="hidden md:flex items-center justify-center gap-1">
+          {links.map((l) => {
+            const isActive = active === l.href;
+
+            return (
+              <button
+                key={l.href}
+                onClick={() => go(l.href)}
+                className="relative px-4 py-2 text-sm rounded-lg transition-colors duration-200"
+                style={{
+                  color: isActive ? "#a78bfa" : "#B8B8BE",
+                  fontWeight: isActive ? 600 : 500,
+                  background: "transparent",
+                  border: "none",
+                  cursor: "pointer",
+                }}
+                onMouseEnter={(e) => {
+                  if (!isActive) e.currentTarget.style.color = "#ffffff";
+                }}
+                onMouseLeave={(e) => {
+                  if (!isActive) e.currentTarget.style.color = "#B8B8BE";
+                }}
+              >
+                {isActive && (
+                  <motion.span
+                    layoutId="nav-indicator"
+                    className="absolute inset-0 rounded-lg"
+                    style={{
+                      background: "rgba(91,60,245,0.18)",
+                    }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 350,
+                      damping: 30,
+                    }}
+                  />
+                )}
+
+                <span style={{ position: "relative", zIndex: 1 }}>
+                  {l.label}
+                </span>
+              </button>
+            );
+          })}
+        </nav>
+
+        {/* Desktop CTA */}
+        <div className="hidden md:flex items-center justify-end">
+          <motion.button
+            onClick={() => go("#contact")}
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.96 }}
+            className="text-sm"
+            style={{
+              borderRadius: 12,
+              padding: "11px 26px",
+              background: "#5B3CF5",
+              color: "#ffffff",
+              fontWeight: 700,
+              border: "1px solid #5B3CF5",
+              boxShadow: "0 8px 22px rgba(91,60,245,0.35)",
+              cursor: "pointer",
+            }}
+          >
+            Hire Me
+          </motion.button>
+        </div>
+
+        {/* Mobile toggle */}
+        <div className="md:hidden" style={{ justifySelf: "end" }}>
+          <button
+            className="p-2 rounded-lg transition-colors"
+            style={{
+              background: "rgba(255,255,255,0.07)",
+              color: "#ffffff",
+              border: "1px solid rgba(255,255,255,0.10)",
+            }}
+            onClick={() => setOpen(!open)}
+            aria-label="Toggle menu"
+          >
+            {open ? <X size={18} /> : <Menu size={18} />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile dropdown */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -10, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.97 }}
+            transition={{ duration: 0.2 }}
+            className="absolute rounded-2xl p-3 z-50"
+            style={{
+              top: 82,
+              left: 16,
+              right: 16,
+              background: "rgba(42,42,46,0.98)",
+              backdropFilter: "blur(20px)",
+              WebkitBackdropFilter: "blur(20px)",
+              border: "1px solid rgba(255,255,255,0.10)",
+              boxShadow: "0 20px 60px rgba(13,13,13,0.35)",
+            }}
+          >
+            {links.map((l) => {
+              const isActive = active === l.href;
+
+              return (
+                <button
+                  key={l.href}
+                  onClick={() => go(l.href)}
+                  className="w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-colors duration-150"
+                  style={{
+                    color: isActive ? "#a78bfa" : "#B8B8BE",
+                    background: isActive
+                      ? "rgba(91,60,245,0.18)"
+                      : "transparent",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  {l.label}
+                </button>
+              );
+            })}
+
+            <div
+              className="mt-2 pt-2"
+              style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
+            >
+              <button
+                onClick={() => go("#contact")}
+                className="w-full text-sm"
+                style={{
+                  borderRadius: 10,
+                  padding: "10px 18px",
+                  background: "#5B3CF5",
+                  color: "#ffffff",
+                  fontWeight: 700,
+                  border: "1px solid #5B3CF5",
+                  cursor: "pointer",
+                }}
+              >
+                Hire Me
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <style>{`
+        @media (max-width: 1024px) {
+          .navbar-inner {
+            grid-template-columns: 160px 1fr 160px !important;
+            padding-left: 28px !important;
+            padding-right: 28px !important;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .navbar-inner {
+            grid-template-columns: 1fr auto !important;
+            height: 64px !important;
+            padding-left: 22px !important;
+            padding-right: 22px !important;
+          }
+        }
+      `}</style>
+    </motion.header>
+  );
+}
