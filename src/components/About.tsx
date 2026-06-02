@@ -212,7 +212,7 @@ export default function About() {
                 background: "#fff",
                 border: "1px solid #E8E8E2",
                 borderRadius: 20,
-                padding: "28px 24px",
+                padding: "40px 28px",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -222,17 +222,17 @@ export default function About() {
               {/* Avatar */}
               <div
                 style={{
-                  width: 80,
-                  height: 80,
-                  borderRadius: 18,
+                  width: 96,
+                  height: 96,
+                  borderRadius: 22,
                   background:
                     "linear-gradient(135deg, rgba(91,60,245,0.12), rgba(0,168,130,0.1))",
                   border: "1px solid rgba(91,60,245,0.18)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  fontSize: 36,
-                  marginBottom: 16,
+                  fontSize: 44,
+                  marginBottom: 20,
                   flexShrink: 0,
                 }}
               >
@@ -381,7 +381,7 @@ export default function About() {
                     background: "#fff",
                     border: "1px solid #E8E8E2",
                     borderRadius: 14,
-                    padding: "16px 14px",
+                    padding: "10px 10px",
                     textAlign: "center",
                     display: "flex",
                     flexDirection: "column",
@@ -394,10 +394,10 @@ export default function About() {
                     style={{
                       fontFamily: "'Syne', sans-serif",
                       fontWeight: 800,
-                      fontSize: 28,
-                      letterSpacing: "-1px",
+                      fontSize: 22,
+                      letterSpacing: "-0.5px",
                       lineHeight: 1,
-                      marginBottom: 5,
+                      marginBottom: 3,
                       color: s.color,
                     }}
                   >
