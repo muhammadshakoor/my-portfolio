@@ -36,11 +36,11 @@ export default function Navbar() {
     <motion.header
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
       className="fixed top-0 left-0 right-0 z-50"
       style={{
         width: "100%",
-        background: scrolled ? "rgba(30,30,35,0.97)" : "rgba(30,30,35,0.93)",
+        background: scrolled ? "rgba(30,30,35,0.97)" : "rgba(30,30,35,0.94)",
         backdropFilter: "blur(20px)",
         WebkitBackdropFilter: "blur(20px)",
         borderBottom: "1px solid rgba(255,255,255,0.08)",
@@ -54,7 +54,7 @@ export default function Navbar() {
         className="navbar-inner"
         style={{
           width: "100%",
-          height: 68,
+          height: 72,
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
@@ -65,72 +65,145 @@ export default function Navbar() {
         {/* Logo */}
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="font-black text-3xl cursor-pointer select-none"
+          aria-label="Go to top"
           style={{
-            color: "#5B3CF5",
-            letterSpacing: "-0.04em",
-            lineHeight: 1,
+            width: 80,
+            height: 80,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
             background: "transparent",
             border: "none",
+            cursor: "pointer",
+            padding: 0,
           }}
         >
-          MS
+          <img
+            src="/logo.png"
+            alt="Muhammad Shakoor Logo"
+            style={{
+              width: 76,
+              height: 76,
+              objectFit: "contain",
+              display: "block",
+              filter: "drop-shadow(0 4px 14px rgba(91,60,245,0.28))",
+            }}
+          />
         </button>
 
-        {/* Desktop — nav links + CTA grouped on the right */}
-        <div className="hidden md:flex items-center" style={{ gap: 6 }}>
-          {links.map((l) => {
-            const isActive = active === l.href;
-            return (
-              <button
-                key={l.href}
-                onClick={() => go(l.href)}
-                className="relative px-5 py-2 text-sm rounded-lg transition-colors duration-200"
-                style={{
-                  color: isActive ? "#a78bfa" : "#a0a0b0",
-                  fontWeight: isActive ? 600 : 400,
-                  letterSpacing: "0.01em",
-                  background: "transparent",
-                  border: "none",
-                  cursor: "pointer",
-                }}
-                onMouseEnter={(e) => {
-                  if (!isActive) e.currentTarget.style.color = "#ffffff";
-                }}
-                onMouseLeave={(e) => {
-                  if (!isActive) e.currentTarget.style.color = "#a0a0b0";
-                }}
-              >
-                {isActive && (
-                  <motion.span
-                    layoutId="nav-indicator"
-                    className="absolute inset-0 rounded-lg"
-                    style={{ background: "rgba(167,139,250,0.14)" }}
-                    transition={{ type: "spring", stiffness: 350, damping: 30 }}
-                  />
-                )}
-                <span style={{ position: "relative", zIndex: 1 }}>{l.label}</span>
-              </button>
-            );
-          })}
+        {/* Desktop nav + CTA */}
+        <div
+          className="hidden md:flex items-center navbar-right"
+          style={{
+            gap: 14,
+          }}
+        >
+          {/* Desktop nav links */}
+          <nav
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+            }}
+          >
+            {links.map((l) => {
+              const isActive = active === l.href;
+
+              return (
+                <button
+                  key={l.href}
+                  onClick={() => go(l.href)}
+                  className="relative text-sm rounded-xl transition-colors duration-200"
+                  style={{
+                    minHeight: 38,
+                    padding: "9px 16px",
+                    color: isActive ? "#ffffff" : "#C9C6D8",
+                    fontWeight: isActive ? 700 : 500,
+                    letterSpacing: "0.01em",
+                    background: "transparent",
+                    border: "none",
+                    cursor: "pointer",
+                    lineHeight: 1,
+                    overflow: "hidden",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.color = "#ffffff";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.color = "#C9C6D8";
+                    }
+                  }}
+                >
+                  {isActive && (
+                    <motion.span
+                      layoutId="nav-indicator"
+                      className="absolute rounded-xl"
+                      style={{
+                        inset: 0,
+                        background:
+                          "linear-gradient(135deg, rgba(22,153,255,0.22), rgba(91,60,245,0.34))",
+                        border: "1px solid rgba(135,116,255,0.26)",
+                        boxShadow:
+                          "0 6px 18px rgba(91,60,245,0.18), inset 0 1px 0 rgba(255,255,255,0.08)",
+                      }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 350,
+                        damping: 30,
+                      }}
+                    />
+                  )}
+
+                  <span
+                    style={{
+                      position: "relative",
+                      zIndex: 1,
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {l.label}
+                  </span>
+                </button>
+              );
+            })}
+          </nav>
 
           {/* Divider */}
-          <div style={{ width: 1, height: 20, background: "rgba(255,255,255,0.15)", margin: "0 10px" }} />
+          <div
+            style={{
+              width: 1,
+              height: 24,
+              background:
+                "linear-gradient(180deg, transparent, rgba(255,255,255,0.18), transparent)",
+              marginLeft: 4,
+              marginRight: 4,
+            }}
+          />
 
+          {/* Hire Me */}
           <motion.button
             onClick={() => go("#contact")}
-            whileHover={{ scale: 1.04 }}
+            whileHover={{
+              scale: 1.04,
+              boxShadow:
+                "0 10px 28px rgba(91,60,245,0.38), 0 0 0 1px rgba(255,255,255,0.08)",
+            }}
             whileTap={{ scale: 0.96 }}
             className="text-sm"
             style={{
-              borderRadius: 10,
-              padding: "9px 22px",
-              background: "#5B3CF5",
+              borderRadius: 12,
+              padding: "11px 26px",
+              background: "linear-gradient(135deg, #129DFF 0%, #5B3CF5 58%, #6D35F5 100%)",
               color: "#ffffff",
-              fontWeight: 700,
-              border: "1px solid #5B3CF5",
-              boxShadow: "0 4px 14px rgba(91,60,245,0.28)",
+              fontWeight: 800,
+              border: "1px solid rgba(255,255,255,0.10)",
+              boxShadow: "0 6px 20px rgba(91,60,245,0.32)",
               cursor: "pointer",
+              letterSpacing: "0.01em",
+              whiteSpace: "nowrap",
             }}
           >
             Hire Me
@@ -144,6 +217,7 @@ export default function Navbar() {
             background: "rgba(255,255,255,0.07)",
             color: "#ffffff",
             border: "1px solid rgba(255,255,255,0.12)",
+            cursor: "pointer",
           }}
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
@@ -162,7 +236,7 @@ export default function Navbar() {
             transition={{ duration: 0.2 }}
             className="absolute rounded-2xl p-3 z-50"
             style={{
-              top: 78,
+              top: 82,
               left: 16,
               right: 16,
               background: "rgba(28,28,33,0.98)",
@@ -174,15 +248,21 @@ export default function Navbar() {
           >
             {links.map((l) => {
               const isActive = active === l.href;
+
               return (
                 <button
                   key={l.href}
                   onClick={() => go(l.href)}
-                  className="w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-colors duration-150"
+                  className="w-full text-left rounded-xl text-sm font-medium transition-colors duration-150"
                   style={{
-                    color: isActive ? "#a78bfa" : "#a0a0b0",
-                    background: isActive ? "rgba(167,139,250,0.12)" : "transparent",
-                    border: "none",
+                    padding: "13px 16px",
+                    color: isActive ? "#ffffff" : "#C9C6D8",
+                    background: isActive
+                      ? "linear-gradient(135deg, rgba(22,153,255,0.18), rgba(91,60,245,0.28))"
+                      : "transparent",
+                    border: isActive
+                      ? "1px solid rgba(135,116,255,0.22)"
+                      : "1px solid transparent",
                     cursor: "pointer",
                   }}
                 >
@@ -199,13 +279,15 @@ export default function Navbar() {
                 onClick={() => go("#contact")}
                 className="w-full text-sm"
                 style={{
-                  borderRadius: 10,
-                  padding: "10px 18px",
-                  background: "#5B3CF5",
+                  borderRadius: 12,
+                  padding: "12px 18px",
+                  background:
+                    "linear-gradient(135deg, #129DFF 0%, #5B3CF5 58%, #6D35F5 100%)",
                   color: "#ffffff",
-                  fontWeight: 700,
-                  border: "1px solid #5B3CF5",
+                  fontWeight: 800,
+                  border: "1px solid rgba(255,255,255,0.10)",
                   cursor: "pointer",
+                  boxShadow: "0 6px 20px rgba(91,60,245,0.28)",
                 }}
               >
                 Hire Me
@@ -216,18 +298,48 @@ export default function Navbar() {
       </AnimatePresence>
 
       <style>{`
+        @media (max-width: 1180px) {
+          .navbar-inner {
+            padding-left: 32px !important;
+            padding-right: 32px !important;
+          }
+
+          .navbar-right {
+            gap: 10px !important;
+          }
+
+          .navbar-right nav {
+            gap: 6px !important;
+          }
+
+          .navbar-right nav button {
+            padding-left: 12px !important;
+            padding-right: 12px !important;
+          }
+        }
+
         @media (max-width: 1024px) {
           .navbar-inner {
             padding-left: 28px !important;
             padding-right: 28px !important;
           }
+
+          .navbar-right nav button {
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+          }
         }
 
         @media (max-width: 768px) {
           .navbar-inner {
-            height: 62px !important;
+            height: 64px !important;
             padding-left: 20px !important;
             padding-right: 20px !important;
+          }
+
+          .navbar-inner img {
+            width: 60px !important;
+            height: 60px !important;
           }
         }
       `}</style>
