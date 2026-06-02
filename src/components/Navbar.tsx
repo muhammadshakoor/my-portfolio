@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
@@ -54,7 +55,7 @@ export default function Navbar() {
         className="navbar-inner"
         style={{
           width: "100%",
-          height: 72,
+          height: 84,
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
@@ -67,8 +68,8 @@ export default function Navbar() {
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           aria-label="Go to top"
           style={{
-            width: 80,
-            height: 80,
+            width: 90,
+            height: 90,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -76,18 +77,16 @@ export default function Navbar() {
             border: "none",
             cursor: "pointer",
             padding: 0,
+            flexShrink: 0,
           }}
         >
-          <img
+          <Image
             src="/logo.png"
-            alt="Muhammad Shakoor Logo"
-            style={{
-              width: 76,
-              height: 76,
-              objectFit: "contain",
-              display: "block",
-              filter: "drop-shadow(0 4px 14px rgba(91,60,245,0.28))",
-            }}
+            alt="MS"
+            width={90}
+            height={90}
+            style={{ objectFit: "contain" }}
+            priority
           />
         </button>
 
@@ -332,15 +331,11 @@ export default function Navbar() {
 
         @media (max-width: 768px) {
           .navbar-inner {
-            height: 64px !important;
+            height: 72px !important;
             padding-left: 20px !important;
             padding-right: 20px !important;
           }
 
-          .navbar-inner img {
-            width: 60px !important;
-            height: 60px !important;
-          }
         }
       `}</style>
     </motion.header>
