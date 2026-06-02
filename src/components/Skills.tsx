@@ -91,7 +91,7 @@ export default function Skills() {
   const fadeUp = (delay = 0) => ({
     initial: { opacity: 0, y: 28 },
     animate: inView ? { opacity: 1, y: 0 } : {},
-    transition: { delay, duration: 0.55, ease: "easeOut" },
+    transition: { delay, duration: 0.55 },
   });
 
   return (

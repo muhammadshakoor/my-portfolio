@@ -167,7 +167,7 @@ function FeaturedCard({
       initial={{ opacity: 0, y: 34 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.55, delay: index * 0.08, ease: "easeOut" }}
+      transition={{ duration: 0.55, delay: index * 0.08,  }}
       className="featured-card-grid"
       style={{
         display: "grid",
@@ -573,7 +573,7 @@ export default function Projects() {
   const fadeUp = (delay = 0) => ({
     initial: { opacity: 0, y: 28 },
     animate: inView ? { opacity: 1, y: 0 } : {},
-    transition: { delay, duration: 0.55, ease: "easeOut" },
+    transition: { delay, duration: 0.55,  },
   });
 
   return (
