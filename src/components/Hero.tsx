@@ -63,6 +63,7 @@ export default function Hero() {
   const [text, setText] = useState("");
   const [typing, setTyping] = useState(true);
   const [dots, setDots] = useState<Dot[]>([]);
+  const [hoveredSocial, setHoveredSocial] = useState<string | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -428,32 +429,59 @@ export default function Hero() {
           {/* Social icons */}
           <div style={{ display: "flex", justifyContent: "center", gap: 10 }}>
             {socials.map(({ icon: Icon, href, label, color, bg, border }) => (
-              <motion.a
-                key={label}
-                href={href}
-                target={href.startsWith("http") ? "_blank" : undefined}
-                rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-                aria-label={label}
-                whileHover={{
-                  scale: 1.1,
-                  y: -5,
-                  boxShadow: "0 8px 24px rgba(13,13,13,0.08)",
-                }}
-                whileTap={{ scale: 0.94 }}
-                style={{
-                  width: 46,
-                  height: 46,
-                  borderRadius: 12,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  background: bg,
-                  border: `1px solid ${border}`,
-                  textDecoration: "none",
-                }}
-              >
-                <Icon size={18} style={{ color }} />
-              </motion.a>
+              <div key={label} style={{ position: "relative" }}>
+                <motion.a
+                  href={href}
+                  target={href.startsWith("http") ? "_blank" : undefined}
+                  rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  aria-label={label}
+                  download={label === "Resume" ? "Muhammad_Shakoor_Resume.pdf" : undefined}
+                  onMouseEnter={() => setHoveredSocial(label)}
+                  onMouseLeave={() => setHoveredSocial(null)}
+                  whileHover={{ scale: 1.1, y: -5, boxShadow: "0 8px 24px rgba(13,13,13,0.08)" }}
+                  whileTap={{ scale: 0.94 }}
+                  style={{
+                    width: 46, height: 46, borderRadius: 12,
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    background: bg, border: `1px solid ${border}`, textDecoration: "none",
+                  }}
+                >
+                  <Icon size={18} style={{ color }} />
+                </motion.a>
+
+                {/* Tooltip */}
+                {hoveredSocial === label && (
+                  <div style={{
+                    position: "absolute",
+                    bottom: "calc(100% + 10px)",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    background: "#1a1a2e",
+                    color: "#e2e8f0",
+                    fontSize: "11px",
+                    fontWeight: 500,
+                    padding: "5px 10px",
+                    borderRadius: 7,
+                    whiteSpace: "nowrap",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    pointerEvents: "none",
+                    zIndex: 50,
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                  }}>
+                    {label === "Resume" ? "Download Resume" : label}
+                    {/* Arrow */}
+                    <div style={{
+                      position: "absolute",
+                      top: "100%", left: "50%",
+                      transform: "translateX(-50%)",
+                      width: 0, height: 0,
+                      borderLeft: "5px solid transparent",
+                      borderRight: "5px solid transparent",
+                      borderTop: "5px solid #1a1a2e",
+                    }} />
+                  </div>
+                )}
+              </div>
             ))}
           </div>
         </motion.div>
