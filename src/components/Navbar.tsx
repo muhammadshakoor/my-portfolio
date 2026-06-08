@@ -40,6 +40,23 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Close panel when clicking outside
+  useEffect(() => {
+    if (!open) return;
+    const handleClick = (e: MouseEvent) => {
+      const panel = document.getElementById("mobile-menu-panel");
+      const toggle = document.getElementById("mobile-menu-toggle");
+      if (
+        panel && !panel.contains(e.target as Node) &&
+        toggle && !toggle.contains(e.target as Node)
+      ) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [open]);
+
   const go = (href: string) => {
     setActive(href);
     setOpen(false);
@@ -224,8 +241,10 @@ export default function Navbar() {
 
         {/* Mobile toggle */}
         <button
-          className="md:hidden p-2 rounded-lg transition-colors"
+          id="mobile-menu-toggle"
+          className="md:hidden rounded-xl transition-colors"
           style={{
+            padding: "10px 12px",
             background: "rgba(255,255,255,0.07)",
             color: "#ffffff",
             border: "1px solid rgba(255,255,255,0.12)",
@@ -234,7 +253,7 @@ export default function Navbar() {
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
         >
-          {open ? <X size={18} /> : <Menu size={18} />}
+          {open ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
@@ -242,32 +261,34 @@ export default function Navbar() {
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: -10, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.97 }}
-            transition={{ duration: 0.2 }}
-            className="absolute rounded-2xl p-3 z-50"
+            id="mobile-menu-panel"
+            initial={{ opacity: 0, x: 24 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 24 }}
+            transition={{ duration: 0.22, type: "spring", stiffness: 300, damping: 28 }}
+            className="absolute z-50"
             style={{
-              top: 82,
-              left: 16,
+              top: 92,
               right: 16,
+              width: 210,
+              borderRadius: 18,
+              padding: 10,
               background: "rgba(28,28,33,0.98)",
               backdropFilter: "blur(20px)",
               WebkitBackdropFilter: "blur(20px)",
               border: "1px solid rgba(255,255,255,0.1)",
-              boxShadow: "0 16px 48px rgba(0,0,0,0.3)",
+              boxShadow: "0 16px 48px rgba(0,0,0,0.35)",
             }}
           >
             {links.map((l) => {
               const isActive = active === l.href;
-
               return (
                 <button
                   key={l.href}
                   onClick={() => go(l.href)}
                   className="w-full text-left rounded-xl text-sm font-medium transition-colors duration-150"
                   style={{
-                    padding: "13px 16px",
+                    padding: "12px 16px",
                     color: isActive ? "#ffffff" : "#C9C6D8",
                     background: isActive
                       ? "linear-gradient(135deg, rgba(22,153,255,0.18), rgba(91,60,245,0.28))"
@@ -291,12 +312,11 @@ export default function Navbar() {
                 onClick={() => go("#contact")}
                 className="w-full text-sm"
                 style={{
-                  borderRadius: 12,
-                  padding: "12px 18px",
-                  background:
-                    "linear-gradient(135deg, #129DFF 0%, #5B3CF5 58%, #6D35F5 100%)",
+                  borderRadius: 10,
+                  padding: "11px 16px",
+                  background: "linear-gradient(135deg, #129DFF 0%, #5B3CF5 58%, #6D35F5 100%)",
                   color: "#ffffff",
-                  fontWeight: 800,
+                  fontWeight: 700,
                   border: "1px solid rgba(255,255,255,0.10)",
                   cursor: "pointer",
                   boxShadow: "0 6px 20px rgba(91,60,245,0.28)",
