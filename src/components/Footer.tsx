@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowUp, Heart } from "lucide-react";
@@ -9,6 +10,7 @@ const nav = ["About", "Skills", "Projects", "Experience", "Contact"];
 
 export default function Footer() {
   const top = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  const [hoveredSocial, setHoveredSocial] = useState<string | null>(null);
 
   const go = (id: string) => {
     document.querySelector(`#${id.toLowerCase()}`)?.scrollIntoView({
@@ -140,32 +142,56 @@ export default function Footer() {
             }}
           >
             {socials.map(({ icon: Icon, href, label, color, bg, border }) => (
-              <motion.a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                whileHover={{
-                  scale: 1.1,
-                  y: -3,
-                  boxShadow: "0 8px 22px rgba(13,13,13,0.08)",
-                }}
-                whileTap={{ scale: 0.92 }}
-                style={{
-                  width: 38,
-                  height: 38,
-                  borderRadius: 10,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  background: bg,
-                  border: `1px solid ${border}`,
-                  textDecoration: "none",
-                }}
-              >
-                <Icon size={15} style={{ color }} />
-              </motion.a>
+              <div key={label} style={{ position: "relative" }}>
+                <motion.a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  onMouseEnter={() => setHoveredSocial(label)}
+                  onMouseLeave={() => setHoveredSocial(null)}
+                  whileHover={{ scale: 1.1, y: -3, boxShadow: "0 8px 22px rgba(13,13,13,0.08)" }}
+                  whileTap={{ scale: 0.92 }}
+                  style={{
+                    width: 38, height: 38, borderRadius: 10,
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    background: bg, border: `1px solid ${border}`, textDecoration: "none",
+                  }}
+                >
+                  <Icon size={15} style={{ color }} />
+                </motion.a>
+
+                {hoveredSocial === label && (
+                  <div style={{
+                    position: "absolute",
+                    bottom: "calc(100% + 8px)",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    background: "#1a1a2e",
+                    color: "#e2e8f0",
+                    fontSize: "11px",
+                    fontWeight: 500,
+                    padding: "4px 10px",
+                    borderRadius: 6,
+                    whiteSpace: "nowrap",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    pointerEvents: "none",
+                    zIndex: 10,
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                  }}>
+                    {label}
+                    <div style={{
+                      position: "absolute",
+                      top: "100%", left: "50%",
+                      transform: "translateX(-50%)",
+                      width: 0, height: 0,
+                      borderLeft: "5px solid transparent",
+                      borderRight: "5px solid transparent",
+                      borderTop: "5px solid #1a1a2e",
+                    }} />
+                  </div>
+                )}
+              </div>
             ))}
           </div>
         </div>
