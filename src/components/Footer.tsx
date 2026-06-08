@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowUp, Heart } from "lucide-react";
 import { FaGithub, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
@@ -85,18 +86,15 @@ export default function Footer() {
           <button
             onClick={top}
             style={{
-              fontFamily: "'Syne', sans-serif",
-              fontSize: 26,
-              fontWeight: 900,
-              color: "#5B3CF5",
-              letterSpacing: "-0.05em",
               background: "transparent",
               border: "none",
               cursor: "pointer",
-              lineHeight: 1,
+              padding: 0,
+              display: "flex",
+              alignItems: "center",
             }}
           >
-            MS
+            <Image src="/logo.png" alt="MS" width={52} height={52} style={{ objectFit: "contain" }} />
           </button>
 
           {/* Nav */}
