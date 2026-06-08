@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowDown, Download, Briefcase } from "lucide-react";
+import { ArrowDown, Download, Briefcase, Code2 } from "lucide-react";
 import { FaGithub, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
 
 const roles = [
@@ -62,35 +63,26 @@ export default function Hero() {
   const [roleIdx, setRoleIdx] = useState(0);
   const [text, setText] = useState("");
   const [typing, setTyping] = useState(true);
-  const [dots, setDots] = useState<Dot[]>([]);
+  const [dots] = useState<Dot[]>(() => {
+    const COLORS = ["#5B3CF5", "#00A882", "#e84a2a", "#c026d3"];
+    return Array.from({ length: 18 }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 3 + 1.5,
+      color: COLORS[i % COLORS.length],
+      dur: Math.random() * 4 + 4,
+      delay: Math.random() * 4,
+    }));
+  });
   const [hoveredSocial, setHoveredSocial] = useState<string | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    const COLORS = ["#5B3CF5", "#00A882", "#e84a2a", "#c026d3"];
-
-    setDots(
-      Array.from({ length: 18 }, (_, i) => ({
-        id: i,
-        x: Math.random() * 100,
-        y: Math.random() * 100,
-        size: Math.random() * 3 + 1.5,
-        color: COLORS[i % COLORS.length],
-        dur: Math.random() * 4 + 4,
-        delay: Math.random() * 4,
-      }))
-    );
-  }, []);
-
-  useEffect(() => {
     const cur = roles[roleIdx];
-
     if (typing) {
       if (text.length < cur.length) {
-        timer.current = setTimeout(
-          () => setText(cur.slice(0, text.length + 1)),
-          65
-        );
+        timer.current = setTimeout(() => setText(cur.slice(0, text.length + 1)), 65);
       } else {
         timer.current = setTimeout(() => setTyping(false), 2400);
       }
@@ -98,14 +90,13 @@ export default function Hero() {
       if (text.length > 0) {
         timer.current = setTimeout(() => setText((t) => t.slice(0, -1)), 30);
       } else {
-        setRoleIdx((i) => (i + 1) % roles.length);
-        setTyping(true);
+        timer.current = setTimeout(() => {
+          setRoleIdx((i) => (i + 1) % roles.length);
+          setTyping(true);
+        }, 0);
       }
     }
-
-    return () => {
-      if (timer.current) clearTimeout(timer.current);
-    };
+    return () => { if (timer.current) clearTimeout(timer.current); };
   }, [text, typing, roleIdx]);
 
   const fadeUp = (delay = 0) => ({
@@ -124,12 +115,9 @@ export default function Hero() {
       <div
         style={{
           position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
+          top: 0, left: 0, right: 0,
           height: 1,
-          background:
-            "linear-gradient(90deg, transparent, #D8D8D0, transparent)",
+          background: "linear-gradient(90deg, transparent, #D8D8D0, transparent)",
         }}
       />
 
@@ -137,297 +125,281 @@ export default function Hero() {
       <div className="hero-grid pointer-events-none" />
 
       {/* Light orbs */}
-      <div
-        className="hero-orb"
-        style={{
-          width: 520,
-          height: 520,
-          top: "14%",
-          left: -160,
-          background: "rgba(91,60,245,0.10)",
-        }}
-      />
-      <div
-        className="hero-orb"
-        style={{
-          width: 380,
-          height: 380,
-          bottom: "16%",
-          right: -90,
-          background: "rgba(0,168,130,0.08)",
-          animationDelay: "3s",
-        }}
-      />
-      <div
-        className="hero-orb"
-        style={{
-          width: 280,
-          height: 280,
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          background: "rgba(232,74,42,0.055)",
-          animationDelay: "1.5s",
-        }}
-      />
+      <div className="hero-orb" style={{ width: 520, height: 520, top: "14%", left: -160, background: "rgba(91,60,245,0.10)" }} />
+      <div className="hero-orb" style={{ width: 380, height: 380, bottom: "16%", right: -90, background: "rgba(0,168,130,0.08)", animationDelay: "3s" }} />
+      <div className="hero-orb" style={{ width: 280, height: 280, top: "50%", left: "50%", transform: "translate(-50%, -50%)", background: "rgba(232,74,42,0.055)", animationDelay: "1.5s" }} />
 
       {/* Floating dots */}
       {dots.map((d) => (
         <motion.div
           key={d.id}
           className="absolute rounded-full pointer-events-none"
-          style={{
-            left: `${d.x}%`,
-            top: `${d.y}%`,
-            width: d.size,
-            height: d.size,
-            background: d.color,
-            opacity: 0.28,
-          }}
+          style={{ left: `${d.x}%`, top: `${d.y}%`, width: d.size, height: d.size, background: d.color, opacity: 0.28 }}
           animate={{ y: [0, -18, 0], opacity: [0.18, 0.45, 0.18] }}
-          transition={{
-            duration: d.dur,
-            repeat: Infinity,
-            delay: d.delay,
-            ease: "easeInOut",
-          }}
+          transition={{ duration: d.dur, repeat: Infinity, delay: d.delay, ease: "easeInOut" }}
         />
       ))}
 
       {/* Main content */}
       <div
-        className="relative z-10 w-full max-w-3xl mx-auto px-6 text-center"
-        style={{ paddingTop: "108px", paddingBottom: "88px" }}
+        className="hero-content relative z-10 w-full"
+        style={{
+          maxWidth: 1100,
+          margin: "0 auto",
+          padding: "108px 48px 72px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "stretch",
+        }}
       >
-        {/* Status badge */}
-        <motion.div
-          {...fadeUp(0.1)}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginBottom: "36px",
-          }}
-        >
-          <span
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              padding: "7px 18px",
-              borderRadius: "999px",
-              fontSize: "12px",
-              fontWeight: 500,
-              letterSpacing: "0.01em",
-              background: "rgba(22,163,74,0.08)",
-              border: "1px solid rgba(22,163,74,0.18)",
-              color: "#16a34a",
-            }}
-          >
+        {/* Two-column row */}
+        <div className="hero-columns" style={{ display: "flex", alignItems: "flex-start", gap: 72, marginBottom: 40, width: "100%" }}>
+
+        {/* LEFT: Text */}
+        <div className="hero-left" style={{ flex: 1, minWidth: 0 }}>
+          {/* Status badge */}
+          <motion.div {...fadeUp(0.1)} className="hero-badge" style={{ marginBottom: "36px" }}>
             <span
-              style={{
-                width: 7,
-                height: 7,
-                borderRadius: "50%",
-                background: "#16a34a",
-                flexShrink: 0,
-                animation: "pulse 2s infinite",
-              }}
-            />
-            Available for work · Islamabad, Pakistan
-          </span>
-        </motion.div>
-
-        {/* Greeting */}
-        <motion.p
-          {...fadeUp(0.2)}
-          style={{
-            color: "#5B3CF5",
-            fontSize: "11px",
-            fontWeight: 500,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            marginBottom: "14px",
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 8,
-          }}
-        >
-          <span
-            style={{
-              width: 20,
-              height: 2,
-              background: "#5B3CF5",
-              borderRadius: 1,
-              display: "inline-block",
-            }}
-          />
-          Hi, I&apos;m
-        </motion.p>
-
-        {/* Name */}
-        <motion.h1
-          {...fadeUp(0.3)}
-          style={{
-            fontFamily: "'Syne', sans-serif",
-            fontWeight: 900,
-            lineHeight: 1,
-            fontSize: "clamp(3.6rem, 9vw, 7.5rem)",
-            letterSpacing: "-0.04em",
-            marginBottom: "16px",
-            color: "#0D0D0D",
-          }}
-        >
-          <span style={{ color: "#5B3CF5" }}>Muhammad</span>
-          <br />
-          <span style={{ color: "#0D0D0D" }}>Shakoor</span>
-        </motion.h1>
-
-        {/* Typewriter */}
-        <motion.div
-          {...fadeUp(0.4)}
-          style={{
-            height: "52px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            marginBottom: "28px",
-          }}
-        >
-          <span
-            style={{
-              fontSize: "clamp(1.1rem, 3vw, 1.5rem)",
-              fontWeight: 600,
-              color: "#3A3A3A",
-            }}
-          >
-            {text}
-            <span
-              className="cursor-blink"
-              style={{ color: "#5B3CF5", marginLeft: "2px" }}
-            >
-              |
-            </span>
-          </span>
-        </motion.div>
-
-        {/* Bio */}
-        <motion.p
-          {...fadeUp(0.5)}
-          style={{
-            color: "#7A7A7A",
-            fontSize: "clamp(0.95rem, 2vw, 1.08rem)",
-            lineHeight: 1.75,
-            maxWidth: "610px",
-            margin: "0 auto",
-            marginBottom: "56px",
-            fontWeight: 300,
-          }}
-        >
-          Associate Full Stack Developer &amp; Automation Engineer at{" "}
-          <span style={{ color: "#0D0D0D", fontWeight: 500 }}>
-            Blutech Consulting
-          </span>
-          . Building scalable web applications and enterprise automation with{" "}
-          <span style={{ color: "#5B3CF5", fontWeight: 600 }}>React</span>,{" "}
-          <span style={{ color: "#00A882", fontWeight: 600 }}>Node.js</span>,
-          and{" "}
-          <span style={{ color: "#e84a2a", fontWeight: 600 }}>
-            Power Platform
-          </span>
-          .
-        </motion.p>
-
-        {/* CTA + Social */}
-        <motion.div
-          {...fadeUp(0.6)}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "28px",
-          }}
-        >
-          {/* Primary buttons */}
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "center",
-              gap: "14px",
-            }}
-          >
-            <button
-              onClick={() =>
-                document
-                  .querySelector("#projects")
-                  ?.scrollIntoView({ behavior: "smooth" })
-              }
               style={{
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "8px",
-                padding: "13px 22px",
-                borderRadius: 14,
-                background: "#5B3CF5",
-                color: "#fff",
-                border: "1px solid #5B3CF5",
-                fontSize: 14,
-                fontWeight: 600,
-                cursor: "pointer",
-                boxShadow: "0 10px 24px rgba(91,60,245,0.22)",
+                padding: "7px 18px",
+                borderRadius: "999px",
+                fontSize: "12px",
+                fontWeight: 500,
+                letterSpacing: "0.01em",
+                background: "rgba(22,163,74,0.08)",
+                border: "1px solid rgba(22,163,74,0.18)",
+                color: "#16a34a",
+              }}
+            >
+              <span
+                style={{
+                  width: 7, height: 7, borderRadius: "50%",
+                  background: "#16a34a", flexShrink: 0,
+                  animation: "pulse 2s infinite",
+                }}
+              />
+              Available for work · Islamabad, Pakistan
+            </span>
+          </motion.div>
+
+          {/* Greeting */}
+          <motion.p
+            {...fadeUp(0.2)}
+            style={{
+              color: "#5B3CF5",
+              fontSize: "11px",
+              fontWeight: 500,
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              marginBottom: "14px",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+            }}
+          >
+            <span style={{ width: 20, height: 2, background: "#5B3CF5", borderRadius: 1, display: "inline-block" }} />
+            Hi, I&apos;m
+          </motion.p>
+
+          {/* Name */}
+          <motion.h1
+            {...fadeUp(0.3)}
+            style={{
+              fontFamily: "'Syne', sans-serif",
+              fontWeight: 900,
+              lineHeight: 1,
+              fontSize: "clamp(3rem, 6vw, 5.5rem)",
+              letterSpacing: "-0.04em",
+              marginBottom: "16px",
+              color: "#0D0D0D",
+            }}
+          >
+            <span style={{ color: "#5B3CF5" }}>Muhammad</span>
+            <br />
+            <span style={{ color: "#0D0D0D" }}>Shakoor</span>
+          </motion.h1>
+
+          {/* Typewriter */}
+          <motion.div
+            {...fadeUp(0.4)}
+            className="hero-typewriter"
+            style={{ height: "52px", display: "flex", alignItems: "center", marginBottom: "28px" }}
+          >
+            <span style={{ fontSize: "clamp(1rem, 2.2vw, 1.3rem)", fontWeight: 600, color: "#3A3A3A" }}>
+              {text}
+              <span className="cursor-blink" style={{ color: "#5B3CF5", marginLeft: "2px" }}>|</span>
+            </span>
+          </motion.div>
+
+          {/* Bio */}
+          <motion.p
+            {...fadeUp(0.5)}
+            style={{
+              color: "#7A7A7A",
+              fontSize: "clamp(0.9rem, 1.6vw, 1rem)",
+              lineHeight: 1.75,
+              maxWidth: "500px",
+              marginBottom: "40px",
+              fontWeight: 300,
+            }}
+          >
+            Associate Full Stack Developer &amp; Automation Engineer at{" "}
+            <span style={{ color: "#0D0D0D", fontWeight: 500 }}>Blutech Consulting</span>. Building
+            scalable web applications and enterprise automation with{" "}
+            <span style={{ color: "#5B3CF5", fontWeight: 600 }}>React</span>,{" "}
+            <span style={{ color: "#00A882", fontWeight: 600 }}>Node.js</span>, and{" "}
+            <span style={{ color: "#e84a2a", fontWeight: 600 }}>Power Platform</span>.
+          </motion.p>
+
+          {/* Buttons */}
+          <motion.div {...fadeUp(0.6)} style={{ display: "flex", flexWrap: "wrap", gap: "14px" }}>
+            <button
+              onClick={() => document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" })}
+              style={{
+                display: "inline-flex", alignItems: "center", gap: "8px",
+                padding: "13px 22px", borderRadius: 14,
+                background: "#5B3CF5", color: "#fff",
+                border: "1px solid #5B3CF5", fontSize: 14, fontWeight: 600,
+                cursor: "pointer", boxShadow: "0 10px 24px rgba(91,60,245,0.22)",
               }}
             >
               <Briefcase size={16} /> View My Work
             </button>
-
             <a
               href="https://github.com/muhammadshakoor"
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                padding: "13px 22px",
-                borderRadius: 14,
-                background: "#fff",
-                color: "#0D0D0D",
-                border: "1px solid #E8E8E2",
-                fontSize: 14,
-                fontWeight: 600,
+                display: "inline-flex", alignItems: "center", gap: "8px",
+                padding: "13px 22px", borderRadius: 14,
+                background: "#fff", color: "#0D0D0D",
+                border: "1px solid #E8E8E2", fontSize: 14, fontWeight: 600,
                 textDecoration: "none",
               }}
             >
               <FaGithub size={16} /> GitHub Profile
             </a>
-          </div>
+          </motion.div>
+        </div>
 
-          {/* Divider */}
+        {/* RIGHT: Profile image */}
+        <motion.div
+          initial={{ opacity: 0, x: 40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.7, delay: 0.3 }}
+          className="hero-image-col"
+          style={{ flexShrink: 0, position: "relative", width: 340, marginTop: 118 }}
+        >
+          {/* Decorative rotated background */}
           <div
             style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "14px",
-              width: "180px",
+              position: "absolute",
+              inset: -10,
+              borderRadius: 36,
+              background: "linear-gradient(135deg, rgba(91,60,245,0.1), rgba(0,168,130,0.07))",
+              transform: "rotate(3deg)",
+            }}
+          />
+
+          {/* Image */}
+          <div
+            style={{
+              position: "relative",
+              borderRadius: 28,
+              overflow: "hidden",
+              border: "2px solid rgba(91,60,245,0.18)",
+              boxShadow: "0 32px 80px rgba(0,0,0,0.18), 0 0 0 1px rgba(91,60,245,0.08)",
+              aspectRatio: "4/5",
             }}
           >
+            <Image
+              src="/profile.jpg"
+              alt="Muhammad Shakoor"
+              fill
+              style={{ objectFit: "cover", objectPosition: "top center" }}
+              priority
+            />
+          </div>
+
+          {/* Badge: Experience */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.9 }}
+            style={{
+              position: "absolute",
+              bottom: 36, left: -20,
+              background: "#fff",
+              border: "1px solid #E8E8E2",
+              borderRadius: 16,
+              padding: "12px 16px",
+              boxShadow: "0 8px 28px rgba(0,0,0,0.09)",
+              display: "flex", alignItems: "center", gap: 10,
+            }}
+          >
+            <div style={{
+              width: 38, height: 38, borderRadius: 10,
+              background: "rgba(91,60,245,0.09)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              flexShrink: 0,
+            }}>
+              <Briefcase size={16} style={{ color: "#5B3CF5" }} />
+            </div>
+            <div>
+              <div style={{ fontSize: 17, fontWeight: 800, color: "#0D0D0D", lineHeight: 1 }}>3+</div>
+              <div style={{ fontSize: 10, color: "#7A7A7A", fontWeight: 500, marginTop: 2 }}>Years Exp.</div>
+            </div>
+          </motion.div>
+
+          {/* Badge: Projects */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 1.1 }}
+            style={{
+              position: "absolute",
+              top: -18, right: -16,
+              background: "#fff",
+              border: "1px solid #E8E8E2",
+              borderRadius: 16,
+              padding: "12px 16px",
+              boxShadow: "0 8px 28px rgba(0,0,0,0.09)",
+              display: "flex", alignItems: "center", gap: 10,
+            }}
+          >
+            <div style={{
+              width: 38, height: 38, borderRadius: 10,
+              background: "rgba(0,168,130,0.09)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              flexShrink: 0,
+            }}>
+              <Code2 size={16} style={{ color: "#00A882" }} />
+            </div>
+            <div>
+              <div style={{ fontSize: 17, fontWeight: 800, color: "#0D0D0D", lineHeight: 1 }}>8+</div>
+              <div style={{ fontSize: 10, color: "#7A7A7A", fontWeight: 500, marginTop: 2 }}>Projects</div>
+            </div>
+          </motion.div>
+        </motion.div>
+        </div>{/* /hero-columns */}
+
+        {/* CONNECT — full-width centered below both columns */}
+        <motion.div
+          {...fadeUp(0.7)}
+          style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "16px" }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "14px", width: "180px" }}>
             <div style={{ flex: 1, height: 1, background: "#E8E8E2" }} />
-            <span
-              style={{
-                fontSize: "9px",
-                color: "#B0B0A8",
-                fontWeight: 500,
-                letterSpacing: "0.14em",
-                textTransform: "uppercase",
-              }}
-            >
+            <span style={{ fontSize: "9px", color: "#B0B0A8", fontWeight: 500, letterSpacing: "0.14em", textTransform: "uppercase" }}>
               connect
             </span>
             <div style={{ flex: 1, height: 1, background: "#E8E8E2" }} />
           </div>
 
-          {/* Social icons */}
-          <div style={{ display: "flex", justifyContent: "center", gap: 10 }}>
+          <div style={{ display: "flex", gap: 10 }}>
             {socials.map(({ icon: Icon, href, label, color, bg, border }) => (
               <div key={label} style={{ position: "relative" }}>
                 <motion.a
@@ -448,28 +420,20 @@ export default function Hero() {
                 >
                   <Icon size={18} style={{ color }} />
                 </motion.a>
-
-                {/* Tooltip */}
                 {hoveredSocial === label && (
                   <div style={{
                     position: "absolute",
-                    bottom: "calc(100% + 10px)",
-                    left: "50%",
+                    bottom: "calc(100% + 10px)", left: "50%",
                     transform: "translateX(-50%)",
-                    background: "#1a1a2e",
-                    color: "#e2e8f0",
-                    fontSize: "11px",
-                    fontWeight: 500,
-                    padding: "5px 10px",
-                    borderRadius: 7,
+                    background: "#1a1a2e", color: "#e2e8f0",
+                    fontSize: "11px", fontWeight: 500,
+                    padding: "5px 10px", borderRadius: 7,
                     whiteSpace: "nowrap",
                     border: "1px solid rgba(255,255,255,0.1)",
-                    pointerEvents: "none",
-                    zIndex: 50,
+                    pointerEvents: "none", zIndex: 50,
                     boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
                   }}>
                     {label === "Resume" ? "Download Resume" : label}
-                    {/* Arrow */}
                     <div style={{
                       position: "absolute",
                       top: "100%", left: "50%",
@@ -489,44 +453,23 @@ export default function Hero() {
 
       {/* Scroll indicator */}
       <motion.button
-        onClick={() =>
-          document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" })
-        }
+        onClick={() => document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" })}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, y: [0, 8, 0] }}
-        transition={{
-          delay: 1.5,
-          y: { duration: 1.8, repeat: Infinity, ease: "easeInOut" },
-        }}
+        transition={{ delay: 1.5, y: { duration: 1.8, repeat: Infinity, ease: "easeInOut" } }}
         style={{
-          position: "absolute",
-          bottom: "32px",
-          left: "50%",
+          position: "absolute", bottom: "32px", left: "50%",
           transform: "translateX(-50%)",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "5px",
-          color: "#B0B0A8",
-          background: "none",
-          border: "none",
-          cursor: "pointer",
+          display: "flex", flexDirection: "column", alignItems: "center", gap: "5px",
+          color: "#B0B0A8", background: "none", border: "none", cursor: "pointer",
         }}
       >
-        <span
-          style={{
-            fontSize: "9px",
-            fontWeight: 500,
-            letterSpacing: "0.22em",
-            textTransform: "uppercase",
-          }}
-        >
+        <span style={{ fontSize: "9px", fontWeight: 500, letterSpacing: "0.22em", textTransform: "uppercase" }}>
           scroll
         </span>
         <ArrowDown size={13} />
       </motion.button>
 
-      {/* Local styles */}
       <style>{`
         .hero-grid {
           position: absolute;
@@ -547,33 +490,54 @@ export default function Hero() {
         }
 
         @keyframes heroFloat {
-          0%, 100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(-18px);
-          }
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-18px); }
         }
 
         @keyframes pulse {
-          0%, 100% {
-            opacity: 1;
-          }
-          50% {
-            opacity: 0.35;
-          }
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.35; }
         }
 
-        .cursor-blink {
-          animation: blink 1s step-end infinite;
-        }
+        .cursor-blink { animation: blink 1s step-end infinite; }
 
         @keyframes blink {
-          0%, 100% {
-            opacity: 1;
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
+        }
+
+        @media (max-width: 860px) {
+          .hero-content {
+            padding-top: 90px !important;
+            padding-left: 24px !important;
+            padding-right: 24px !important;
           }
-          50% {
-            opacity: 0;
+
+          .hero-columns {
+            flex-direction: column-reverse !important;
+            gap: 44px !important;
+            margin-bottom: 28px !important;
+            text-align: center;
+          }
+
+          .hero-left {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+          }
+
+          .hero-badge {
+            display: flex;
+            justify-content: center;
+          }
+
+          .hero-typewriter {
+            justify-content: center !important;
+          }
+
+          .hero-image-col {
+            width: 260px !important;
           }
         }
       `}</style>
