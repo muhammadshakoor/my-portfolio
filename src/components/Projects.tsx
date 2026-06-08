@@ -53,7 +53,7 @@ const projects = [
   },
   {
     id: 7,
-    emoji: "🗂️",
+    emoji: "🔄",
     title: "CRUD App",
     sub: "Full Stack Monorepo",
     desc: "A full-stack CRUD application with frontend and backend in a single monorepo, deployed together on Vercel using a unified vercel.json. Also available as separate frontend and backend repositories with independent deployments.",
@@ -73,6 +73,29 @@ const projects = [
     featured: true,
     github: "https://github.com/muhammadshakoor/crud_app",
     live: "https://crud-app-drab-ten.vercel.app",
+  },
+  {
+    id: 8,
+    emoji: "🧠",
+    title: "MNIST CNN & KITTI Object Detection",
+    sub: "Deep Learning & Computer Vision",
+    desc: "Built and benchmarked 5 CNN architectures for real-time handwritten digit recognition on MNIST, then fine-tuned a Faster R-CNN model to detect Cars, Pedestrians, and Cyclists in live KITTI driving footage. Delivered production-ready model weights, mAP benchmarks, and visual detection outputs.",
+    tags: [
+      "Python",
+      "PyTorch",
+      "TorchVision",
+      "Jupyter",
+      "MNIST",
+      "KITTI",
+      "Faster R-CNN",
+    ],
+    cat: "AI/ML",
+    color: "#5B3CF5",
+    bg: "rgba(91,60,245,0.08)",
+    border: "rgba(91,60,245,0.18)",
+    featured: true,
+    github: "https://github.com/muhammadshakoor/mnist-cnn-kitti-object-detection",
+    live: "#",
   },
   {
     id: 4,
@@ -167,7 +190,7 @@ function FeaturedCard({
       initial={{ opacity: 0, y: 34 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.55, delay: index * 0.08,  }}
+      transition={{ duration: 0.55, delay: index * 0.08 }}
       className="featured-card-grid"
       style={{
         display: "grid",
@@ -348,7 +371,6 @@ function FeaturedCard({
             <FaGithub size={14} />
             Source Code
           </a>
-
         </div>
       </div>
     </motion.div>
@@ -518,7 +540,6 @@ function GridCard({ p, i }: { p: (typeof projects)[0]; i: number }) {
             <FaGithub size={12} />
             Source
           </a>
-
         </div>
       </div>
     </motion.article>
@@ -539,7 +560,7 @@ export default function Projects() {
   const fadeUp = (delay = 0) => ({
     initial: { opacity: 0, y: 28 },
     animate: inView ? { opacity: 1, y: 0 } : {},
-    transition: { delay, duration: 0.55,  },
+    transition: { delay, duration: 0.55 },
   });
 
   return (
@@ -642,8 +663,8 @@ export default function Projects() {
             }}
           >
             A selection of projects I&apos;ve designed and built from scratch —
-            from business dashboards to full-stack platforms and automation
-            tools.
+            from business dashboards to full-stack platforms, AI models, and
+            automation tools.
           </p>
         </motion.div>
 

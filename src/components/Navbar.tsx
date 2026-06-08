@@ -71,13 +71,17 @@ export default function Navbar() {
       className="fixed top-0 left-0 right-0 z-50"
       style={{
         width: "100%",
-        background: scrolled ? "rgba(153,151,151,0.97)" : "rgba(153,151,151,0.93)",
-        backdropFilter: "blur(20px)",
-        WebkitBackdropFilter: "blur(20px)",
-        borderBottom: "1px solid rgba(255,255,255,0.08)",
+        background: scrolled
+          ? "rgba(9,9,15,0.97)"
+          : "rgba(9,9,15,0.82)",
+        backdropFilter: "blur(24px)",
+        WebkitBackdropFilter: "blur(24px)",
+        borderBottom: scrolled
+          ? "1px solid rgba(124,58,237,0.25)"
+          : "1px solid rgba(255,255,255,0.06)",
         boxShadow: scrolled
-          ? "0 4px 28px rgba(0,0,0,0.22)"
-          : "0 2px 14px rgba(0,0,0,0.12)",
+          ? "0 4px 32px rgba(0,0,0,0.55), 0 1px 0 rgba(124,58,237,0.15)"
+          : "0 2px 16px rgba(0,0,0,0.3)",
       }}
     >
       {/* Main navbar */}
@@ -277,11 +281,11 @@ export default function Navbar() {
               width: 210,
               borderRadius: 18,
               padding: 10,
-              background: "rgba(140,138,138,0.98)",
-              backdropFilter: "blur(20px)",
-              WebkitBackdropFilter: "blur(20px)",
-              border: "1px solid rgba(255,255,255,0.1)",
-              boxShadow: "0 16px 48px rgba(0,0,0,0.35)",
+              background: "rgba(12,12,20,0.98)",
+              backdropFilter: "blur(24px)",
+              WebkitBackdropFilter: "blur(24px)",
+              border: "1px solid rgba(124,58,237,0.2)",
+              boxShadow: "0 16px 48px rgba(0,0,0,0.6), 0 0 0 1px rgba(124,58,237,0.08)",
             }}
           >
             {links.map((l) => {
