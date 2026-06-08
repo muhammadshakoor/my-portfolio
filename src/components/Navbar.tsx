@@ -71,7 +71,7 @@ export default function Navbar() {
       className="fixed top-0 left-0 right-0 z-50"
       style={{
         width: "100%",
-        background: scrolled ? "rgba(30,30,35,0.97)" : "rgba(30,30,35,0.94)",
+        background: scrolled ? "rgba(153,151,151,0.97)" : "rgba(153,151,151,0.93)",
         backdropFilter: "blur(20px)",
         WebkitBackdropFilter: "blur(20px)",
         borderBottom: "1px solid rgba(255,255,255,0.08)",
@@ -85,7 +85,7 @@ export default function Navbar() {
         className="navbar-inner"
         style={{
           width: "100%",
-          height: 84,
+          height: 64,
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
@@ -98,8 +98,8 @@ export default function Navbar() {
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           aria-label="Go to top"
           style={{
-            width: 90,
-            height: 90,
+            width: 58,
+            height: 58,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -113,8 +113,8 @@ export default function Navbar() {
           <Image
             src="/logo.png"
             alt="MS"
-            width={90}
-            height={90}
+            width={56}
+            height={56}
             style={{ objectFit: "contain" }}
             priority
           />
@@ -144,10 +144,11 @@ export default function Navbar() {
                   onClick={() => go(l.href)}
                   className="relative text-sm rounded-xl transition-colors duration-200"
                   style={{
-                    minHeight: 38,
-                    padding: "9px 16px",
+                    minHeight: 32,
+                    padding: "6px 12px",
+                    fontSize: 13,
                     color: isActive ? "#ffffff" : "#C9C6D8",
-                    fontWeight: isActive ? 700 : 500,
+                    fontWeight: isActive ? 600 : 400,
                     letterSpacing: "0.01em",
                     background: "transparent",
                     border: "none",
@@ -158,11 +159,13 @@ export default function Navbar() {
                   onMouseEnter={(e) => {
                     if (!isActive) {
                       e.currentTarget.style.color = "#ffffff";
+                      e.currentTarget.style.background = "rgba(255,255,255,0.14)";
                     }
                   }}
                   onMouseLeave={(e) => {
                     if (!isActive) {
                       e.currentTarget.style.color = "#C9C6D8";
+                      e.currentTarget.style.background = "transparent";
                     }
                   }}
                 >
@@ -223,11 +226,12 @@ export default function Navbar() {
             whileTap={{ scale: 0.96 }}
             className="text-sm"
             style={{
-              borderRadius: 12,
-              padding: "11px 26px",
+              borderRadius: 10,
+              padding: "8px 18px",
+              fontSize: 13,
               background: "linear-gradient(135deg, #129DFF 0%, #5B3CF5 58%, #6D35F5 100%)",
               color: "#ffffff",
-              fontWeight: 800,
+              fontWeight: 700,
               border: "1px solid rgba(255,255,255,0.10)",
               boxShadow: "0 6px 20px rgba(91,60,245,0.32)",
               cursor: "pointer",
@@ -244,7 +248,7 @@ export default function Navbar() {
           id="mobile-menu-toggle"
           className="md:hidden rounded-xl transition-colors"
           style={{
-            padding: "10px 12px",
+            padding: "7px 9px",
             background: "rgba(255,255,255,0.07)",
             color: "#ffffff",
             border: "1px solid rgba(255,255,255,0.12)",
@@ -253,7 +257,7 @@ export default function Navbar() {
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
         >
-          {open ? <X size={24} /> : <Menu size={24} />}
+          {open ? <X size={18} /> : <Menu size={18} />}
         </button>
       </div>
 
@@ -268,12 +272,12 @@ export default function Navbar() {
             transition={{ duration: 0.22, type: "spring", stiffness: 300, damping: 28 }}
             className="absolute z-50"
             style={{
-              top: 92,
+              top: 72,
               right: 16,
               width: 210,
               borderRadius: 18,
               padding: 10,
-              background: "rgba(28,28,33,0.98)",
+              background: "rgba(140,138,138,0.98)",
               backdropFilter: "blur(20px)",
               WebkitBackdropFilter: "blur(20px)",
               border: "1px solid rgba(255,255,255,0.1)",
@@ -297,6 +301,19 @@ export default function Navbar() {
                       ? "1px solid rgba(135,116,255,0.22)"
                       : "1px solid transparent",
                     cursor: "pointer",
+                    transition: "background 0.15s, color 0.15s",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.background = "rgba(255,255,255,0.1)";
+                      e.currentTarget.style.color = "#ffffff";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.background = "transparent";
+                      e.currentTarget.style.color = "#C9C6D8";
+                    }
                   }}
                 >
                   {l.label}
@@ -364,7 +381,7 @@ export default function Navbar() {
 
         @media (max-width: 768px) {
           .navbar-inner {
-            height: 72px !important;
+            height: 58px !important;
             padding-left: 20px !important;
             padding-right: 20px !important;
           }
