@@ -515,6 +515,7 @@ export default function Hero() {
 
           .hero-columns {
             flex-direction: column-reverse !important;
+            align-items: center !important;
             gap: 44px !important;
             margin-bottom: 28px !important;
             text-align: center;
@@ -538,6 +539,7 @@ export default function Hero() {
 
           .hero-image-col {
             width: 260px !important;
+            margin-top: 0 !important;
           }
         }
       `}</style>
