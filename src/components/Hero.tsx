@@ -255,7 +255,7 @@ export default function Hero() {
           </motion.p>
 
           {/* Buttons */}
-          <motion.div {...fadeUp(0.6)} style={{ display: "flex", flexWrap: "wrap", gap: "14px" }}>
+          <motion.div {...fadeUp(0.6)} className="hero-cta-buttons" style={{ display: "flex", flexWrap: "wrap", gap: "14px" }}>
             <button
               onClick={() => document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" })}
               style={{
@@ -540,6 +540,10 @@ export default function Hero() {
           .hero-image-col {
             width: 260px !important;
             margin-top: 0 !important;
+          }
+
+          .hero-cta-buttons {
+            justify-content: center;
           }
         }
       `}</style>
