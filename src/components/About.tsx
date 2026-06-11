@@ -160,7 +160,7 @@ export default function About() {
 
           <h2
             style={{
-              fontFamily: "'Syne', sans-serif",
+              fontFamily: "var(--font-display), sans-serif",
               fontWeight: 800,
               fontSize: 42,
               color: "#0D0D0D",
@@ -241,7 +241,7 @@ export default function About() {
 
               <p
                 style={{
-                  fontFamily: "'Syne', sans-serif",
+                  fontFamily: "var(--font-display), sans-serif",
                   fontWeight: 700,
                   fontSize: 16,
                   color: "#0D0D0D",
@@ -392,7 +392,7 @@ export default function About() {
                 >
                   <p
                     style={{
-                      fontFamily: "'Syne', sans-serif",
+                      fontFamily: "var(--font-display), sans-serif",
                       fontWeight: 800,
                       fontSize: 22,
                       letterSpacing: "-0.5px",
@@ -438,7 +438,7 @@ export default function About() {
             <div>
               <h3
                 style={{
-                  fontFamily: "'Syne', sans-serif",
+                  fontFamily: "var(--font-display), sans-serif",
                   fontWeight: 700,
                   fontSize: 22,
                   color: "#0D0D0D",
@@ -634,7 +634,7 @@ export default function About() {
 
               <p
                 style={{
-                  fontFamily: "'Syne', sans-serif",
+                  fontFamily: "var(--font-display), sans-serif",
                   fontWeight: 600,
                   fontSize: 13,
                   color: "#0D0D0D",

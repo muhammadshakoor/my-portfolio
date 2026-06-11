@@ -1,165 +1,11 @@
 "use client";
 
 import { useState, useRef } from "react";
+import Link from "next/link";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { Star, ArrowUpRight } from "lucide-react";
+import { Star, ArrowUpRight, BookOpen } from "lucide-react";
 import { FaGithub } from "react-icons/fa6";
-
-const projects = [
-  {
-    id: 3,
-    emoji: "📊",
-    title: "STC P&L Forecasting",
-    sub: "Enterprise Finance Dashboard",
-    desc: "Finance dashboard for Saudi Telecom Company — monthly forecasts across Consumer, Business, Wholesale & stc Pay segments. Built at Blutech Consulting.",
-    tags: ["React", "Vite", "TypeScript", "Power BI", "REST API"],
-    cat: "Enterprise",
-    color: "#e84a2a",
-    bg: "rgba(232,74,42,0.07)",
-    border: "rgba(232,74,42,0.18)",
-    featured: true,
-    github: "https://github.com/muhammadshakoor/STC-Forecasting-Frontend",
-    live: "#",
-  },
-  {
-    id: 9,
-    emoji: "🗺️",
-    title: "Bank Lead Generation",
-    sub: "Enterprise Field Agent Platform",
-    desc: "Field agent platform for a major bank — an interactive map displays nearby businesses, agents tap to generate leads and log visits for account opening pitches. Multi-level hierarchy: Branch, Region, Group, and Head levels, each with role-specific dashboards, lead favourites, and visit status tracking. Built at Blutech Consulting.",
-    tags: ["React", "TypeScript", "Node.js", "Express", "Google Maps", "PostgreSQL"],
-    cat: "Enterprise",
-    color: "#0369a1",
-    bg: "rgba(3,105,161,0.07)",
-    border: "rgba(3,105,161,0.18)",
-    featured: true,
-    github: "https://github.com/insaf-blutech/LeadGeneration_Frontend",
-    live: "#",
-  },
-  {
-    id: 1,
-    emoji: "🏨",
-    title: "Smart Guest",
-    sub: "Hotel Management System",
-    desc: "Full-featured hotel management with booking engine, room management, invoicing, and real-time availability. Role-based admin dashboard with analytics.",
-    tags: ["React", "Node.js", "MongoDB", "Express", "TypeScript"],
-    cat: "Full Stack",
-    color: "#5B3CF5",
-    bg: "rgba(91,60,245,0.08)",
-    border: "rgba(91,60,245,0.18)",
-    featured: true,
-    github: "https://github.com/muhammadshakoor/smart-guest",
-    live: "#",
-  },
-  {
-    id: 2,
-    emoji: "💄",
-    title: "Cosmetics Store",
-    sub: "E-Commerce Platform",
-    desc: "End-to-end e-commerce with product catalog, shopping cart, Stripe payments, order tracking, and admin dashboard. JWT auth with RBAC.",
-    tags: ["React", "Node.js", "PostgreSQL", "TypeScript", "Stripe"],
-    cat: "Full Stack",
-    color: "#c026d3",
-    bg: "rgba(192,38,211,0.07)",
-    border: "rgba(192,38,211,0.18)",
-    featured: true,
-    github: "https://github.com/muhammadshakoor/cosmetics-store",
-    live: "#",
-  },
-  {
-    id: 7,
-    emoji: "🔄",
-    title: "CRUD App",
-    sub: "Full Stack Monorepo",
-    desc: "A full-stack CRUD application with frontend and backend in a single monorepo, deployed together on Vercel using a unified vercel.json. Also available as separate frontend and backend repositories with independent deployments.",
-    tags: [
-      "React",
-      "TypeScript",
-      "Vite",
-      "Tailwind",
-      "Express",
-      "PostgreSQL",
-      "Vercel",
-    ],
-    cat: "Full Stack",
-    color: "#5B3CF5",
-    bg: "rgba(91,60,245,0.08)",
-    border: "rgba(91,60,245,0.18)",
-    featured: true,
-    github: "https://github.com/muhammadshakoor/crud_app",
-    live: "https://crud-app-drab-ten.vercel.app",
-  },
-  {
-    id: 8,
-    emoji: "🧠",
-    title: "MNIST CNN & KITTI Object Detection",
-    sub: "Deep Learning & Computer Vision",
-    desc: "Built and benchmarked 5 CNN architectures for real-time handwritten digit recognition on MNIST, then fine-tuned a Faster R-CNN model to detect Cars, Pedestrians, and Cyclists in live KITTI driving footage. Delivered production-ready model weights, mAP benchmarks, and visual detection outputs.",
-    tags: [
-      "Python",
-      "PyTorch",
-      "TorchVision",
-      "Jupyter",
-      "MNIST",
-      "KITTI",
-      "Faster R-CNN",
-    ],
-    cat: "AI/ML",
-    color: "#5B3CF5",
-    bg: "rgba(91,60,245,0.08)",
-    border: "rgba(91,60,245,0.18)",
-    featured: true,
-    github: "https://github.com/muhammadshakoor/mnist-cnn-kitti-object-detection",
-    live: "#",
-  },
-  {
-    id: 4,
-    emoji: "🪙",
-    title: "TokenDapp",
-    sub: "Blockchain DApp",
-    desc: "Decentralised ERC-20 token app with MetaMask wallet, token transfers, real-time balances, and full transaction history.",
-    tags: ["React", "TypeScript", "Web3.js", "Solidity", "MetaMask"],
-    cat: "Web3",
-    color: "#00A882",
-    bg: "rgba(0,168,130,0.08)",
-    border: "rgba(0,168,130,0.18)",
-    featured: false,
-    github: "https://github.com/muhammadshakoor/TokenDapp",
-    live: "#",
-  },
-  {
-    id: 5,
-    emoji: "🤖",
-    title: "LangFlow BTC",
-    sub: "AI Bitcoin Chatbot",
-    desc: "Bitcoin-focused AI chatbot powered by LangFlow & OpenAI — market analysis, price insights, and educational crypto content.",
-    tags: ["Next.js", "TypeScript", "LangFlow", "OpenAI", "Tailwind"],
-    cat: "AI/ML",
-    color: "#5B3CF5",
-    bg: "rgba(91,60,245,0.08)",
-    border: "rgba(91,60,245,0.18)",
-    featured: false,
-    github: "https://github.com/muhammadshakoor/LangFlowBTC",
-    live: "#",
-  },
-  {
-    id: 6,
-    emoji: "🔐",
-    title: "JWT Auth System",
-    sub: "Authentication Boilerplate",
-    desc: "Production-ready auth with JWT + refresh tokens, email verification, OAuth, and two-factor authentication.",
-    tags: ["Node.js", "Express", "JWT", "MongoDB", "Nodemailer"],
-    cat: "Backend",
-    color: "#00A882",
-    bg: "rgba(0,168,130,0.08)",
-    border: "rgba(0,168,130,0.18)",
-    featured: false,
-    github: "https://github.com/muhammadshakoor/loginpage",
-    live: "#",
-  },
-];
-
-const cats = ["All", "Full Stack", "Enterprise", "Web3", "AI/ML", "Backend"];
+import { projects, categories, type Project } from "@/data/projects";
 
 function TechPill({
   tag,
@@ -191,13 +37,146 @@ function TechPill({
   );
 }
 
-function FeaturedCard({
-  p,
-  index,
-}: {
-  p: (typeof projects)[0];
-  index: number;
-}) {
+/* Browser-chrome frame so emoji thumbnails read as product shots */
+function BrowserFrame({ p, emojiSize }: { p: Project; emojiSize: number }) {
+  return (
+    <div
+      style={{
+        position: "absolute",
+        inset: 0,
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      {/* Title bar */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 8,
+          padding: "8px 12px",
+          background: "rgba(255,255,255,0.72)",
+          borderBottom: `1px solid ${p.border}`,
+          flexShrink: 0,
+        }}
+      >
+        <span style={{ display: "flex", gap: 5 }}>
+          {["#FF5F57", "#FEBC2E", "#28C840"].map((c) => (
+            <span
+              key={c}
+              style={{ width: 8, height: 8, borderRadius: "50%", background: c }}
+            />
+          ))}
+        </span>
+        <span
+          style={{
+            flex: 1,
+            maxWidth: 220,
+            margin: "0 auto",
+            padding: "3px 12px",
+            borderRadius: 999,
+            background: "rgba(13,13,13,0.05)",
+            border: "1px solid rgba(13,13,13,0.06)",
+            fontSize: 9.5,
+            color: "#7A7A7A",
+            textAlign: "center",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            fontFamily: "monospace",
+          }}
+        >
+          {p.slug}.app
+        </span>
+      </div>
+
+      {/* Viewport */}
+      <div
+        style={{
+          flex: 1,
+          position: "relative",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            backgroundImage: `radial-gradient(${p.color}35 1px, transparent 1px)`,
+            backgroundSize: "22px 22px",
+            opacity: 0.28,
+          }}
+        />
+        <span style={{ fontSize: emojiSize, position: "relative", zIndex: 1 }}>
+          {p.emoji}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function CardLinks({ p, small }: { p: Project; small?: boolean }) {
+  const fontSize = small ? 11 : 12;
+  const iconSize = small ? 12 : 14;
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: small ? 15 : 18,
+        borderTop: "1px solid #E8E8E2",
+        paddingTop: small ? 14 : 18,
+        flexWrap: "wrap",
+      }}
+    >
+      <Link
+        href={`/projects/${p.slug}`}
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: small ? 5 : 6,
+          fontSize,
+          color: p.color,
+          fontWeight: 600,
+          textDecoration: "none",
+        }}
+      >
+        <BookOpen size={iconSize} />
+        Case Study
+        <ArrowUpRight size={iconSize - 2} />
+      </Link>
+
+      <a
+        href={p.github}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: small ? 5 : 6,
+          fontSize,
+          color: "#7A7A7A",
+          fontWeight: 500,
+          textDecoration: "none",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.color = "#0D0D0D";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.color = "#7A7A7A";
+        }}
+      >
+        <FaGithub size={iconSize} />
+        {small ? "Source" : "Source Code"}
+      </a>
+    </div>
+  );
+}
+
+function FeaturedCard({ p, index }: { p: Project; index: number }) {
   const isEven = index % 2 === 0;
 
   return (
@@ -231,39 +210,18 @@ function FeaturedCard({
           borderRadius: 16,
           overflow: "hidden",
           aspectRatio: "16/10",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
           background: `linear-gradient(135deg, ${p.bg}, #FAFAF7)`,
           border: `1px solid ${p.border}`,
           position: "relative",
         }}
       >
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            backgroundImage: `radial-gradient(${p.color}35 1px, transparent 1px)`,
-            backgroundSize: "22px 22px",
-            opacity: 0.28,
-          }}
-        />
-
-        <span
-          style={{
-            fontSize: 70,
-            position: "relative",
-            zIndex: 1,
-          }}
-        >
-          {p.emoji}
-        </span>
+        <BrowserFrame p={p} emojiSize={64} />
 
         {p.featured && (
           <div
             style={{
               position: "absolute",
-              top: 14,
+              top: 42,
               right: 14,
               display: "flex",
               alignItems: "center",
@@ -272,9 +230,10 @@ function FeaturedCard({
               borderRadius: "999px",
               fontSize: 10,
               fontWeight: 700,
-              background: "rgba(251,191,36,0.12)",
-              border: "1px solid rgba(251,191,36,0.28)",
+              background: "rgba(251,191,36,0.16)",
+              border: "1px solid rgba(251,191,36,0.32)",
               color: "#b7791f",
+              zIndex: 2,
             }}
           >
             <Star size={9} fill="currentColor" />
@@ -300,7 +259,7 @@ function FeaturedCard({
 
         <h3
           style={{
-            fontFamily: "'Syne', sans-serif",
+            fontFamily: "var(--font-display), sans-serif",
             fontSize: 24,
             fontWeight: 700,
             color: "#0D0D0D",
@@ -343,56 +302,17 @@ function FeaturedCard({
           }}
         >
           {p.tags.map((t) => (
-            <TechPill
-              key={t}
-              tag={t}
-              color={p.color}
-              bg={p.bg}
-              border={p.border}
-            />
+            <TechPill key={t} tag={t} color={p.color} bg={p.bg} border={p.border} />
           ))}
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 18,
-            borderTop: "1px solid #E8E8E2",
-            paddingTop: 18,
-            flexWrap: "wrap",
-          }}
-        >
-          <a
-            href={p.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 6,
-              fontSize: 12,
-              color: "#7A7A7A",
-              fontWeight: 500,
-              textDecoration: "none",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.color = "#0D0D0D";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.color = "#7A7A7A";
-            }}
-          >
-            <FaGithub size={14} />
-            Source Code
-          </a>
-        </div>
+        <CardLinks p={p} />
       </div>
     </motion.div>
   );
 }
 
-function GridCard({ p, i }: { p: (typeof projects)[0]; i: number }) {
+function GridCard({ p, i }: { p: Project; i: number }) {
   return (
     <motion.article
       layout
@@ -418,28 +338,13 @@ function GridCard({ p, i }: { p: (typeof projects)[0]; i: number }) {
       <div
         style={{
           height: 148,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
           background: `linear-gradient(135deg, ${p.bg}, #FAFAF7)`,
           position: "relative",
           overflow: "hidden",
           borderBottom: "1px solid #E8E8E2",
         }}
       >
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            backgroundImage: `radial-gradient(${p.color}35 1px, transparent 1px)`,
-            backgroundSize: "20px 20px",
-            opacity: 0.24,
-          }}
-        />
-
-        <span style={{ fontSize: 50, position: "relative", zIndex: 1 }}>
-          {p.emoji}
-        </span>
+        <BrowserFrame p={p} emojiSize={42} />
       </div>
 
       <div
@@ -465,7 +370,7 @@ function GridCard({ p, i }: { p: (typeof projects)[0]; i: number }) {
 
         <h3
           style={{
-            fontFamily: "'Syne', sans-serif",
+            fontFamily: "var(--font-display), sans-serif",
             fontSize: 16,
             fontWeight: 700,
             color: "#0D0D0D",
@@ -512,50 +417,11 @@ function GridCard({ p, i }: { p: (typeof projects)[0]; i: number }) {
           }}
         >
           {p.tags.slice(0, 4).map((t) => (
-            <TechPill
-              key={t}
-              tag={t}
-              color={p.color}
-              bg={p.bg}
-              border={p.border}
-            />
+            <TechPill key={t} tag={t} color={p.color} bg={p.bg} border={p.border} />
           ))}
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 15,
-            borderTop: "1px solid #E8E8E2",
-            paddingTop: 14,
-            flexWrap: "wrap",
-          }}
-        >
-          <a
-            href={p.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 5,
-              fontSize: 11,
-              color: "#7A7A7A",
-              fontWeight: 500,
-              textDecoration: "none",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.color = "#0D0D0D";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.color = "#7A7A7A";
-            }}
-          >
-            <FaGithub size={12} />
-            Source
-          </a>
-        </div>
+        <CardLinks p={p} small />
       </div>
     </motion.article>
   );
@@ -656,8 +522,8 @@ export default function Projects() {
 
           <h2
             style={{
-              fontFamily: "'Syne', sans-serif",
-              fontWeight: 800,
+              fontFamily: "var(--font-display), sans-serif",
+              fontWeight: 700,
               fontSize: "clamp(2.4rem, 5vw, 3.2rem)",
               color: "#0D0D0D",
               letterSpacing: "-1.5px",
@@ -693,7 +559,7 @@ export default function Projects() {
             marginBottom: 34,
           }}
         >
-          {cats.map((c) => {
+          {categories.map((c) => {
             const isActive = active === c;
 
             return (
@@ -742,7 +608,7 @@ export default function Projects() {
                 }}
               >
                 {featured.map((p, i) => (
-                  <FeaturedCard key={p.id} p={p} index={i} />
+                  <FeaturedCard key={p.slug} p={p} index={i} />
                 ))}
               </div>
 
@@ -771,7 +637,7 @@ export default function Projects() {
                   }}
                 >
                   {others.map((p, i) => (
-                    <GridCard key={p.id} p={p} i={i} />
+                    <GridCard key={p.slug} p={p} i={i} />
                   ))}
                 </div>
               </div>
@@ -790,7 +656,7 @@ export default function Projects() {
               }}
             >
               {filteredAll.map((p, i) => (
-                <GridCard key={p.id} p={p} i={i} />
+                <GridCard key={p.slug} p={p} i={i} />
               ))}
 
               {filteredAll.length === 0 && (

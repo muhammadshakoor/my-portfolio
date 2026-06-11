@@ -208,11 +208,11 @@ export default function Hero() {
           <motion.h1
             {...fadeUp(0.3)}
             style={{
-              fontFamily: "'Syne', sans-serif",
-              fontWeight: 900,
-              lineHeight: 1,
-              fontSize: "clamp(3rem, 6vw, 5.5rem)",
-              letterSpacing: "-0.04em",
+              fontFamily: "var(--font-display), sans-serif",
+              fontWeight: 700,
+              lineHeight: 1.04,
+              fontSize: "clamp(2.6rem, 4.6vw, 4.1rem)",
+              letterSpacing: "-0.03em",
               marginBottom: "16px",
               color: "#0D0D0D",
             }}
@@ -331,7 +331,7 @@ export default function Hero() {
             transition={{ delay: 0.9 }}
             style={{
               position: "absolute",
-              bottom: 36, left: -20,
+              bottom: -26, left: -24,
               background: "#fff",
               border: "1px solid #E8E8E2",
               borderRadius: 16,
@@ -361,7 +361,7 @@ export default function Hero() {
             transition={{ delay: 1.1 }}
             style={{
               position: "absolute",
-              top: -18, right: -16,
+              top: -26, right: -24,
               background: "#fff",
               border: "1px solid #E8E8E2",
               borderRadius: 16,

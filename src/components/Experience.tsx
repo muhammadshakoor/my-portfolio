@@ -172,7 +172,7 @@ export default function Experience() {
 
           <h2
             style={{
-              fontFamily: "'Syne', sans-serif",
+              fontFamily: "var(--font-display), sans-serif",
               fontWeight: 800,
               fontSize: "clamp(2.4rem, 5vw, 3.2rem)",
               color: "#0D0D0D",
@@ -359,7 +359,7 @@ export default function Experience() {
 
                     <h3
                       style={{
-                        fontFamily: "'Syne', sans-serif",
+                        fontFamily: "var(--font-display), sans-serif",
                         fontSize: 20,
                         fontWeight: 700,
                         color: "#0D0D0D",
