@@ -113,6 +113,96 @@ export const projects: Project[] = [
     },
   },
   {
+    slug: "langflow-btc",
+    emoji: "⚙️",
+    title: "LangFlow BTC",
+    sub: "AI Workflow Platform with Enterprise Controls",
+    desc: "A production-ready fork of LangFlow rebranded for enterprise use. Features a full admin portal with per-user token budgets, role-based permissions, live agent monitoring, external database connections, Portkey AI gateway for caching and routing, and Langfuse observability — all self-hosted on PostgreSQL.",
+    tags: ["LangFlow", "FastAPI", "React", "PostgreSQL", "Docker", "Portkey", "Langfuse", "OpenAI"],
+    cat: "AI/ML",
+    color: "#6C3CF5",
+    bg: "#F3F0FF",
+    border: "#DDD6FE",
+    featured: true,
+    github: "https://github.com/muhammadshakoor/LangFlowBTC",
+    live: "#",
+    caseStudy: {
+      role: "Full Stack Developer — Personal Project",
+      timeline: "2024",
+      overview: [
+        "LangFlow BTC is a production-ready enterprise fork of LangFlow, rebranded and extended with a full admin portal. It adds per-user token budgets, role-based permissions, and live agent monitoring on top of LangFlow's visual AI pipeline builder.",
+        "The platform is fully self-hosted on PostgreSQL with a Portkey AI gateway for model caching and routing across providers, and Langfuse observability for tracing every agent run — giving enterprise teams control and cost visibility they don't get from hosted LangFlow.",
+      ],
+      challenges: [
+        {
+          title: "Per-user token budgets",
+          detail:
+            "Each user gets a token allowance enforced at the gateway layer via Portkey. Budgets are tracked in PostgreSQL and checked before every LLM call, preventing runaway costs in shared environments.",
+        },
+        {
+          title: "Live agent monitoring",
+          detail:
+            "Enterprise users need to see running pipelines in real time. A WebSocket-backed monitoring panel streams agent status, token counts, and error events as workflows execute.",
+        },
+        {
+          title: "Portkey + Langfuse integration",
+          detail:
+            "Routing AI calls through Portkey adds caching and provider fallbacks; every call is also traced in Langfuse, giving a full audit trail of inputs, outputs, latency, and cost per run.",
+        },
+      ],
+      outcomes: [
+        "Self-hosted AI workflow platform with full admin controls",
+        "Per-user token budgets enforced at the gateway layer",
+        "Complete observability via Langfuse tracing on every agent run",
+      ],
+    },
+  },
+  {
+    slug: "cosmetics-store",
+    emoji: "💎",
+    title: "Cosmetics Store",
+    sub: "E-Commerce Platform",
+    desc: "End-to-end e-commerce with product catalog, shopping cart, Stripe payments, order tracking, and admin dashboard. JWT auth with RBAC.",
+    tags: ["React", "Node.js", "PostgreSQL", "TypeScript", "Stripe"],
+    cat: "Full Stack",
+    color: "#c026d3",
+    bg: "rgba(192,38,211,0.07)",
+    border: "rgba(192,38,211,0.18)",
+    featured: true,
+    github: "https://github.com/muhammadshakoor/cosmetics-store",
+    live: "#",
+    caseStudy: {
+      role: "Full Stack Developer — Freelance",
+      timeline: "2022 — 2023",
+      overview: [
+        "A complete e-commerce platform for a cosmetics brand: product catalog with categories and search, shopping cart, Stripe checkout, order tracking for customers, and an admin dashboard for inventory and order management.",
+        "Built on PostgreSQL with a typed Node.js API and a React storefront, with JWT authentication and role-based access separating customers from store admins.",
+      ],
+      challenges: [
+        {
+          title: "Payment integrity with Stripe",
+          detail:
+            "Orders are only confirmed when Stripe webhooks verify payment — the client is never trusted with payment state. Failed and abandoned payments leave inventory untouched.",
+        },
+        {
+          title: "Inventory consistency",
+          detail:
+            "Stock is decremented transactionally at order confirmation, preventing oversells when two customers buy the last item at the same time.",
+        },
+        {
+          title: "Admin operations",
+          detail:
+            "The admin dashboard covers product CRUD, stock management, and order fulfilment — designed so a non-technical store owner can run the shop alone.",
+        },
+      ],
+      outcomes: [
+        "Full storefront-to-fulfilment flow with secure Stripe payments",
+        "Transactional inventory prevents overselling",
+        "Self-serve admin dashboard for non-technical staff",
+      ],
+    },
+  },
+  {
     slug: "smart-guest",
     emoji: "🏨",
     title: "Smart Guest",
@@ -154,51 +244,6 @@ export const projects: Project[] = [
         "Complete booking-to-invoice flow in one system",
         "Real-time room availability with conflict-safe booking",
         "Analytics dashboard for occupancy and revenue tracking",
-      ],
-    },
-  },
-  {
-    slug: "cosmetics-store",
-    emoji: "💄",
-    title: "Cosmetics Store",
-    sub: "E-Commerce Platform",
-    desc: "End-to-end e-commerce with product catalog, shopping cart, Stripe payments, order tracking, and admin dashboard. JWT auth with RBAC.",
-    tags: ["React", "Node.js", "PostgreSQL", "TypeScript", "Stripe"],
-    cat: "Full Stack",
-    color: "#c026d3",
-    bg: "rgba(192,38,211,0.07)",
-    border: "rgba(192,38,211,0.18)",
-    featured: true,
-    github: "https://github.com/muhammadshakoor/cosmetics-store",
-    live: "#",
-    caseStudy: {
-      role: "Full Stack Developer — Freelance",
-      timeline: "2022 — 2023",
-      overview: [
-        "A complete e-commerce platform for a cosmetics brand: product catalog with categories and search, shopping cart, Stripe checkout, order tracking for customers, and an admin dashboard for inventory and order management.",
-        "Built on PostgreSQL with a typed Node.js API and a React storefront, with JWT authentication and role-based access separating customers from store admins.",
-      ],
-      challenges: [
-        {
-          title: "Payment integrity with Stripe",
-          detail:
-            "Orders are only confirmed when Stripe webhooks verify payment — the client is never trusted with payment state. Failed and abandoned payments leave inventory untouched.",
-        },
-        {
-          title: "Inventory consistency",
-          detail:
-            "Stock is decremented transactionally at order confirmation, preventing oversells when two customers buy the last item at the same time.",
-        },
-        {
-          title: "Admin operations",
-          detail:
-            "The admin dashboard covers product CRUD, stock management, and order fulfilment — designed so a non-technical store owner can run the shop alone.",
-        },
-      ],
-      outcomes: [
-        "Full storefront-to-fulfilment flow with secure Stripe payments",
-        "Transactional inventory prevents overselling",
-        "Self-serve admin dashboard for non-technical staff",
       ],
     },
   },
@@ -288,82 +333,47 @@ export const projects: Project[] = [
     },
   },
   {
-    slug: "tokendapp",
-    emoji: "🪙",
-    title: "TokenDapp",
-    sub: "Blockchain DApp",
-    desc: "Decentralised ERC-20 token app with MetaMask wallet, token transfers, real-time balances, and full transaction history.",
-    tags: ["React", "TypeScript", "Web3.js", "Solidity", "MetaMask"],
-    cat: "Web3",
+    slug: "rest-api-boilerplate",
+    emoji: "🔌",
+    title: "REST API Boilerplate",
+    sub: "Production-Ready Node.js Backend",
+    desc: "A battle-tested backend starter with Express.js, PostgreSQL, JWT auth, RBAC, Docker, rate limiting, request validation, and structured error handling — everything needed to ship a secure API fast.",
+    tags: ["Node.js", "Express.js", "PostgreSQL", "TypeScript", "Docker", "JWT", "RBAC"],
+    cat: "Backend",
     color: "#00A882",
     bg: "rgba(0,168,130,0.08)",
     border: "rgba(0,168,130,0.18)",
     featured: false,
-    github: "https://github.com/muhammadshakoor/TokenDapp",
+    github: "https://github.com/muhammadshakoor",
     live: "#",
     caseStudy: {
-      role: "Full Stack Developer — Personal Project",
-      timeline: "2023",
-      overview: [
-        "A decentralised application for an ERC-20 token: connect a MetaMask wallet, transfer tokens, watch balances update in real time, and browse full transaction history — all directly against the blockchain.",
-        "The Solidity contract and the React/Web3.js frontend were built together, so the UI reflects exactly what the chain allows.",
-      ],
-      challenges: [
-        {
-          title: "Wallet state synchronisation",
-          detail:
-            "Account switches, network changes, and pending transactions all change what the UI should show. Event listeners on the provider keep the app consistent with MetaMask at all times.",
-        },
-        {
-          title: "Transaction lifecycle UX",
-          detail:
-            "Blockchain transactions are slow and can fail. The UI models pending → confirmed → failed states explicitly so users always know where their tokens are.",
-        },
-      ],
-      outcomes: [
-        "Working ERC-20 token with transfer and history features",
-        "Real-time balance updates from on-chain events",
-        "Clean separation between contract logic and UI state",
-      ],
-    },
-  },
-  {
-    slug: "langflow-btc",
-    emoji: "🤖",
-    title: "LangFlow BTC",
-    sub: "AI Bitcoin Chatbot",
-    desc: "Bitcoin-focused AI chatbot powered by LangFlow & OpenAI — market analysis, price insights, and educational crypto content.",
-    tags: ["Next.js", "TypeScript", "LangFlow", "OpenAI", "Tailwind"],
-    cat: "AI/ML",
-    color: "#5B3CF5",
-    bg: "rgba(91,60,245,0.08)",
-    border: "rgba(91,60,245,0.18)",
-    featured: false,
-    github: "https://github.com/muhammadshakoor/LangFlowBTC",
-    live: "#",
-    caseStudy: {
-      role: "Full Stack Developer — Personal Project",
+      role: "Backend Developer — Personal Project",
       timeline: "2024",
       overview: [
-        "A Bitcoin-focused AI chatbot that answers market questions, explains price movements, and teaches crypto concepts — built with LangFlow for the conversation pipeline and OpenAI models for generation.",
-        "The Next.js frontend streams responses for a fast chat feel, with the LangFlow pipeline handling prompt orchestration behind an API route.",
+        "A production-ready REST API starter built to eliminate the boilerplate cost on every new Node.js project. It ships with Express.js, PostgreSQL (via connection pooling), TypeScript types throughout, Docker Compose for local dev, and a full auth layer out of the box.",
+        "The goal was a template strict enough to enforce good patterns — structured error responses, input validation, role-based access — without locking teams into a framework.",
       ],
       challenges: [
         {
-          title: "Grounded answers",
+          title: "Consistent error handling",
           detail:
-            "Crypto chat invites hallucination. The pipeline injects current market context into prompts so answers reference real data instead of stale training knowledge.",
+            "Every API route funnels through a central error middleware that maps domain errors to HTTP status codes and returns a uniform JSON shape — so clients never parse surprise error formats.",
         },
         {
-          title: "Streaming UX",
+          title: "Role-based access at the middleware layer",
           detail:
-            "Long analytical answers feel broken without streaming. Token-by-token rendering keeps the conversation responsive.",
+            "RBAC is enforced as composable route middleware rather than scattered if-checks, making it easy to add or change permissions without touching business logic.",
+        },
+        {
+          title: "Docker-first local development",
+          detail:
+            "A single docker-compose up spins up the API, PostgreSQL, and a migration runner — so any developer can be productive in minutes with no manual database setup.",
         },
       ],
       outcomes: [
-        "Conversational interface for Bitcoin market education",
-        "LangFlow pipeline orchestrating OpenAI generation",
-        "Streaming chat UI built on Next.js",
+        "Drop-in backend starter used across multiple projects",
+        "JWT + refresh token auth and RBAC wired in from day one",
+        "Dockerised environment eliminates local setup friction",
       ],
     },
   },
@@ -409,4 +419,4 @@ export const projects: Project[] = [
   },
 ];
 
-export const categories = ["All", "Full Stack", "Enterprise", "Web3", "AI/ML", "Backend"];
+export const categories = ["All", "Full Stack", "Enterprise", "AI/ML", "Backend"];
