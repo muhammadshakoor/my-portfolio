@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowDown, Download, Briefcase, Code2 } from "lucide-react";
-import { FaGithub, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
+import { FaGithub, FaLinkedinIn, FaXTwitter, FaWhatsapp, FaFacebook, FaInstagram, FaThreads } from "react-icons/fa6";
 
 const roles = [
   "Full Stack Developer",
@@ -45,6 +45,38 @@ const socials = [
     icon: FaXTwitter,
     href: "https://twitter.com/Muhamma45190755",
     label: "Twitter",
+    color: "#0D0D0D",
+    bg: "rgba(13,13,13,0.04)",
+    border: "#E8E8E2",
+  },
+  {
+    icon: FaWhatsapp,
+    href: "https://wa.me/923107252754",
+    label: "WhatsApp",
+    color: "#25D366",
+    bg: "rgba(37,211,102,0.08)",
+    border: "rgba(37,211,102,0.22)",
+  },
+  {
+    icon: FaFacebook,
+    href: "https://www.facebook.com/muhammad.shakoor.786",
+    label: "Facebook",
+    color: "#1877F2",
+    bg: "rgba(24,119,242,0.08)",
+    border: "rgba(24,119,242,0.22)",
+  },
+  {
+    icon: FaInstagram,
+    href: "https://www.instagram.com/muhammadshakoor_official",
+    label: "Instagram",
+    color: "#E1306C",
+    bg: "rgba(225,48,108,0.08)",
+    border: "rgba(225,48,108,0.22)",
+  },
+  {
+    icon: FaThreads,
+    href: "https://www.threads.net/@muhammadshakoor_official",
+    label: "Threads",
     color: "#0D0D0D",
     bg: "rgba(13,13,13,0.04)",
     border: "#E8E8E2",
@@ -452,23 +484,32 @@ export default function Hero() {
       </div>
 
       {/* Scroll indicator */}
-      <motion.button
-        onClick={() => document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" })}
+      <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1, y: [0, 8, 0] }}
-        transition={{ delay: 1.5, y: { duration: 1.8, repeat: Infinity, ease: "easeInOut" } }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5 }}
         style={{
-          position: "absolute", bottom: "32px", left: "50%",
-          transform: "translateX(-50%)",
-          display: "flex", flexDirection: "column", alignItems: "center", gap: "5px",
-          color: "#B0B0A8", background: "none", border: "none", cursor: "pointer",
+          position: "absolute", bottom: "32px", left: 0, right: 0,
+          display: "flex", justifyContent: "center",
+          pointerEvents: "none",
         }}
       >
-        <span style={{ fontSize: "9px", fontWeight: 500, letterSpacing: "0.22em", textTransform: "uppercase" }}>
-          scroll
-        </span>
-        <ArrowDown size={13} />
-      </motion.button>
+        <motion.button
+          onClick={() => document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" })}
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+          style={{
+            display: "flex", flexDirection: "column", alignItems: "center", gap: "5px",
+            color: "#B0B0A8", background: "none", border: "none", cursor: "pointer",
+            pointerEvents: "auto",
+          }}
+        >
+          <span style={{ fontSize: "9px", fontWeight: 500, letterSpacing: "0.22em", textTransform: "uppercase" }}>
+            scroll
+          </span>
+          <ArrowDown size={13} />
+        </motion.button>
+      </motion.div>
 
       <style>{`
         .hero-grid {

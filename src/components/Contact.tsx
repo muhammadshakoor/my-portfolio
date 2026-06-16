@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Mail, MapPin, Send, CheckCircle, MessageSquare } from "lucide-react";
-import { FaGithub, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
+import { FaGithub, FaLinkedinIn, FaXTwitter, FaWhatsapp, FaFacebook, FaInstagram, FaThreads } from "react-icons/fa6";
 
 const socials = [
   {
@@ -26,6 +26,38 @@ const socials = [
     icon: FaXTwitter,
     href: "https://twitter.com/Muhamma45190755",
     label: "Twitter",
+    color: "#0D0D0D",
+    bg: "rgba(13,13,13,0.04)",
+    border: "#E8E8E2",
+  },
+  {
+    icon: FaWhatsapp,
+    href: "https://wa.me/923107252754",
+    label: "WhatsApp",
+    color: "#25D366",
+    bg: "rgba(37,211,102,0.08)",
+    border: "rgba(37,211,102,0.22)",
+  },
+  {
+    icon: FaFacebook,
+    href: "https://www.facebook.com/muhammad.shakoor.786",
+    label: "Facebook",
+    color: "#1877F2",
+    bg: "rgba(24,119,242,0.08)",
+    border: "rgba(24,119,242,0.22)",
+  },
+  {
+    icon: FaInstagram,
+    href: "https://www.instagram.com/muhammadshakoor_official",
+    label: "Instagram",
+    color: "#E1306C",
+    bg: "rgba(225,48,108,0.08)",
+    border: "rgba(225,48,108,0.22)",
+  },
+  {
+    icon: FaThreads,
+    href: "https://www.threads.net/@muhammadshakoor_official",
+    label: "Threads",
     color: "#0D0D0D",
     bg: "rgba(13,13,13,0.04)",
     border: "#E8E8E2",
@@ -310,14 +342,25 @@ export default function Contact() {
                     icon: Mail,
                     label: "Email",
                     val: "muhammadshakoor86@gmail.com",
+                    href: "mailto:muhammadshakoor86@gmail.com",
                     color: "#5B3CF5",
                     bg: "rgba(91,60,245,0.08)",
                     border: "rgba(91,60,245,0.18)",
                   },
                   {
+                    icon: FaWhatsapp,
+                    label: "WhatsApp",
+                    val: "+92 310 725 2754",
+                    href: "https://wa.me/923107252754",
+                    color: "#25D366",
+                    bg: "rgba(37,211,102,0.08)",
+                    border: "rgba(37,211,102,0.22)",
+                  },
+                  {
                     icon: MapPin,
                     label: "Location",
                     val: "Islamabad, Pakistan",
+                    href: undefined,
                     color: "#00A882",
                     bg: "rgba(0,168,130,0.08)",
                     border: "rgba(0,168,130,0.18)",
@@ -326,6 +369,7 @@ export default function Contact() {
                     icon: MessageSquare,
                     label: "Response",
                     val: "Within 24 hours",
+                    href: undefined,
                     color: "#e84a2a",
                     bg: "rgba(232,74,42,0.07)",
                     border: "rgba(232,74,42,0.18)",
@@ -369,16 +413,36 @@ export default function Contact() {
                         {c.label}
                       </p>
 
-                      <p
-                        style={{
-                          fontSize: 14,
-                          color: "#0D0D0D",
-                          fontWeight: 500,
-                          wordBreak: "break-word",
-                        }}
-                      >
-                        {c.val}
-                      </p>
+                      {c.href ? (
+                        <a
+                          href={c.href}
+                          target={c.href.startsWith("http") ? "_blank" : undefined}
+                          rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                          style={{
+                            fontSize: 14,
+                            color: "#0D0D0D",
+                            fontWeight: 500,
+                            wordBreak: "break-word",
+                            textDecoration: "none",
+                            transition: "color 0.2s",
+                          }}
+                          onMouseEnter={(e) => { e.currentTarget.style.color = c.color; }}
+                          onMouseLeave={(e) => { e.currentTarget.style.color = "#0D0D0D"; }}
+                        >
+                          {c.val}
+                        </a>
+                      ) : (
+                        <p
+                          style={{
+                            fontSize: 14,
+                            color: "#0D0D0D",
+                            fontWeight: 500,
+                            wordBreak: "break-word",
+                          }}
+                        >
+                          {c.val}
+                        </p>
+                      )}
                     </div>
                   </div>
                 ))}

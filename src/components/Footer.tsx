@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowUp, Heart } from "lucide-react";
-import { FaGithub, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
+import { FaGithub, FaLinkedinIn, FaXTwitter, FaWhatsapp, FaFacebook, FaInstagram, FaThreads } from "react-icons/fa6";
 
 const nav = ["About", "Skills", "Projects", "Experience", "Contact"];
 
@@ -39,6 +39,38 @@ export default function Footer() {
       icon: FaXTwitter,
       href: "https://twitter.com/Muhamma45190755",
       label: "Twitter",
+      color: "#0D0D0D",
+      bg: "rgba(13,13,13,0.04)",
+      border: "#E8E8E2",
+    },
+    {
+      icon: FaWhatsapp,
+      href: "https://wa.me/923107252754",
+      label: "WhatsApp",
+      color: "#25D366",
+      bg: "rgba(37,211,102,0.08)",
+      border: "rgba(37,211,102,0.22)",
+    },
+    {
+      icon: FaFacebook,
+      href: "https://www.facebook.com/muhammad.shakoor.786",
+      label: "Facebook",
+      color: "#1877F2",
+      bg: "rgba(24,119,242,0.08)",
+      border: "rgba(24,119,242,0.22)",
+    },
+    {
+      icon: FaInstagram,
+      href: "https://www.instagram.com/muhammadshakoor_official",
+      label: "Instagram",
+      color: "#E1306C",
+      bg: "rgba(225,48,108,0.08)",
+      border: "rgba(225,48,108,0.22)",
+    },
+    {
+      icon: FaThreads,
+      href: "https://www.threads.net/@muhammadshakoor_official",
+      label: "Threads",
       color: "#0D0D0D",
       bg: "rgba(13,13,13,0.04)",
       border: "#E8E8E2",
