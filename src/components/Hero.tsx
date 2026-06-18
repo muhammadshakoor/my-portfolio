@@ -29,25 +29,25 @@ const socials = [
     icon: FaGithub,
     href: "https://github.com/muhammadshakoor",
     label: "GitHub",
-    color: "#0D0D0D",
-    bg: "rgba(13,13,13,0.04)",
-    border: "#E8E8E2",
+    color: "var(--text-1)",
+    bg: "var(--icon-bw-bg)",
+    border: "var(--icon-bw-border)",
   },
   {
     icon: FaLinkedinIn,
     href: "https://www.linkedin.com/in/muhammad-shakoor-2971a6117/",
     label: "LinkedIn",
-    color: "#5B3CF5",
-    bg: "rgba(91,60,245,0.08)",
-    border: "rgba(91,60,245,0.18)",
+    color: "#818CF8",
+    bg: "rgba(91,60,245,0.12)",
+    border: "rgba(91,60,245,0.25)",
   },
   {
     icon: FaXTwitter,
     href: "https://twitter.com/Muhamma45190755",
     label: "Twitter",
-    color: "#0D0D0D",
-    bg: "rgba(13,13,13,0.04)",
-    border: "#E8E8E2",
+    color: "var(--text-1)",
+    bg: "var(--icon-bw-bg)",
+    border: "var(--icon-bw-border)",
   },
   {
     icon: FaWhatsapp,
@@ -77,9 +77,9 @@ const socials = [
     icon: FaThreads,
     href: "https://www.threads.net/@muhammadshakoor_official",
     label: "Threads",
-    color: "#0D0D0D",
-    bg: "rgba(13,13,13,0.04)",
-    border: "#E8E8E2",
+    color: "var(--text-1)",
+    bg: "var(--icon-bw-bg)",
+    border: "var(--icon-bw-border)",
   },
   {
     icon: Download,
@@ -141,7 +141,7 @@ export default function Hero() {
     <section
       id="hero"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
-      style={{ background: "#FAFAF7" }}
+      style={{ background: "var(--bg-section)" }}
     >
       {/* Top rule */}
       <div
@@ -149,7 +149,7 @@ export default function Hero() {
           position: "absolute",
           top: 0, left: 0, right: 0,
           height: 1,
-          background: "linear-gradient(90deg, transparent, #D8D8D0, transparent)",
+          background: "linear-gradient(90deg, transparent, rgba(0,180,255,0.18), transparent)",
         }}
       />
 
@@ -157,9 +157,9 @@ export default function Hero() {
       <div className="hero-grid pointer-events-none" />
 
       {/* Light orbs */}
-      <div className="hero-orb" style={{ width: 520, height: 520, top: "14%", left: -160, background: "rgba(91,60,245,0.10)" }} />
-      <div className="hero-orb" style={{ width: 380, height: 380, bottom: "16%", right: -90, background: "rgba(0,168,130,0.08)", animationDelay: "3s" }} />
-      <div className="hero-orb" style={{ width: 280, height: 280, top: "50%", left: "50%", transform: "translate(-50%, -50%)", background: "rgba(232,74,42,0.055)", animationDelay: "1.5s" }} />
+      <div className="hero-orb" style={{ width: 520, height: 520, top: "14%", left: -160, background: "rgba(91,60,245,0.18)" }} />
+      <div className="hero-orb" style={{ width: 380, height: 380, bottom: "16%", right: -90, background: "rgba(0,200,255,0.12)", animationDelay: "3s" }} />
+      <div className="hero-orb" style={{ width: 280, height: 280, top: "50%", left: "50%", transform: "translate(-50%, -50%)", background: "rgba(0,168,130,0.08)", animationDelay: "1.5s" }} />
 
       {/* Floating dots */}
       {dots.map((d) => (
@@ -246,12 +246,12 @@ export default function Hero() {
               fontSize: "clamp(2.6rem, 4.6vw, 4.1rem)",
               letterSpacing: "-0.03em",
               marginBottom: "16px",
-              color: "#0D0D0D",
+              color: "var(--text-1)",
             }}
           >
-            <span style={{ color: "#5B3CF5" }}>Muhammad</span>
+            <span style={{ color: "var(--accent-highlight)" }}>Muhammad</span>
             <br />
-            <span style={{ color: "#0D0D0D" }}>Shakoor</span>
+            <span style={{ color: "#E2EDF5" }}>Shakoor</span>
           </motion.h1>
 
           {/* Typewriter */}
@@ -260,7 +260,7 @@ export default function Hero() {
             className="hero-typewriter"
             style={{ height: "52px", display: "flex", alignItems: "center", marginBottom: "28px" }}
           >
-            <span style={{ fontSize: "clamp(1rem, 2.2vw, 1.3rem)", fontWeight: 600, color: "#3A3A3A" }}>
+            <span style={{ fontSize: "clamp(1rem, 2.2vw, 1.3rem)", fontWeight: 600, color: "var(--text-b)" }}>
               {text}
               <span className="cursor-blink" style={{ color: "#5B3CF5", marginLeft: "2px" }}>|</span>
             </span>
@@ -270,7 +270,7 @@ export default function Hero() {
           <motion.p
             {...fadeUp(0.5)}
             style={{
-              color: "#7A7A7A",
+              color: "var(--text-2)",
               fontSize: "clamp(0.9rem, 1.6vw, 1rem)",
               lineHeight: 1.75,
               maxWidth: "500px",
@@ -279,11 +279,11 @@ export default function Hero() {
             }}
           >
             Associate Full Stack Developer &amp; Automation Engineer at{" "}
-            <span style={{ color: "#0D0D0D", fontWeight: 500 }}>Blutech Consulting</span>. Building
+            <span style={{ color: "var(--text-1)", fontWeight: 500 }}>Blutech Consulting</span>. Building
             scalable web applications and enterprise automation with{" "}
-            <span style={{ color: "#5B3CF5", fontWeight: 600 }}>React</span>,{" "}
-            <span style={{ color: "#00A882", fontWeight: 600 }}>Node.js</span>, and{" "}
-            <span style={{ color: "#e84a2a", fontWeight: 600 }}>Power Platform</span>.
+            <span style={{ color: "#818CF8", fontWeight: 600 }}>React</span>,{" "}
+            <span style={{ color: "#2DD4BF", fontWeight: 600 }}>Node.js</span>, and{" "}
+            <span style={{ color: "#FB923C", fontWeight: 600 }}>Power Platform</span>.
           </motion.p>
 
           {/* Buttons */}
@@ -307,8 +307,8 @@ export default function Hero() {
               style={{
                 display: "inline-flex", alignItems: "center", gap: "8px",
                 padding: "13px 22px", borderRadius: 14,
-                background: "#fff", color: "#0D0D0D",
-                border: "1px solid #E8E8E2", fontSize: 14, fontWeight: 600,
+                background: "var(--icon-bw-bg)", color: "var(--text-1)",
+                border: "1px solid var(--icon-bw-border)", fontSize: 14, fontWeight: 600,
                 textDecoration: "none",
               }}
             >
@@ -364,25 +364,26 @@ export default function Hero() {
             style={{
               position: "absolute",
               bottom: -26, left: -24,
-              background: "#fff",
-              border: "1px solid #E8E8E2",
+              background: "var(--badge-bg)",
+              border: "1px solid var(--badge-border)",
               borderRadius: 16,
               padding: "12px 16px",
-              boxShadow: "0 8px 28px rgba(0,0,0,0.09)",
+              boxShadow: "0 8px 28px rgba(0,0,0,0.4)",
               display: "flex", alignItems: "center", gap: 10,
+              backdropFilter: "blur(10px)",
             }}
           >
             <div style={{
               width: 38, height: 38, borderRadius: 10,
-              background: "rgba(91,60,245,0.09)",
+              background: "rgba(91,60,245,0.18)",
               display: "flex", alignItems: "center", justifyContent: "center",
               flexShrink: 0,
             }}>
-              <Briefcase size={16} style={{ color: "#5B3CF5" }} />
+              <Briefcase size={16} style={{ color: "#818CF8" }} />
             </div>
             <div>
-              <div style={{ fontSize: 17, fontWeight: 800, color: "#0D0D0D", lineHeight: 1 }}>3+</div>
-              <div style={{ fontSize: 10, color: "#7A7A7A", fontWeight: 500, marginTop: 2 }}>Years Exp.</div>
+              <div style={{ fontSize: 17, fontWeight: 800, color: "var(--text-1)", lineHeight: 1 }}>3+</div>
+              <div style={{ fontSize: 10, color: "var(--text-2)", fontWeight: 500, marginTop: 2 }}>Years Exp.</div>
             </div>
           </motion.div>
 
@@ -394,25 +395,26 @@ export default function Hero() {
             style={{
               position: "absolute",
               top: -26, right: -24,
-              background: "#fff",
-              border: "1px solid #E8E8E2",
+              background: "var(--badge-bg)",
+              border: "1px solid var(--badge-border)",
               borderRadius: 16,
               padding: "12px 16px",
-              boxShadow: "0 8px 28px rgba(0,0,0,0.09)",
+              boxShadow: "0 8px 28px rgba(0,0,0,0.4)",
               display: "flex", alignItems: "center", gap: 10,
+              backdropFilter: "blur(10px)",
             }}
           >
             <div style={{
               width: 38, height: 38, borderRadius: 10,
-              background: "rgba(0,168,130,0.09)",
+              background: "rgba(0,168,130,0.18)",
               display: "flex", alignItems: "center", justifyContent: "center",
               flexShrink: 0,
             }}>
-              <Code2 size={16} style={{ color: "#00A882" }} />
+              <Code2 size={16} style={{ color: "#2DD4BF" }} />
             </div>
             <div>
-              <div style={{ fontSize: 17, fontWeight: 800, color: "#0D0D0D", lineHeight: 1 }}>8+</div>
-              <div style={{ fontSize: 10, color: "#7A7A7A", fontWeight: 500, marginTop: 2 }}>Projects</div>
+              <div style={{ fontSize: 17, fontWeight: 800, color: "var(--text-1)", lineHeight: 1 }}>8+</div>
+              <div style={{ fontSize: 10, color: "var(--text-2)", fontWeight: 500, marginTop: 2 }}>Projects</div>
             </div>
           </motion.div>
         </motion.div>
@@ -424,11 +426,11 @@ export default function Hero() {
           style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "16px" }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "14px", width: "180px" }}>
-            <div style={{ flex: 1, height: 1, background: "#E8E8E2" }} />
-            <span style={{ fontSize: "9px", color: "#B0B0A8", fontWeight: 500, letterSpacing: "0.14em", textTransform: "uppercase" }}>
+            <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
+            <span style={{ fontSize: "9px", color: "var(--text-3)", fontWeight: 500, letterSpacing: "0.14em", textTransform: "uppercase" }}>
               connect
             </span>
-            <div style={{ flex: 1, height: 1, background: "#E8E8E2" }} />
+            <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
           </div>
 
           <div style={{ display: "flex", gap: 10 }}>
@@ -500,7 +502,7 @@ export default function Hero() {
           transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
           style={{
             display: "flex", flexDirection: "column", alignItems: "center", gap: "5px",
-            color: "#B0B0A8", background: "none", border: "none", cursor: "pointer",
+            color: "var(--text-3)", background: "none", border: "none", cursor: "pointer",
             pointerEvents: "auto",
           }}
         >
@@ -516,8 +518,8 @@ export default function Hero() {
           position: absolute;
           inset: 0;
           background-image:
-            linear-gradient(rgba(13,13,13,0.035) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(13,13,13,0.035) 1px, transparent 1px);
+            linear-gradient(var(--hero-grid) 1px, transparent 1px),
+            linear-gradient(90deg, var(--hero-grid) 1px, transparent 1px);
           background-size: 52px 52px;
           mask-image: radial-gradient(circle at center, black 0%, transparent 72%);
         }

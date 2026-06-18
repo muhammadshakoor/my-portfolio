@@ -82,9 +82,9 @@ const chipStyles = {
     border: "1px solid rgba(0,168,130,0.18)",
   },
   neutral: {
-    background: "rgba(13,13,13,0.05)",
-    color: "#3A3A3A",
-    border: "1px solid #E8E8E2",
+    background: "var(--chip-n-bg)",
+    color: "var(--chip-n-color)",
+    border: "1px solid var(--chip-n-border)",
   },
 };
 
@@ -105,7 +105,7 @@ export default function About() {
       ref={ref}
       style={{
         padding: "96px 0 100px",
-        background: "#FAFAF7",
+        background: "var(--bg-section)",
         position: "relative",
         overflow: "hidden",
       }}
@@ -119,7 +119,7 @@ export default function About() {
           right: 0,
           height: 1,
           background:
-            "linear-gradient(90deg, transparent, #D8D8D0, transparent)",
+            "linear-gradient(90deg, transparent, var(--divider), transparent)",
         }}
       />
 
@@ -163,7 +163,7 @@ export default function About() {
               fontFamily: "var(--font-display), sans-serif",
               fontWeight: 800,
               fontSize: 42,
-              color: "#0D0D0D",
+              color: "var(--text-1)",
               letterSpacing: "-1.5px",
               lineHeight: 1.05,
             }}
@@ -175,7 +175,7 @@ export default function About() {
             style={{
               marginTop: 8,
               fontSize: 15,
-              color: "#7A7A7A",
+              color: "var(--text-2)",
               fontWeight: 300,
             }}
           >
@@ -209,8 +209,8 @@ export default function About() {
             {/* Profile card */}
             <div
               style={{
-                background: "#fff",
-                border: "1px solid #E8E8E2",
+                background: "var(--bg-card)",
+                border: "1px solid var(--border)",
                 borderRadius: 20,
                 padding: "40px 28px",
                 display: "flex",
@@ -244,7 +244,7 @@ export default function About() {
                   fontFamily: "var(--font-display), sans-serif",
                   fontWeight: 700,
                   fontSize: 16,
-                  color: "#0D0D0D",
+                  color: "var(--text-1)",
                   letterSpacing: "-0.3px",
                   marginBottom: 4,
                 }}
@@ -268,7 +268,7 @@ export default function About() {
                 style={{
                   width: "100%",
                   height: 1,
-                  background: "#E8E8E2",
+                  background: "rgba(255,255,255,0.08)",
                   marginBottom: 16,
                 }}
               />
@@ -303,7 +303,7 @@ export default function About() {
                       alignItems: "center",
                       gap: 10,
                       fontSize: 13,
-                      color: "#3A3A3A",
+                      color: "var(--text-b)",
                     }}
                   >
                     <span
@@ -311,13 +311,13 @@ export default function About() {
                         width: 28,
                         height: 28,
                         borderRadius: 7,
-                        background: "#F4F4F0",
-                        border: "1px solid #E8E8E2",
+                        background: "var(--bg-meta)",
+                        border: "1px solid var(--border)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                         flexShrink: 0,
-                        color: "#7A7A7A",
+                        color: "var(--text-2)",
                       }}
                     >
                       {icon}
@@ -378,8 +378,8 @@ export default function About() {
                   animate={inView ? { opacity: 1, scale: 1 } : {}}
                   transition={{ delay: 0.2 + i * 0.07, duration: 0.45 }}
                   style={{
-                    background: "#fff",
-                    border: "1px solid #E8E8E2",
+                    background: "var(--bg-card)",
+                    border: "1px solid var(--border)",
                     borderRadius: 14,
                     padding: "10px 10px",
                     textAlign: "center",
@@ -408,7 +408,7 @@ export default function About() {
                     style={{
                       fontSize: 11,
                       fontWeight: 500,
-                      color: "#7A7A7A",
+                      color: "var(--text-2)",
                       letterSpacing: "0.05em",
                       textTransform: "uppercase",
                     }}
@@ -425,8 +425,8 @@ export default function About() {
           <motion.div
             {...fadeUp(0.2)}
             style={{
-              background: "#fff",
-              border: "1px solid #E8E8E2",
+              background: "var(--bg-card)",
+              border: "1px solid var(--border)",
               borderRadius: 20,
               padding: "36px 36px",
               display: "flex",
@@ -441,7 +441,7 @@ export default function About() {
                   fontFamily: "var(--font-display), sans-serif",
                   fontWeight: 700,
                   fontSize: 22,
-                  color: "#0D0D0D",
+                  color: "var(--text-1)",
                   letterSpacing: "-0.5px",
                   lineHeight: 1.3,
                   marginBottom: 16,
@@ -457,11 +457,11 @@ export default function About() {
               {[
                 <>
                   Currently at{" "}
-                  <strong style={{ color: "#0D0D0D", fontWeight: 500 }}>
+                  <strong style={{ color: "var(--text-1)", fontWeight: 500 }}>
                     Blutech Consulting
                   </strong>
                   , I contribute to enterprise products including the{" "}
-                  <strong style={{ color: "#0D0D0D", fontWeight: 500 }}>
+                  <strong style={{ color: "var(--text-1)", fontWeight: 500 }}>
                     STC Bahrain P&L Forecasting Tool
                   </strong>{" "}
                   — a finance dashboard for Saudi Telecom Company managing
@@ -471,7 +471,7 @@ export default function About() {
                 <>
                   I ship end-to-end web applications — from database schema to
                   polished, responsive UIs — using{" "}
-                  <strong style={{ color: "#0D0D0D", fontWeight: 500 }}>
+                  <strong style={{ color: "var(--text-1)", fontWeight: 500 }}>
                     React, TypeScript, Node.js, PostgreSQL
                   </strong>
                   , and the Microsoft Power Platform. I care about clean code,
@@ -487,7 +487,7 @@ export default function About() {
                   style={{
                     fontSize: 14.5,
                     lineHeight: 1.78,
-                    color: "#7A7A7A",
+                    color: "var(--text-2)",
                     fontWeight: 300,
                     marginTop: i > 0 ? 12 : 0,
                   }}
@@ -498,7 +498,7 @@ export default function About() {
             </div>
 
             {/* Rule */}
-            <div style={{ height: 1, background: "#E8E8E2" }} />
+            <div style={{ height: 1, background: "var(--border)" }} />
 
             {/* Core Stack chips */}
             <div>
@@ -508,7 +508,7 @@ export default function About() {
                   fontWeight: 500,
                   letterSpacing: "0.1em",
                   textTransform: "uppercase",
-                  color: "#B0B0A8",
+                  color: "var(--text-3)",
                   marginBottom: 12,
                 }}
               >
@@ -555,8 +555,8 @@ export default function About() {
                   style={{
                     padding: "14px 16px",
                     borderRadius: 12,
-                    background: "#F4F4F0",
-                    border: "1px solid #E8E8E2",
+                    background: "var(--bg-meta)",
+                    border: "1px solid var(--border)",
                   }}
                 >
                   <p
@@ -565,7 +565,7 @@ export default function About() {
                       fontWeight: 500,
                       letterSpacing: "0.08em",
                       textTransform: "uppercase",
-                      color: "#B0B0A8",
+                      color: "var(--text-3)",
                       marginBottom: 5,
                     }}
                   >
@@ -576,7 +576,7 @@ export default function About() {
                     style={{
                       fontSize: 13,
                       fontWeight: 500,
-                      color: "#0D0D0D",
+                      color: "var(--text-1)",
                     }}
                   >
                     {h.val}
@@ -609,8 +609,8 @@ export default function About() {
                 boxShadow: "0 8px 24px rgba(13,13,13,0.08)",
               }}
               style={{
-                background: "#fff",
-                border: "1px solid #E8E8E2",
+                background: "var(--bg-card)",
+                border: "1px solid var(--border)",
                 borderRadius: 16,
                 padding: "22px 20px",
                 cursor: "default",
@@ -637,7 +637,7 @@ export default function About() {
                   fontFamily: "var(--font-display), sans-serif",
                   fontWeight: 600,
                   fontSize: 13,
-                  color: "#0D0D0D",
+                  color: "var(--text-1)",
                   marginBottom: 6,
                   letterSpacing: "-0.1px",
                 }}
@@ -648,7 +648,7 @@ export default function About() {
               <p
                 style={{
                   fontSize: 11.5,
-                  color: "#7A7A7A",
+                  color: "var(--text-2)",
                   lineHeight: 1.6,
                   fontWeight: 300,
                 }}

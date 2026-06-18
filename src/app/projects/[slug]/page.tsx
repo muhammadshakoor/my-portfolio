@@ -89,7 +89,7 @@ export default async function ProjectPage({
   return (
     <main
       id="main"
-      style={{ background: "#FAFAF7", minHeight: "100vh", position: "relative" }}
+      style={{ background: "var(--bg-section)", minHeight: "100vh", position: "relative" }}
     >
       <script
         type="application/ld+json"
@@ -114,12 +114,12 @@ export default async function ProjectPage({
             gap: 7,
             fontSize: 13,
             fontWeight: 500,
-            color: "#7A7A7A",
+            color: "var(--text-2)",
             textDecoration: "none",
             padding: "8px 14px",
             borderRadius: 10,
-            background: "#fff",
-            border: "1px solid #E8E8E2",
+            background: "var(--bg-card)",
+            border: "1px solid var(--border)",
             marginBottom: 40,
           }}
         >
@@ -162,7 +162,7 @@ export default async function ProjectPage({
               fontFamily: "var(--font-display), sans-serif",
               fontWeight: 700,
               fontSize: "clamp(2rem, 5vw, 3rem)",
-              color: "#0D0D0D",
+              color: "var(--text-1)",
               letterSpacing: "-1px",
               lineHeight: 1.1,
               marginBottom: 10,
@@ -171,7 +171,7 @@ export default async function ProjectPage({
             {project.title}
           </h1>
 
-          <p style={{ fontSize: 17, color: "#7A7A7A", fontWeight: 300 }}>
+          <p style={{ fontSize: 17, color: "var(--text-2)", fontWeight: 300 }}>
             {project.sub}
           </p>
         </header>
@@ -182,9 +182,9 @@ export default async function ProjectPage({
             borderRadius: 20,
             overflow: "hidden",
             border: `1px solid ${project.border}`,
-            background: `linear-gradient(135deg, ${project.bg}, #FAFAF7)`,
+            background: `linear-gradient(135deg, ${project.color}18, var(--bg-section, transparent))`,
             marginBottom: 36,
-            boxShadow: "0 16px 48px rgba(13,13,13,0.06)",
+            boxShadow: "var(--shadow-sm)",
           }}
         >
           <div
@@ -193,7 +193,7 @@ export default async function ProjectPage({
               alignItems: "center",
               gap: 8,
               padding: "10px 16px",
-              background: "rgba(255,255,255,0.72)",
+              background: "var(--badge-bg)",
               borderBottom: `1px solid ${project.border}`,
             }}
           >
@@ -212,10 +212,10 @@ export default async function ProjectPage({
                 margin: "0 auto",
                 padding: "4px 14px",
                 borderRadius: 999,
-                background: "rgba(13,13,13,0.05)",
-                border: "1px solid rgba(13,13,13,0.06)",
+                background: "var(--bg-input)",
+                border: "1px solid var(--border)",
                 fontSize: 11,
-                color: "#7A7A7A",
+                color: "var(--text-2)",
                 textAlign: "center",
                 fontFamily: "monospace",
               }}
@@ -261,8 +261,8 @@ export default async function ProjectPage({
               style={{
                 padding: "14px 16px",
                 borderRadius: 14,
-                background: "#fff",
-                border: "1px solid #E8E8E2",
+                background: "var(--bg-card)",
+                border: "1px solid var(--border)",
               }}
             >
               <p
@@ -271,13 +271,13 @@ export default async function ProjectPage({
                   fontWeight: 600,
                   letterSpacing: "0.1em",
                   textTransform: "uppercase",
-                  color: "#B0B0A8",
+                  color: "var(--text-3)",
                   marginBottom: 5,
                 }}
               >
                 {m.label}
               </p>
-              <p style={{ fontSize: 13.5, fontWeight: 500, color: "#0D0D0D" }}>
+              <p style={{ fontSize: 13.5, fontWeight: 500, color: "var(--text-1)" }}>
                 {m.value}
               </p>
             </div>
@@ -291,7 +291,7 @@ export default async function ProjectPage({
               fontFamily: "var(--font-display), sans-serif",
               fontWeight: 700,
               fontSize: 24,
-              color: "#0D0D0D",
+              color: "var(--text-1)",
               letterSpacing: "-0.5px",
               marginBottom: 16,
             }}
@@ -304,7 +304,7 @@ export default async function ProjectPage({
               style={{
                 fontSize: 15,
                 lineHeight: 1.8,
-                color: "#5A5A5A",
+                color: "var(--text-b)",
                 fontWeight: 300,
                 marginTop: i > 0 ? 14 : 0,
               }}
@@ -321,12 +321,12 @@ export default async function ProjectPage({
               fontFamily: "var(--font-display), sans-serif",
               fontWeight: 700,
               fontSize: 24,
-              color: "#0D0D0D",
+              color: "var(--text-1)",
               letterSpacing: "-0.5px",
               marginBottom: 18,
             }}
           >
-            Challenges & Solutions
+            Challenges &amp; Solutions
           </h2>
 
           <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
@@ -336,8 +336,8 @@ export default async function ProjectPage({
                 style={{
                   padding: "20px 22px",
                   borderRadius: 16,
-                  background: "#fff",
-                  border: "1px solid #E8E8E2",
+                  background: "var(--bg-card)",
+                  border: "1px solid var(--border)",
                 }}
               >
                 <p
@@ -347,7 +347,7 @@ export default async function ProjectPage({
                     gap: 10,
                     fontSize: 15,
                     fontWeight: 600,
-                    color: "#0D0D0D",
+                    color: "var(--text-1)",
                     marginBottom: 8,
                   }}
                 >
@@ -375,7 +375,7 @@ export default async function ProjectPage({
                   style={{
                     fontSize: 14,
                     lineHeight: 1.75,
-                    color: "#7A7A7A",
+                    color: "var(--text-2)",
                     fontWeight: 300,
                   }}
                 >
@@ -393,7 +393,7 @@ export default async function ProjectPage({
               fontFamily: "var(--font-display), sans-serif",
               fontWeight: 700,
               fontSize: 24,
-              color: "#0D0D0D",
+              color: "var(--text-1)",
               letterSpacing: "-0.5px",
               marginBottom: 16,
             }}
@@ -410,7 +410,7 @@ export default async function ProjectPage({
                   alignItems: "flex-start",
                   gap: 10,
                   fontSize: 14.5,
-                  color: "#3A3A3A",
+                  color: "var(--text-b)",
                   lineHeight: 1.6,
                 }}
               >
@@ -431,7 +431,7 @@ export default async function ProjectPage({
               fontFamily: "var(--font-display), sans-serif",
               fontWeight: 700,
               fontSize: 24,
-              color: "#0D0D0D",
+              color: "var(--text-1)",
               letterSpacing: "-0.5px",
               marginBottom: 16,
             }}
@@ -466,7 +466,7 @@ export default async function ProjectPage({
             flexWrap: "wrap",
             gap: 12,
             paddingTop: 28,
-            borderTop: "1px solid #E8E8E2",
+            borderTop: "1px solid var(--border)",
           }}
         >
           <a
@@ -479,8 +479,8 @@ export default async function ProjectPage({
               gap: 8,
               padding: "12px 20px",
               borderRadius: 14,
-              background: "#0D0D0D",
-              color: "#fff",
+              background: "var(--text-1)",
+              color: "var(--btn-solid-fg)",
               fontSize: 14,
               fontWeight: 600,
               textDecoration: "none",
@@ -501,9 +501,9 @@ export default async function ProjectPage({
                 gap: 8,
                 padding: "12px 20px",
                 borderRadius: 14,
-                background: "#fff",
-                color: "#0D0D0D",
-                border: "1px solid #E8E8E2",
+                background: "var(--bg-card)",
+                color: "var(--text-1)",
+                border: "1px solid var(--border)",
                 fontSize: 14,
                 fontWeight: 600,
                 textDecoration: "none",

@@ -55,7 +55,7 @@ function BrowserFrame({ p, emojiSize }: { p: Project; emojiSize: number }) {
           alignItems: "center",
           gap: 8,
           padding: "8px 12px",
-          background: "rgba(255,255,255,0.72)",
+          background: "var(--badge-bg)",
           borderBottom: `1px solid ${p.border}`,
           flexShrink: 0,
         }}
@@ -75,10 +75,10 @@ function BrowserFrame({ p, emojiSize }: { p: Project; emojiSize: number }) {
             margin: "0 auto",
             padding: "3px 12px",
             borderRadius: 999,
-            background: "rgba(13,13,13,0.05)",
-            border: "1px solid rgba(13,13,13,0.06)",
+            background: "var(--bg-input)",
+            border: "1px solid var(--border)",
             fontSize: 9.5,
-            color: "#7A7A7A",
+            color: "var(--text-2)",
             textAlign: "center",
             whiteSpace: "nowrap",
             overflow: "hidden",
@@ -127,7 +127,7 @@ function CardLinks({ p, small }: { p: Project; small?: boolean }) {
         display: "flex",
         alignItems: "center",
         gap: small ? 15 : 18,
-        borderTop: "1px solid #E8E8E2",
+        borderTop: "1px solid var(--border)",
         paddingTop: small ? 14 : 18,
         flexWrap: "wrap",
       }}
@@ -158,15 +158,15 @@ function CardLinks({ p, small }: { p: Project; small?: boolean }) {
           alignItems: "center",
           gap: small ? 5 : 6,
           fontSize,
-          color: "#7A7A7A",
+          color: "var(--text-2)",
           fontWeight: 500,
           textDecoration: "none",
         }}
         onMouseEnter={(e) => {
-          e.currentTarget.style.color = "#0D0D0D";
+          e.currentTarget.style.color = "var(--text-1)";
         }}
         onMouseLeave={(e) => {
-          e.currentTarget.style.color = "#7A7A7A";
+          e.currentTarget.style.color = "var(--text-2)";
         }}
       >
         <FaGithub size={iconSize} />
@@ -193,13 +193,13 @@ function FeaturedCard({ p, index }: { p: Project; index: number }) {
         alignItems: "center",
         padding: 28,
         borderRadius: 20,
-        background: "#fff",
-        border: "1px solid #E8E8E2",
-        boxShadow: "0 8px 28px rgba(13,13,13,0.035)",
+        background: "var(--bg-card)",
+        border: "1px solid var(--border)",
+        boxShadow: "0 8px 28px rgba(0,0,0,0.2)",
       }}
       whileHover={{
         y: -3,
-        boxShadow: "0 14px 36px rgba(13,13,13,0.075)",
+        boxShadow: "0 14px 36px rgba(0,0,0,0.4)",
       }}
     >
       {/* Visual */}
@@ -210,7 +210,7 @@ function FeaturedCard({ p, index }: { p: Project; index: number }) {
           borderRadius: 16,
           overflow: "hidden",
           aspectRatio: "16/10",
-          background: `linear-gradient(135deg, ${p.bg}, #FAFAF7)`,
+          background: `linear-gradient(135deg, ${p.color}22, var(--bg-section, transparent))`,
           border: `1px solid ${p.border}`,
           position: "relative",
         }}
@@ -262,7 +262,7 @@ function FeaturedCard({ p, index }: { p: Project; index: number }) {
             fontFamily: "var(--font-display), sans-serif",
             fontSize: 24,
             fontWeight: 700,
-            color: "#0D0D0D",
+            color: "var(--text-1)",
             marginBottom: 5,
             letterSpacing: "-0.5px",
             lineHeight: 1.2,
@@ -274,7 +274,7 @@ function FeaturedCard({ p, index }: { p: Project; index: number }) {
         <p
           style={{
             fontSize: 13,
-            color: "#7A7A7A",
+            color: "var(--text-2)",
             marginBottom: 14,
           }}
         >
@@ -284,7 +284,7 @@ function FeaturedCard({ p, index }: { p: Project; index: number }) {
         <p
           style={{
             fontSize: 14,
-            color: "#7A7A7A",
+            color: "var(--text-2)",
             lineHeight: 1.75,
             marginBottom: 20,
             fontWeight: 300,
@@ -322,26 +322,26 @@ function GridCard({ p, i }: { p: Project; i: number }) {
       transition={{ duration: 0.3, delay: i * 0.04 }}
       whileHover={{
         y: -5,
-        boxShadow: "0 12px 30px rgba(13,13,13,0.08)",
+        boxShadow: "0 12px 30px rgba(0,0,0,0.35)",
       }}
       style={{
         display: "flex",
         flexDirection: "column",
         borderRadius: 18,
         overflow: "hidden",
-        background: "#fff",
-        border: "1px solid #E8E8E2",
-        boxShadow: "0 8px 26px rgba(13,13,13,0.035)",
+        background: "var(--bg-card)",
+        border: "1px solid var(--border)",
+        boxShadow: "0 8px 26px rgba(0,0,0,0.2)",
       }}
     >
       {/* Thumbnail */}
       <div
         style={{
           height: 148,
-          background: `linear-gradient(135deg, ${p.bg}, #FAFAF7)`,
+          background: `linear-gradient(135deg, ${p.color}22, var(--bg-section, transparent))`,
           position: "relative",
           overflow: "hidden",
-          borderBottom: "1px solid #E8E8E2",
+          borderBottom: "1px solid var(--border)",
         }}
       >
         <BrowserFrame p={p} emojiSize={42} />
@@ -373,7 +373,7 @@ function GridCard({ p, i }: { p: Project; i: number }) {
             fontFamily: "var(--font-display), sans-serif",
             fontSize: 16,
             fontWeight: 700,
-            color: "#0D0D0D",
+            color: "var(--text-1)",
             marginBottom: 4,
             letterSpacing: "-0.2px",
           }}
@@ -384,7 +384,7 @@ function GridCard({ p, i }: { p: Project; i: number }) {
         <p
           style={{
             fontSize: 12,
-            color: "#7A7A7A",
+            color: "var(--text-2)",
             marginBottom: 10,
           }}
         >
@@ -394,7 +394,7 @@ function GridCard({ p, i }: { p: Project; i: number }) {
         <p
           style={{
             fontSize: 12.5,
-            color: "#7A7A7A",
+            color: "var(--text-2)",
             lineHeight: 1.65,
             flex: 1,
             marginBottom: 14,
@@ -450,7 +450,7 @@ export default function Projects() {
       ref={ref}
       style={{
         padding: "96px 0 100px",
-        background: "#FAFAF7",
+        background: "var(--bg-section)",
         position: "relative",
         overflow: "hidden",
       }}
@@ -464,7 +464,7 @@ export default function Projects() {
           right: 0,
           height: 1,
           background:
-            "linear-gradient(90deg, transparent, #D8D8D0, transparent)",
+            "linear-gradient(90deg, transparent, var(--divider), transparent)",
         }}
       />
 
@@ -525,7 +525,7 @@ export default function Projects() {
               fontFamily: "var(--font-display), sans-serif",
               fontWeight: 700,
               fontSize: "clamp(2.4rem, 5vw, 3.2rem)",
-              color: "#0D0D0D",
+              color: "var(--text-1)",
               letterSpacing: "-1.5px",
               lineHeight: 1.05,
               marginBottom: 10,
@@ -539,7 +539,7 @@ export default function Projects() {
               maxWidth: 520,
               fontSize: 15,
               lineHeight: 1.7,
-              color: "#7A7A7A",
+              color: "var(--text-2)",
               fontWeight: 300,
             }}
           >
@@ -573,11 +573,11 @@ export default function Projects() {
                   borderRadius: "999px",
                   cursor: "pointer",
                   transition: "all 0.2s",
-                  background: isActive ? "#5B3CF5" : "#fff",
-                  color: isActive ? "#fff" : "#7A7A7A",
+                  background: isActive ? "#5B3CF5" : "var(--bg-meta)",
+                  color: isActive ? "#fff" : "var(--text-2)",
                   border: isActive
                     ? "1px solid #5B3CF5"
-                    : "1px solid #E8E8E2",
+                    : "1px solid var(--border)",
                   boxShadow: isActive
                     ? "0 8px 20px rgba(91,60,245,0.22)"
                     : "none",
@@ -620,7 +620,7 @@ export default function Projects() {
                     fontWeight: 500,
                     letterSpacing: "0.1em",
                     textTransform: "uppercase",
-                    color: "#B0B0A8",
+                    color: "var(--text-3)",
                     marginBottom: 16,
                   }}
                 >
@@ -662,7 +662,7 @@ export default function Projects() {
               {filteredAll.length === 0 && (
                 <p
                   style={{
-                    color: "#7A7A7A",
+                    color: "var(--text-2)",
                     textAlign: "center",
                     gridColumn: "1/-1",
                     padding: "40px 0",
@@ -693,13 +693,13 @@ export default function Projects() {
               gap: 8,
               padding: "12px 20px",
               borderRadius: 14,
-              background: "#fff",
-              color: "#0D0D0D",
-              border: "1px solid #E8E8E2",
+              background: "var(--bg-card)",
+              color: "var(--text-1)",
+              border: "1px solid var(--border)",
               fontSize: 14,
               fontWeight: 600,
               textDecoration: "none",
-              boxShadow: "0 8px 24px rgba(13,13,13,0.04)",
+              boxShadow: "var(--shadow-sm)",
             }}
           >
             <FaGithub size={15} />
@@ -718,7 +718,7 @@ export default function Projects() {
           right: 0,
           height: 1,
           background:
-            "linear-gradient(90deg, transparent, #D8D8D0, transparent)",
+            "linear-gradient(90deg, transparent, var(--divider), transparent)",
         }}
       />
 

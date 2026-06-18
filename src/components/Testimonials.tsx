@@ -54,7 +54,7 @@ export default function Testimonials() {
       ref={ref}
       style={{
         padding: "96px 0 100px",
-        background: "#FAFAF7",
+        background: "var(--bg-section)",
         position: "relative",
         overflow: "hidden",
       }}
@@ -67,7 +67,7 @@ export default function Testimonials() {
           left: 0,
           right: 0,
           height: 1,
-          background: "linear-gradient(90deg, transparent, #D8D8D0, transparent)",
+          background: "linear-gradient(90deg, transparent, var(--divider), transparent)",
         }}
       />
 
@@ -128,7 +128,7 @@ export default function Testimonials() {
               fontFamily: "var(--font-display), sans-serif",
               fontWeight: 700,
               fontSize: "clamp(2.4rem, 5vw, 3.2rem)",
-              color: "#0D0D0D",
+              color: "var(--text-1)",
               letterSpacing: "-1.5px",
               lineHeight: 1.05,
               marginBottom: 10,
@@ -142,7 +142,7 @@ export default function Testimonials() {
               maxWidth: 520,
               fontSize: 15,
               lineHeight: 1.7,
-              color: "#7A7A7A",
+              color: "var(--text-2)",
               fontWeight: 300,
             }}
           >
@@ -164,15 +164,15 @@ export default function Testimonials() {
             <motion.figure
               key={t.name + t.role}
               {...fadeUp(0.12 + i * 0.1)}
-              whileHover={{ y: -4, boxShadow: "0 14px 36px rgba(13,13,13,0.075)" }}
+              whileHover={{ y: -4, boxShadow: "var(--shadow-md)" }}
               style={{
                 display: "flex",
                 flexDirection: "column",
                 padding: "26px 24px",
                 borderRadius: 20,
-                background: "#fff",
-                border: "1px solid #E8E8E2",
-                boxShadow: "0 8px 28px rgba(13,13,13,0.035)",
+                background: "var(--bg-card)",
+                border: "1px solid var(--border)",
+                boxShadow: "var(--shadow-sm)",
               }}
             >
               <div
@@ -195,7 +195,7 @@ export default function Testimonials() {
                 style={{
                   fontSize: 14,
                   lineHeight: 1.75,
-                  color: "#5A5A5A",
+                  color: "var(--text-b)",
                   fontWeight: 300,
                   flex: 1,
                   marginBottom: 20,
@@ -206,14 +206,14 @@ export default function Testimonials() {
 
               <figcaption
                 style={{
-                  borderTop: "1px solid #E8E8E2",
+                  borderTop: "1px solid var(--border)",
                   paddingTop: 14,
                 }}
               >
-                <p style={{ fontSize: 13.5, fontWeight: 600, color: "#0D0D0D" }}>
+                <p style={{ fontSize: 13.5, fontWeight: 600, color: "var(--text-1)" }}>
                   {t.name}
                 </p>
-                <p style={{ fontSize: 12, color: "#7A7A7A", marginTop: 2 }}>
+                <p style={{ fontSize: 12, color: "var(--text-2)", marginTop: 2 }}>
                   {t.role}
                 </p>
               </figcaption>
@@ -230,7 +230,7 @@ export default function Testimonials() {
           left: 0,
           right: 0,
           height: 1,
-          background: "linear-gradient(90deg, transparent, #D8D8D0, transparent)",
+          background: "linear-gradient(90deg, transparent, var(--divider), transparent)",
         }}
       />
 

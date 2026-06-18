@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
+import { useTheme } from "@/context/ThemeContext";
 
 const links = [
   { label: "About", href: "#about" },
@@ -17,6 +18,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("");
   const [open, setOpen] = useState(false);
+  const { theme, toggle } = useTheme();
 
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 28, restDelta: 0.001 });
@@ -25,7 +27,6 @@ export default function Navbar() {
     const onScroll = () => {
       setScrolled(window.scrollY > 60);
 
-      // Scroll spy — find which section's top is closest above the navbar
       const navHeight = 90;
       let current = "";
       for (const { href } of links) {
@@ -43,7 +44,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close panel when clicking outside
   useEffect(() => {
     if (!open) return;
     const handleClick = (e: MouseEvent) => {
@@ -74,13 +74,14 @@ export default function Navbar() {
       className="fixed top-0 left-0 right-0 z-50"
       style={{
         width: "100%",
-        background: scrolled ? "rgba(250,250,247,0.92)" : "rgba(250,250,247,0.75)",
+        background: scrolled ? "var(--nav-bg-scroll)" : "var(--nav-bg-top)",
         backdropFilter: "blur(20px) saturate(1.4)",
         WebkitBackdropFilter: "blur(20px) saturate(1.4)",
         borderBottom: scrolled
-          ? "1px solid rgba(91,60,245,0.16)"
-          : "1px solid rgba(13,13,13,0.06)",
-        boxShadow: scrolled ? "0 6px 24px rgba(13,13,13,0.06)" : "none",
+          ? "1px solid var(--nav-border)"
+          : "1px solid var(--nav-border-top)",
+        boxShadow: scrolled ? "var(--nav-shadow)" : "none",
+        transition: "background 0.3s ease, border-color 0.3s ease",
       }}
     >
       {/* Main navbar */}
@@ -141,7 +142,7 @@ export default function Navbar() {
                     minHeight: 32,
                     padding: "7px 13px",
                     fontSize: 13,
-                    color: isActive ? "#5B3CF5" : "#5A5A5A",
+                    color: isActive ? "var(--nav-active)" : "var(--nav-link)",
                     fontWeight: isActive ? 600 : 500,
                     letterSpacing: "0.01em",
                     background: "transparent",
@@ -152,13 +153,13 @@ export default function Navbar() {
                   }}
                   onMouseEnter={(e) => {
                     if (!isActive) {
-                      e.currentTarget.style.color = "#0D0D0D";
-                      e.currentTarget.style.background = "rgba(13,13,13,0.05)";
+                      e.currentTarget.style.color = "var(--nav-link-hover)";
+                      e.currentTarget.style.background = "var(--nav-link-hover-bg)";
                     }
                   }}
                   onMouseLeave={(e) => {
                     if (!isActive) {
-                      e.currentTarget.style.color = "#5A5A5A";
+                      e.currentTarget.style.color = "var(--nav-link)";
                       e.currentTarget.style.background = "transparent";
                     }
                   }}
@@ -169,8 +170,8 @@ export default function Navbar() {
                       className="absolute rounded-xl"
                       style={{
                         inset: 0,
-                        background: "rgba(91,60,245,0.09)",
-                        border: "1px solid rgba(91,60,245,0.2)",
+                        background: "var(--nav-active-bg)",
+                        border: "1px solid var(--nav-active-border)",
                       }}
                       transition={{ type: "spring", stiffness: 350, damping: 30 }}
                     />
@@ -189,11 +190,35 @@ export default function Navbar() {
             style={{
               width: 1,
               height: 24,
-              background: "linear-gradient(180deg, transparent, rgba(13,13,13,0.14), transparent)",
+              background: "linear-gradient(180deg, transparent, var(--border), transparent)",
               marginLeft: 4,
               marginRight: 4,
             }}
           />
+
+          {/* Theme toggle */}
+          <motion.button
+            onClick={toggle}
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.92 }}
+            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+            style={{
+              width: 36,
+              height: 36,
+              borderRadius: 11,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              background: "var(--toggle-bg)",
+              border: "1px solid var(--toggle-border)",
+              color: "var(--toggle-color)",
+              cursor: "pointer",
+              flexShrink: 0,
+              transition: "background 0.2s, border-color 0.2s",
+            }}
+          >
+            {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+          </motion.button>
 
           {/* Hire Me */}
           <motion.button
@@ -219,25 +244,48 @@ export default function Navbar() {
           </motion.button>
         </div>
 
-        {/* Mobile toggle */}
-        <button
-          id="mobile-menu-toggle"
-          className="md:hidden rounded-xl transition-colors"
-          style={{
-            padding: "7px 9px",
-            background: "#fff",
-            color: "#0D0D0D",
-            border: "1px solid #E8E8E2",
-            cursor: "pointer",
-            boxShadow: "0 4px 14px rgba(13,13,13,0.05)",
-          }}
-          onClick={() => setOpen(!open)}
-          aria-label="Toggle menu"
-          aria-expanded={open}
-          aria-controls="mobile-menu-panel"
-        >
-          {open ? <X size={18} /> : <Menu size={18} />}
-        </button>
+        {/* Mobile right side: theme toggle + hamburger */}
+        <div className="flex md:hidden" style={{ alignItems: "center", gap: 8 }}>
+          <motion.button
+            onClick={toggle}
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.92 }}
+            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+            style={{
+              width: 34,
+              height: 34,
+              borderRadius: 10,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              background: "var(--toggle-bg)",
+              border: "1px solid var(--toggle-border)",
+              color: "var(--toggle-color)",
+              cursor: "pointer",
+            }}
+          >
+            {theme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
+          </motion.button>
+
+          <button
+            id="mobile-menu-toggle"
+            className="rounded-xl transition-colors"
+            style={{
+              padding: "7px 9px",
+              background: "var(--toggle-bg)",
+              color: "var(--text-1)",
+              border: "1px solid var(--toggle-border)",
+              cursor: "pointer",
+              boxShadow: "0 4px 14px rgba(0,0,0,0.2)",
+            }}
+            onClick={() => setOpen(!open)}
+            aria-label="Toggle menu"
+            aria-expanded={open}
+            aria-controls="mobile-menu-panel"
+          >
+            {open ? <X size={18} /> : <Menu size={18} />}
+          </button>
+        </div>
       </div>
 
       {/* Scroll progress bar */}
@@ -271,11 +319,11 @@ export default function Navbar() {
               width: 210,
               borderRadius: 18,
               padding: 10,
-              background: "rgba(255,255,255,0.98)",
+              background: "var(--menu-bg)",
               backdropFilter: "blur(24px)",
               WebkitBackdropFilter: "blur(24px)",
-              border: "1px solid #E8E8E2",
-              boxShadow: "0 16px 48px rgba(13,13,13,0.14)",
+              border: "1px solid var(--menu-border)",
+              boxShadow: "0 16px 48px rgba(0,0,0,0.4)",
             }}
           >
             {links.map((l) => {
@@ -287,24 +335,24 @@ export default function Navbar() {
                   className="w-full text-left rounded-xl text-sm font-medium transition-colors duration-150"
                   style={{
                     padding: "12px 16px",
-                    color: isActive ? "#5B3CF5" : "#3A3A3A",
-                    background: isActive ? "rgba(91,60,245,0.08)" : "transparent",
+                    color: isActive ? "var(--nav-active)" : "var(--nav-link)",
+                    background: isActive ? "var(--nav-active-bg)" : "transparent",
                     border: isActive
-                      ? "1px solid rgba(91,60,245,0.18)"
+                      ? "1px solid var(--nav-active-border)"
                       : "1px solid transparent",
                     cursor: "pointer",
                     transition: "background 0.15s, color 0.15s",
                   }}
                   onMouseEnter={(e) => {
                     if (!isActive) {
-                      e.currentTarget.style.background = "rgba(13,13,13,0.05)";
-                      e.currentTarget.style.color = "#0D0D0D";
+                      e.currentTarget.style.background = "var(--nav-link-hover-bg)";
+                      e.currentTarget.style.color = "var(--nav-link-hover)";
                     }
                   }}
                   onMouseLeave={(e) => {
                     if (!isActive) {
                       e.currentTarget.style.background = "transparent";
-                      e.currentTarget.style.color = "#3A3A3A";
+                      e.currentTarget.style.color = "var(--nav-link)";
                     }
                   }}
                 >
@@ -313,7 +361,7 @@ export default function Navbar() {
               );
             })}
 
-            <div className="mt-2 pt-2" style={{ borderTop: "1px solid #E8E8E2" }}>
+            <div className="mt-2 pt-2" style={{ borderTop: "1px solid var(--menu-divider)" }}>
               <button
                 onClick={() => go("#contact")}
                 className="w-full text-sm"

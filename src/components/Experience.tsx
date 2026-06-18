@@ -87,7 +87,7 @@ export default function Experience() {
       ref={ref}
       style={{
         padding: "96px 0 100px",
-        background: "#FAFAF7",
+        background: "transparent",
         position: "relative",
         overflow: "hidden",
       }}
@@ -101,7 +101,7 @@ export default function Experience() {
           right: 0,
           height: 1,
           background:
-            "linear-gradient(90deg, transparent, #D8D8D0, transparent)",
+            "linear-gradient(90deg, transparent, var(--divider), transparent)",
         }}
       />
 
@@ -175,7 +175,7 @@ export default function Experience() {
               fontFamily: "var(--font-display), sans-serif",
               fontWeight: 800,
               fontSize: "clamp(2.4rem, 5vw, 3.2rem)",
-              color: "#0D0D0D",
+              color: "var(--text-1)",
               letterSpacing: "-1.5px",
               lineHeight: 1.05,
               marginBottom: 10,
@@ -190,7 +190,7 @@ export default function Experience() {
               maxWidth: 520,
               fontSize: 15,
               lineHeight: 1.7,
-              color: "#7A7A7A",
+              color: "var(--text-2)",
               fontWeight: 300,
             }}
           >
@@ -218,7 +218,7 @@ export default function Experience() {
               bottom: 16,
               left: 22,
               width: 1,
-              background: "#E8E8E2",
+              background: "var(--timeline-line)",
             }}
           />
 
@@ -252,9 +252,9 @@ export default function Experience() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    background: "#fff",
+                    background: "var(--bg-card)",
                     border: `1px solid ${it.border}`,
-                    boxShadow: "0 8px 24px rgba(13,13,13,0.06)",
+                    boxShadow: "0 8px 24px rgba(0,0,0,0.3)",
                     color: it.accent,
                   }}
                 >
@@ -273,8 +273,8 @@ export default function Experience() {
                   boxShadow: "0 14px 36px rgba(13,13,13,0.075)",
                 }}
                 style={{
-                  background: "#fff",
-                  border: "1px solid #E8E8E2",
+                  background: "var(--bg-card)",
+                  border: "1px solid var(--border)",
                   borderRadius: 20,
                   padding: "26px 28px",
                   boxShadow: "0 8px 28px rgba(13,13,13,0.035)",
@@ -362,7 +362,7 @@ export default function Experience() {
                         fontFamily: "var(--font-display), sans-serif",
                         fontSize: 20,
                         fontWeight: 700,
-                        color: "#0D0D0D",
+                        color: "var(--text-1)",
                         letterSpacing: "-0.4px",
                         lineHeight: 1.28,
                         marginBottom: 5,
@@ -393,7 +393,7 @@ export default function Experience() {
                       style={{
                         fontSize: 12,
                         fontWeight: 600,
-                        color: "#0D0D0D",
+                        color: "var(--text-1)",
                         marginBottom: 4,
                       }}
                     >
@@ -402,7 +402,7 @@ export default function Experience() {
                     <p
                       style={{
                         fontSize: 12,
-                        color: "#7A7A7A",
+                        color: "var(--text-2)",
                       }}
                     >
                       {it.location}
@@ -413,7 +413,7 @@ export default function Experience() {
                 <p
                   style={{
                     fontSize: 14,
-                    color: "#7A7A7A",
+                    color: "var(--text-2)",
                     lineHeight: 1.75,
                     fontWeight: 300,
                     marginBottom: 18,
@@ -495,7 +495,7 @@ export default function Experience() {
           right: 0,
           height: 1,
           background:
-            "linear-gradient(90deg, transparent, #D8D8D0, transparent)",
+            "linear-gradient(90deg, transparent, var(--divider), transparent)",
         }}
       />
 

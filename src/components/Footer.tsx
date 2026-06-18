@@ -23,9 +23,9 @@ export default function Footer() {
       icon: FaGithub,
       href: "https://github.com/muhammadshakoor",
       label: "GitHub",
-      color: "#0D0D0D",
-      bg: "rgba(13,13,13,0.04)",
-      border: "#E8E8E2",
+      color: "var(--icon-bw)",
+      bg: "var(--icon-bw-bg)",
+      border: "var(--icon-bw-border)",
     },
     {
       icon: FaLinkedinIn,
@@ -39,9 +39,9 @@ export default function Footer() {
       icon: FaXTwitter,
       href: "https://twitter.com/Muhamma45190755",
       label: "Twitter",
-      color: "#0D0D0D",
-      bg: "rgba(13,13,13,0.04)",
-      border: "#E8E8E2",
+      color: "var(--icon-bw)",
+      bg: "var(--icon-bw-bg)",
+      border: "var(--icon-bw-border)",
     },
     {
       icon: FaWhatsapp,
@@ -71,17 +71,17 @@ export default function Footer() {
       icon: FaThreads,
       href: "https://www.threads.net/@muhammadshakoor_official",
       label: "Threads",
-      color: "#0D0D0D",
-      bg: "rgba(13,13,13,0.04)",
-      border: "#E8E8E2",
+      color: "var(--icon-bw)",
+      bg: "var(--icon-bw-bg)",
+      border: "var(--icon-bw-border)",
     },
   ];
 
   return (
     <footer
       style={{
-        background: "#FAFAF7",
-        borderTop: "1px solid #E8E8E2",
+        background: "var(--footer-bg)",
+        borderTop: "1px solid var(--footer-border)",
         position: "relative",
       }}
     >
@@ -94,7 +94,7 @@ export default function Footer() {
           right: 0,
           height: 1,
           background:
-            "linear-gradient(90deg, transparent, #D8D8D0, transparent)",
+            "linear-gradient(90deg, transparent, var(--divider), transparent)",
         }}
       />
 
@@ -148,7 +148,7 @@ export default function Footer() {
                 style={{
                   fontSize: 13,
                   fontWeight: 500,
-                  color: "#7A7A7A",
+                  color: "var(--text-2)",
                   background: "transparent",
                   border: "none",
                   cursor: "pointer",
@@ -233,7 +233,7 @@ export default function Footer() {
           style={{
             margin: "28px 0 18px",
             height: 1,
-            background: "#E8E8E2",
+            background: "var(--border)",
           }}
         />
 
@@ -246,7 +246,7 @@ export default function Footer() {
             justifyContent: "space-between",
             gap: 16,
             fontSize: 12,
-            color: "#7A7A7A",
+            color: "var(--text-2)",
           }}
         >
           <span

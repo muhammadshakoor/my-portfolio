@@ -45,7 +45,7 @@ const cats = [
     border: "rgba(91,60,245,0.18)",
     items: [
       { name: "React",      icon: SiReact,      color: "#61DAFB" },
-      { name: "Next.js",    icon: SiNextdotjs,  color: "#0D0D0D" },
+      { name: "Next.js",    icon: SiNextdotjs,  color: "var(--text-1)" },
       { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
       { name: "JavaScript", icon: SiJavascript, color: "#F7DF1E" },
       { name: "Redux",      icon: SiRedux,      color: "#764ABC" },
@@ -63,10 +63,10 @@ const cats = [
     border: "rgba(0,168,130,0.18)",
     items: [
       { name: "Node.js",    icon: SiNodedotjs,  color: "#339933" },
-      { name: "Express",    icon: SiExpress,    color: "#0D0D0D" },
+      { name: "Express",    icon: SiExpress,    color: "var(--text-1)" },
       { name: "Python",     icon: SiPython,     color: "#3776AB" },
-      { name: "Django",     icon: SiDjango,     color: "#092E20" },
-      { name: "Flask",      icon: SiFlask,      color: "#555555" },
+      { name: "Django",     icon: SiDjango,     color: "#4ADE80" },
+      { name: "Flask",      icon: SiFlask,      color: "#8BADC2" },
       { name: "REST API",   icon: SiSwagger,    color: "#49A14D" },
       { name: "GraphQL",    icon: SiGraphql,    color: "#E10098" },
       { name: "PostgreSQL", icon: SiPostgresql, color: "#4169E1" },
@@ -87,8 +87,8 @@ const cats = [
       { name: "Linux",  icon: SiLinux,    color: "#FCC624" },
       { name: "Docker", icon: SiDocker, color: "#2496ED" },
       { name: "Git", icon: SiGit, color: "#F05032" },
-      { name: "GitHub", icon: SiGithub, color: "#0D0D0D" },
-      { name: "Vercel", icon: SiVercel, color: "#0D0D0D" },
+      { name: "GitHub", icon: SiGithub, color: "var(--text-1)" },
+      { name: "Vercel", icon: SiVercel, color: "var(--text-1)" },
       { name: "Postman", icon: SiPostman, color: "#FF6C37" },
       { name: "Jira", icon: SiJira, color: "#0052CC" },
       { name: "Figma", icon: SiFigma, color: "#F24E1E" },
@@ -112,7 +112,7 @@ export default function Skills() {
       ref={ref}
       style={{
         padding: "96px 0 100px",
-        background: "#FAFAF7",
+        background: "var(--bg-section)",
         position: "relative",
         overflow: "hidden",
       }}
@@ -126,7 +126,7 @@ export default function Skills() {
           right: 0,
           height: 1,
           background:
-            "linear-gradient(90deg, transparent, #D8D8D0, transparent)",
+            "linear-gradient(90deg, transparent, var(--divider), transparent)",
         }}
       />
 
@@ -200,7 +200,7 @@ export default function Skills() {
               fontFamily: "var(--font-display), sans-serif",
               fontWeight: 800,
               fontSize: "clamp(2.4rem, 5vw, 3.2rem)",
-              color: "#0D0D0D",
+              color: "var(--text-1)",
               letterSpacing: "-1.5px",
               lineHeight: 1.05,
               marginBottom: 10,
@@ -214,7 +214,7 @@ export default function Skills() {
               maxWidth: 520,
               fontSize: 15,
               lineHeight: 1.7,
-              color: "#7A7A7A",
+              color: "var(--text-2)",
               fontWeight: 300,
             }}
           >
@@ -236,8 +236,8 @@ export default function Skills() {
               key={cat.name}
               {...fadeUp(0.1 + ci * 0.12)}
               style={{
-                background: "#fff",
-                border: "1px solid #E8E8E2",
+                background: "var(--bg-card)",
+                border: "1px solid var(--border)",
                 borderRadius: 20,
                 padding: "26px",
                 boxShadow: "0 8px 28px rgba(13,13,13,0.035)",
@@ -289,7 +289,7 @@ export default function Skills() {
                     flex: 1,
                     height: 1,
                     background:
-                      "linear-gradient(90deg, #E8E8E2, transparent)",
+                      "linear-gradient(90deg, var(--cat-line), transparent)",
                   }}
                 />
               </div>
@@ -328,8 +328,8 @@ export default function Skills() {
                       padding: "18px 10px",
                       borderRadius: 15,
                       cursor: "default",
-                      background: "#FAFAF7",
-                      border: "1px solid #E8E8E2",
+                      background: "transparent",
+                      border: "1px solid var(--border)",
                     }}
                   >
                     <div
@@ -340,8 +340,8 @@ export default function Skills() {
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        background: "#fff",
-                        border: "1px solid #E8E8E2",
+                        background: "var(--bg-card)",
+                        border: "1px solid var(--border)",
                       }}
                     >
                       <item.icon size={24} style={{ color: item.color }} />
@@ -350,7 +350,7 @@ export default function Skills() {
                     <span
                       style={{
                         fontSize: 12,
-                        color: "#3A3A3A",
+                        color: "var(--text-b)",
                         fontWeight: 500,
                         textAlign: "center",
                         lineHeight: 1.3,
@@ -375,7 +375,7 @@ export default function Skills() {
           right: 0,
           height: 1,
           background:
-            "linear-gradient(90deg, transparent, #D8D8D0, transparent)",
+            "linear-gradient(90deg, transparent, var(--divider), transparent)",
         }}
       />
 

@@ -13,13 +13,13 @@ import {
 
 /* ── static data ──────────────────────────────────── */
 const socials = [
-  { icon: FaGithub,    href: "https://github.com/muhammadshakoor",                       label: "GitHub",    color: "#0D0D0D", bg: "rgba(13,13,13,0.04)",    border: "#E8E8E2" },
+  { icon: FaGithub,    href: "https://github.com/muhammadshakoor",                       label: "GitHub",    color: "var(--icon-bw)", bg: "var(--icon-bw-bg)", border: "var(--icon-bw-border)" },
   { icon: FaLinkedinIn,href: "https://www.linkedin.com/in/muhammad-shakoor-2971a6117/",  label: "LinkedIn",  color: "#5B3CF5", bg: "rgba(91,60,245,0.08)",   border: "rgba(91,60,245,0.18)" },
-  { icon: FaXTwitter,  href: "https://twitter.com/Muhamma45190755",                      label: "Twitter",   color: "#0D0D0D", bg: "rgba(13,13,13,0.04)",    border: "#E8E8E2" },
+  { icon: FaXTwitter,  href: "https://twitter.com/Muhamma45190755",                      label: "Twitter",   color: "var(--icon-bw)", bg: "var(--icon-bw-bg)", border: "var(--icon-bw-border)" },
   { icon: FaWhatsapp,  href: "https://wa.me/923107252754",                               label: "WhatsApp",  color: "#25D366", bg: "rgba(37,211,102,0.08)",  border: "rgba(37,211,102,0.22)" },
   { icon: FaFacebook,  href: "https://www.facebook.com/muhammad.shakoor.786",            label: "Facebook",  color: "#1877F2", bg: "rgba(24,119,242,0.08)",  border: "rgba(24,119,242,0.22)" },
   { icon: FaInstagram, href: "https://www.instagram.com/muhammadshakoor_official",       label: "Instagram", color: "#E1306C", bg: "rgba(225,48,108,0.08)", border: "rgba(225,48,108,0.22)" },
-  { icon: FaThreads,   href: "https://www.threads.net/@muhammadshakoor_official",        label: "Threads",   color: "#0D0D0D", bg: "rgba(13,13,13,0.04)",    border: "#E8E8E2" },
+  { icon: FaThreads,   href: "https://www.threads.net/@muhammadshakoor_official",        label: "Threads",   color: "var(--icon-bw)", bg: "var(--icon-bw-bg)", border: "var(--icon-bw-border)" },
 ];
 
 type CatId = "fullstack" | "frontend" | "backend" | "automation" | "custom";
@@ -53,9 +53,9 @@ function MultiPills({ options, selected, onToggle, color }: {
           <button key={opt} type="button" onClick={() => onToggle(opt)} style={{
             padding: "5px 12px", borderRadius: 999, fontSize: 12, fontWeight: 500,
             cursor: "pointer", transition: "all 0.15s",
-            border: `1px solid ${on ? color : "#E8E8E2"}`,
-            background: on ? color + "18" : "#FAFAF7",
-            color: on ? color : "#7A7A7A",
+            border: `1px solid ${on ? color : "var(--border)"}`,
+            background: on ? color + "22" : "var(--bg-meta)",
+            color: on ? color : "var(--text-2)",
           }}>{opt}</button>
         );
       })}
@@ -74,9 +74,9 @@ function RadioPills({ options, value, onChange, color }: {
           <button key={opt} type="button" onClick={() => onChange(on ? "" : opt)} style={{
             padding: "5px 12px", borderRadius: 999, fontSize: 12, fontWeight: 500,
             cursor: "pointer", transition: "all 0.15s",
-            border: `1px solid ${on ? color : "#E8E8E2"}`,
-            background: on ? color + "18" : "#FAFAF7",
-            color: on ? color : "#7A7A7A",
+            border: `1px solid ${on ? color : "var(--border)"}`,
+            background: on ? color + "22" : "var(--bg-meta)",
+            color: on ? color : "var(--text-2)",
           }}>{opt}</button>
         );
       })}
@@ -96,7 +96,7 @@ function Sel({ value, onChange, onFocus, onBlur, style, children }: {
         className="contact-select" style={{ ...style, paddingRight: 36, cursor: "pointer" }}>
         {children}
       </select>
-      <ChevronDown size={13} style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", color: "#B0B0A8", pointerEvents: "none" }} />
+      <ChevronDown size={13} style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", color: "var(--text-3)", pointerEvents: "none" }} />
     </div>
   );
 }
@@ -104,9 +104,9 @@ function Sel({ value, onChange, onFocus, onBlur, style, children }: {
 function SectionDivider({ label, color }: { label: string; color?: string }) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-      <div style={{ flex: 1, height: 1, background: "#E8E8E2" }} />
-      <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: color ?? "#B0B0A8" }}>{label}</span>
-      <div style={{ flex: 1, height: 1, background: "#E8E8E2" }} />
+      <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
+      <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: color ?? "var(--text-3)" }}>{label}</span>
+      <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
     </div>
   );
 }
@@ -201,29 +201,29 @@ export default function Contact() {
 
   const inputBase: React.CSSProperties = {
     width: "100%", padding: "11px 14px", borderRadius: 10, fontSize: 13,
-    color: "#0D0D0D", background: "#FAFAF7", border: "1px solid #E8E8E2",
+    color: "var(--text-1)", background: "var(--bg-input)", border: "1px solid var(--border)",
     outline: "none", transition: "border-color 0.2s, background 0.2s, box-shadow 0.2s",
   };
   const labelSt: React.CSSProperties = {
     display: "block", fontSize: 10, fontWeight: 600, letterSpacing: "0.11em",
-    textTransform: "uppercase", color: "#B0B0A8", marginBottom: 7,
+    textTransform: "uppercase", color: "var(--text-3)", marginBottom: 7,
   };
   const focusIn = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    e.target.style.borderColor = "#5B3CF5";
-    e.target.style.background = "#fff";
+    e.target.style.borderColor = "#00C8FF";
+    e.target.style.background = "rgba(0,200,255,0.06)";
     e.target.style.boxShadow = "0 0 0 3px rgba(91,60,245,0.08)";
   };
   const blurIn = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    e.target.style.borderColor = "#E8E8E2";
-    e.target.style.background = "#FAFAF7";
+    e.target.style.borderColor = "var(--border)";
+    e.target.style.background = "var(--bg-input)";
     e.target.style.boxShadow = "none";
   };
 
   return (
     <section id="contact" ref={ref}
-      style={{ padding: "96px 0 100px", background: "#FAFAF7", position: "relative", overflow: "hidden" }}>
+      style={{ padding: "96px 0 100px", background: "var(--bg-section)", position: "relative", overflow: "hidden" }}>
 
-      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: "linear-gradient(90deg, transparent, #D8D8D0, transparent)" }} />
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: "linear-gradient(90deg, transparent, var(--divider), transparent)" }} />
       <div style={{ position: "absolute", width: 380, height: 380, borderRadius: "50%", background: "rgba(91,60,245,0.06)", filter: "blur(75px)", top: 70, left: -150, pointerEvents: "none" }} />
       <div style={{ position: "absolute", width: 320, height: 320, borderRadius: "50%", background: "rgba(0,168,130,0.055)", filter: "blur(75px)", bottom: 80, right: -130, pointerEvents: "none" }} />
 
@@ -236,10 +236,10 @@ export default function Contact() {
             <span style={{ width: 20, height: 2, background: "#5B3CF5", borderRadius: 1, display: "inline-block" }} />
             Get In Touch
           </p>
-          <h2 style={{ fontFamily: "var(--font-display), sans-serif", fontWeight: 800, fontSize: "clamp(2.4rem, 5vw, 3.2rem)", color: "#0D0D0D", letterSpacing: "-1.5px", lineHeight: 1.05, marginBottom: 10 }}>
-            Let&apos;s <span style={{ color: "#5B3CF5" }}>Work Together</span>
+          <h2 style={{ fontFamily: "var(--font-display), sans-serif", fontWeight: 800, fontSize: "clamp(2.4rem, 5vw, 3.2rem)", color: "var(--text-1)", letterSpacing: "-1.5px", lineHeight: 1.05, marginBottom: 10 }}>
+            Let&apos;s <span style={{ color: "var(--accent-highlight)" }}>Work Together</span>
           </h2>
-          <p style={{ maxWidth: 540, fontSize: 15, lineHeight: 1.7, color: "#7A7A7A", fontWeight: 300 }}>
+          <p style={{ maxWidth: 540, fontSize: 15, lineHeight: 1.7, color: "var(--text-2)", fontWeight: 300 }}>
             Pick a service, fill in the details — I&apos;ll reply within 24 hours with a tailored plan.
           </p>
         </motion.div>
@@ -253,8 +253,8 @@ export default function Contact() {
             style={{ display: "flex", flexDirection: "column", gap: 16 }}>
 
             {/* Contact info */}
-            <div style={{ background: "#fff", border: "1px solid #E8E8E2", borderRadius: 20, padding: 24, boxShadow: "0 8px 28px rgba(13,13,13,0.035)" }}>
-              <h3 style={{ fontFamily: "var(--font-display), sans-serif", fontSize: 17, fontWeight: 700, color: "#0D0D0D", marginBottom: 18, letterSpacing: "-0.3px" }}>Contact Info</h3>
+            <div style={{ background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 20, padding: 24, boxShadow: "0 8px 28px rgba(0,0,0,0.25)" }}>
+              <h3 style={{ fontFamily: "var(--font-display), sans-serif", fontSize: 17, fontWeight: 700, color: "var(--text-1)", marginBottom: 18, letterSpacing: "-0.3px" }}>Contact Info</h3>
               <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                 {[
                   { icon: Mail,         label: "Email",    val: "muhammadshakoor86@gmail.com", href: "mailto:muhammadshakoor86@gmail.com", color: "#5B3CF5", bg: "rgba(91,60,245,0.08)",  border: "rgba(91,60,245,0.18)" },
@@ -267,16 +267,16 @@ export default function Contact() {
                       <c.icon size={16} style={{ color: c.color }} />
                     </div>
                     <div>
-                      <p style={{ fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "#B0B0A8", marginBottom: 3 }}>{c.label}</p>
+                      <p style={{ fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-3)", marginBottom: 3 }}>{c.label}</p>
                       {c.href ? (
                         <a href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                          style={{ fontSize: 13, color: "#0D0D0D", fontWeight: 500, wordBreak: "break-all", textDecoration: "none", transition: "color 0.2s", lineHeight: 1.4 }}
+                          style={{ fontSize: 13, color: "var(--text-1)", fontWeight: 500, wordBreak: "break-all", textDecoration: "none", transition: "color 0.2s", lineHeight: 1.4 }}
                           onMouseEnter={(e) => { e.currentTarget.style.color = c.color; }}
-                          onMouseLeave={(e) => { e.currentTarget.style.color = "#0D0D0D"; }}>
+                          onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-1)"; }}>
                           {c.val}
                         </a>
                       ) : (
-                        <p style={{ fontSize: 13, color: "#0D0D0D", fontWeight: 500, wordBreak: "break-word", lineHeight: 1.4 }}>{c.val}</p>
+                        <p style={{ fontSize: 13, color: "var(--text-1)", fontWeight: 500, wordBreak: "break-word", lineHeight: 1.4 }}>{c.val}</p>
                       )}
                     </div>
                   </div>
@@ -285,8 +285,8 @@ export default function Contact() {
             </div>
 
             {/* Socials */}
-            <div style={{ background: "#fff", border: "1px solid #E8E8E2", borderRadius: 20, padding: 24, boxShadow: "0 8px 28px rgba(13,13,13,0.035)" }}>
-              <p style={{ fontSize: 10, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "#B0B0A8", marginBottom: 14 }}>Find Me On</p>
+            <div style={{ background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 20, padding: 24, boxShadow: "0 8px 28px rgba(0,0,0,0.25)" }}>
+              <p style={{ fontSize: 10, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--text-3)", marginBottom: 14 }}>Find Me On</p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
                 {socials.map(({ icon: Icon, href, label, color, bg, border }) => (
                   <motion.a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}
@@ -306,7 +306,7 @@ export default function Contact() {
                 <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#16a34a", marginTop: 6, flexShrink: 0, animation: "pulse 2s infinite" }} />
                 <div>
                   <p style={{ color: "#16a34a", fontSize: 14, fontWeight: 700, marginBottom: 4 }}>Open to opportunities</p>
-                  <p style={{ color: "#7A7A7A", fontSize: 12.5, lineHeight: 1.65, fontWeight: 300 }}>Available for freelance, full-time roles, and exciting collaborations.</p>
+                  <p style={{ color: "var(--text-2)", fontSize: 12.5, lineHeight: 1.65, fontWeight: 300 }}>Available for freelance, full-time roles, and exciting collaborations.</p>
                 </div>
               </div>
 
@@ -324,8 +324,8 @@ export default function Contact() {
                   <div key={label} style={{ display: "flex", alignItems: "center", gap: 10 }}>
                     <span style={{ fontSize: 15, lineHeight: 1, flexShrink: 0 }}>{emoji}</span>
                     <div>
-                      <p style={{ fontSize: 12.5, fontWeight: 600, color: "#0D0D0D", lineHeight: 1.2 }}>{label}</p>
-                      <p style={{ fontSize: 11, color: "#7A7A7A", fontWeight: 300, lineHeight: 1.4 }}>{sub}</p>
+                      <p style={{ fontSize: 12.5, fontWeight: 600, color: "var(--text-1)", lineHeight: 1.2 }}>{label}</p>
+                      <p style={{ fontSize: 11, color: "var(--text-2)", fontWeight: 300, lineHeight: 1.4 }}>{sub}</p>
                     </div>
                   </div>
                 ))}
@@ -346,7 +346,7 @@ export default function Contact() {
           <motion.div {...fadeUp(0.22)} className="contact-form-column" style={{ display: "flex", flexDirection: "column", gap: 16, minHeight: 0 }}>
 
             {/* Service selector card */}
-            <div style={{ background: "#fff", border: "1px solid #E8E8E2", borderRadius: 20, padding: 24, boxShadow: "0 8px 28px rgba(13,13,13,0.035)" }}>
+            <div style={{ background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 20, padding: 24, boxShadow: "0 8px 28px rgba(0,0,0,0.25)" }}>
               <p style={labelSt}>Step 1 — Select Service Type</p>
               <div className="cat-grid" style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 10 }}>
                 {CATS.map((cat) => {
@@ -358,16 +358,16 @@ export default function Contact() {
                       whileTap={{ scale: 0.97 }}
                       style={{
                         padding: "16px 10px", borderRadius: 14, textAlign: "center", cursor: "pointer",
-                        border: `1.5px solid ${active ? cat.color : "#E8E8E2"}`,
-                        background: active ? cat.bg : "#FAFAF7",
+                        border: `1.5px solid ${active ? cat.color : "rgba(255,255,255,0.1)"}`,
+                        background: active ? cat.bg : "rgba(255,255,255,0.04)",
                         boxShadow: active ? `0 6px 18px ${cat.color}28` : "none",
                         transition: "all 0.2s",
                       }}>
-                      <div style={{ width: 38, height: 38, borderRadius: 11, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 10px", background: active ? cat.color + "22" : "rgba(13,13,13,0.05)", transition: "background 0.2s" }}>
-                        <Icon size={17} style={{ color: active ? cat.color : "#7A7A7A" }} />
+                      <div style={{ width: 38, height: 38, borderRadius: 11, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 10px", background: active ? cat.color + "22" : "var(--bg-meta)", transition: "background 0.2s" }}>
+                        <Icon size={17} style={{ color: active ? cat.color : "var(--text-2)" }} />
                       </div>
-                      <div style={{ fontSize: 12, fontWeight: 700, color: active ? cat.color : "#0D0D0D", marginBottom: 3, lineHeight: 1.25 }}>{cat.label}</div>
-                      <div style={{ fontSize: 10, color: "#B0B0A8", lineHeight: 1.35 }}>{cat.desc}</div>
+                      <div style={{ fontSize: 12, fontWeight: 700, color: active ? cat.color : "var(--text-1)", marginBottom: 3, lineHeight: 1.25 }}>{cat.label}</div>
+                      <div style={{ fontSize: 10, color: "var(--text-3)", lineHeight: 1.35 }}>{cat.desc}</div>
                     </motion.button>
                   );
                 })}
@@ -385,7 +385,7 @@ export default function Contact() {
                   style={{ flex: 1, display: "flex", flexDirection: "column" }}
                 >
                   <form onSubmit={submit}
-                    style={{ flex: 1, background: "#fff", border: "1px solid #E8E8E2", borderRadius: 20, padding: 28, boxShadow: "0 8px 28px rgba(13,13,13,0.035)", display: "flex", flexDirection: "column", gap: 18 }}>
+                    style={{ flex: 1, background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 20, padding: 28, boxShadow: "0 8px 28px rgba(0,0,0,0.25)", display: "flex", flexDirection: "column", gap: 18 }}>
 
                     {/* Category-specific section */}
                     <AnimatePresence mode="wait">
@@ -479,7 +479,7 @@ export default function Contact() {
                         {/* Custom */}
                         {selectedCat === "custom" && (
                           <div style={{ padding: "14px 16px", borderRadius: 12, background: "rgba(107,114,128,0.06)", border: "1px solid rgba(107,114,128,0.14)" }}>
-                            <p style={{ fontSize: 13, color: "#7A7A7A", lineHeight: 1.65 }}>
+                            <p style={{ fontSize: 13, color: "var(--text-2)", lineHeight: 1.65 }}>
                               Describe your project in the notes below — I&apos;ll reply with a tailored plan.
                             </p>
                           </div>
@@ -569,14 +569,14 @@ export default function Contact() {
         </div>
       </div>
 
-      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 1, background: "linear-gradient(90deg, transparent, #D8D8D0, transparent)" }} />
+      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 1, background: "linear-gradient(90deg, transparent, var(--divider), transparent)" }} />
 
       <style>{`
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
         .contact-select { appearance: none; -webkit-appearance: none; }
         .contact-container input::placeholder,
-        .contact-container textarea::placeholder { color: #B0B0A8; }
-        .contact-container select option { color: #0D0D0D; background: #fff; }
+        .contact-container textarea::placeholder { color: var(--text-3); }
+        .contact-container select option { color: var(--text-1); background: var(--footer-bg, #0c1e38); }
 
         @media (max-width: 900px) {
           .contact-grid { grid-template-columns: 1fr !important; }
