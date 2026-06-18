@@ -52,6 +52,9 @@ html { scroll-behavior: smooth; }
   --footer-bg: rgba(4,10,22,0.95);
   --footer-border: rgba(0,180,255,0.12);
   --btn-solid-fg: #0c1e38;
+  --btn-source-bg: rgba(8,20,42,0.85);
+  --btn-source-color: #E2EDF5;
+  --btn-source-border: rgba(0,180,255,0.22);
 }
 
 /* ── Design tokens: Light theme ───────────────────────────────────────── */
@@ -102,6 +105,9 @@ html { scroll-behavior: smooth; }
   --footer-bg: #FAFAF7;
   --footer-border: #E8E8E2;
   --btn-solid-fg: #FAFAF7;
+  --btn-source-bg: #0D0D0D;
+  --btn-source-color: #FAFAF7;
+  --btn-source-border: #0D0D0D;
 }
 
 body {
