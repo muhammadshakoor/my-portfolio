@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import Link from "next/link";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { Star, ArrowUpRight, BookOpen } from "lucide-react";
+import { Star, ArrowUpRight, BookOpen, ExternalLink } from "lucide-react";
 import { FaGithub } from "react-icons/fa6";
 import { projects, categories, type Project } from "@/data/projects";
 
@@ -149,6 +149,28 @@ function CardLinks({ p, small }: { p: Project; small?: boolean }) {
         <ArrowUpRight size={iconSize - 2} />
       </Link>
 
+      {p.live !== "#" && (
+        <a
+          href={p.live}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: small ? 5 : 6,
+            fontSize,
+            color: p.color,
+            fontWeight: 600,
+            textDecoration: "none",
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.75"; }}
+          onMouseLeave={(e) => { e.currentTarget.style.opacity = "1"; }}
+        >
+          <ExternalLink size={iconSize} />
+          Live Demo
+        </a>
+      )}
+
       <a
         href={p.github}
         target="_blank"
@@ -162,12 +184,8 @@ function CardLinks({ p, small }: { p: Project; small?: boolean }) {
           fontWeight: 500,
           textDecoration: "none",
         }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.color = "var(--text-1)";
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.color = "var(--text-2)";
-        }}
+        onMouseEnter={(e) => { e.currentTarget.style.color = "var(--text-1)"; }}
+        onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-2)"; }}
       >
         <FaGithub size={iconSize} />
         {small ? "Source" : "Source Code"}
