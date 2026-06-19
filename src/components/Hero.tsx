@@ -443,7 +443,7 @@ export default function Hero() {
             <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
           </div>
 
-          <div style={{ display: "flex", gap: 10 }}>
+          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 10 }}>
             {socials.map(({ icon: Icon, href, label, color, bg, border }) => (
               <div key={label} style={{ position: "relative" }}>
                 <motion.a

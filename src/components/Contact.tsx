@@ -348,7 +348,7 @@ export default function Contact() {
             {/* Service selector card */}
             <div style={{ background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 20, padding: 24, boxShadow: "0 8px 28px rgba(0,0,0,0.25)" }}>
               <p style={labelSt}>Step 1 — Select Service Type</p>
-              <div className="cat-grid" style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 10 }}>
+              <div className="cat-grid" style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 10, transform: "translateZ(0)" }}>
                 {CATS.map((cat) => {
                   const Icon = cat.icon;
                   const active = selectedCat === cat.id;
@@ -358,8 +358,8 @@ export default function Contact() {
                       whileTap={{ scale: 0.97 }}
                       style={{
                         padding: "16px 10px", borderRadius: 14, textAlign: "center", cursor: "pointer",
-                        border: `1.5px solid ${active ? cat.color : "rgba(255,255,255,0.1)"}`,
-                        background: active ? cat.bg : "rgba(255,255,255,0.04)",
+                        border: active ? `2px solid ${cat.color}` : "1px solid var(--border)",
+                        background: active ? cat.bg : "var(--bg-meta)",
                         boxShadow: active ? `0 6px 18px ${cat.color}28` : "none",
                         transition: "all 0.2s",
                       }}>

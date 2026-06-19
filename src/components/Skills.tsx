@@ -34,6 +34,8 @@ import {
   SiSwagger,
   SiSass,
   SiLinux,
+  SiMysql,
+  SiNpm,
 } from "react-icons/si";
 import { FaMicrosoft } from "react-icons/fa6";
 
@@ -75,6 +77,7 @@ const cats = [
       { name: "Supabase",   icon: SiSupabase,   color: "#3ECF8E" },
       { name: "Redis",      icon: SiRedis,      color: "#DC382D" },
       { name: "Firebase",   icon: SiFirebase,   color: "#FFCA28" },
+      { name: "MySQL",      icon: SiMysql,      color: "#4479A1" },
     ],
   },
   {
@@ -90,8 +93,9 @@ const cats = [
       { name: "GitHub", icon: SiGithub, color: "var(--text-1)" },
       { name: "Vercel", icon: SiVercel, color: "var(--text-1)" },
       { name: "Postman", icon: SiPostman, color: "#FF6C37" },
-      { name: "Jira", icon: SiJira, color: "#0052CC" },
-      { name: "Figma", icon: SiFigma, color: "#F24E1E" },
+      { name: "Jira",    icon: SiJira,    color: "#0052CC" },
+      { name: "Figma",   icon: SiFigma,   color: "#F24E1E" },
+      { name: "npm",     icon: SiNpm,     color: "#CB3837" },
     ],
   },
 ];
