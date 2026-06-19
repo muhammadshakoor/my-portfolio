@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import {
   Mail, MapPin, Send, CheckCircle, MessageSquare,
-  Layers, Monitor, Server, Zap, Wrench, ChevronDown,
+  Layers, Monitor, Server, Zap, Wrench, ChevronDown, X, AlertCircle,
 } from "lucide-react";
 import {
   FaGithub, FaLinkedinIn, FaXTwitter, FaWhatsapp,
@@ -572,6 +572,89 @@ export default function Contact() {
       </div>
 
       <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 1, background: "linear-gradient(90deg, transparent, var(--divider), transparent)" }} />
+
+      {/* ── Toast notification ── */}
+      <AnimatePresence>
+        {(status === "sent" || status === "error") && (
+          <motion.div
+            initial={{ opacity: 0, y: -24, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -16, scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 320, damping: 28 }}
+            style={{
+              position: "fixed",
+              top: 80,
+              right: 24,
+              zIndex: 9999,
+              minWidth: 300,
+              maxWidth: 380,
+              borderRadius: 16,
+              overflow: "hidden",
+              boxShadow: status === "sent"
+                ? "0 16px 48px rgba(22,163,74,0.22), 0 4px 16px rgba(0,0,0,0.18)"
+                : "0 16px 48px rgba(220,38,38,0.22), 0 4px 16px rgba(0,0,0,0.18)",
+              background: "var(--bg-card)",
+              border: status === "sent"
+                ? "1px solid rgba(22,163,74,0.28)"
+                : "1px solid rgba(220,38,38,0.28)",
+            }}
+          >
+            {/* Progress bar */}
+            <motion.div
+              initial={{ scaleX: 1 }}
+              animate={{ scaleX: 0 }}
+              transition={{ duration: status === "sent" ? 5 : 4, ease: "linear" }}
+              style={{
+                height: 3,
+                transformOrigin: "left",
+                background: status === "sent" ? "#16a34a" : "#dc2626",
+              }}
+            />
+
+            <div style={{ padding: "16px 18px", display: "flex", alignItems: "flex-start", gap: 14 }}>
+              {/* Icon */}
+              <div style={{
+                width: 38, height: 38, borderRadius: 10, flexShrink: 0,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                background: status === "sent" ? "rgba(22,163,74,0.1)" : "rgba(220,38,38,0.1)",
+              }}>
+                {status === "sent"
+                  ? <CheckCircle size={18} style={{ color: "#16a34a" }} />
+                  : <AlertCircle size={18} style={{ color: "#dc2626" }} />
+                }
+              </div>
+
+              {/* Text */}
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <p style={{
+                  fontSize: 14, fontWeight: 700, marginBottom: 3,
+                  color: status === "sent" ? "#16a34a" : "#dc2626",
+                }}>
+                  {status === "sent" ? "Request Sent!" : "Submission Failed"}
+                </p>
+                <p style={{ fontSize: 12.5, color: "var(--text-2)", lineHeight: 1.5, fontWeight: 300 }}>
+                  {status === "sent"
+                    ? "Your message is on its way. I'll reply within 24 hours."
+                    : "Something went wrong. Please try again or email me directly."}
+                </p>
+              </div>
+
+              {/* Close */}
+              <button
+                onClick={() => setStatus("idle")}
+                style={{
+                  width: 26, height: 26, borderRadius: 7, flexShrink: 0,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  background: "var(--bg-meta)", border: "1px solid var(--border)",
+                  color: "var(--text-2)", cursor: "pointer",
+                }}
+              >
+                <X size={13} />
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <style>{`
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
