@@ -9,7 +9,7 @@ const items = [
     type: "work",
     role: "Associate Full Stack Developer & Automation Engineer",
     company: "Blutech Consulting",
-    url: "https://blutech.com",
+    url: "https://blutechconsulting.com/",
     location: "Islamabad, Pakistan",
     period: "2023 — Present",
     current: true,
@@ -371,15 +371,32 @@ export default function Experience() {
                       {it.role}
                     </h3>
 
-                    <p
-                      style={{
-                        fontSize: 13,
-                        color: "#5B3CF5",
-                        fontWeight: 500,
-                      }}
-                    >
-                      {it.company}
-                    </p>
+                    {it.url !== "#" ? (
+                      <a
+                        href={it.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: 4,
+                          fontSize: 13,
+                          color: it.accent,
+                          fontWeight: 500,
+                          textDecoration: "none",
+                          transition: "opacity 0.2s",
+                        }}
+                        onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.75"; }}
+                        onMouseLeave={(e) => { e.currentTarget.style.opacity = "1"; }}
+                      >
+                        {it.company}
+                        <ArrowUpRight size={13} />
+                      </a>
+                    ) : (
+                      <p style={{ fontSize: 13, color: it.accent, fontWeight: 500 }}>
+                        {it.company}
+                      </p>
+                    )}
                   </div>
 
                   <div
