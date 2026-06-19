@@ -30,7 +30,7 @@ const CATS = [
   { id: "frontend"    as CatId, label: "Frontend Only",     icon: Monitor, color: "#00A882", bg: "rgba(0,168,130,0.08)",  border: "rgba(0,168,130,0.18)",  desc: "UI/UX & React development" },
   { id: "backend"     as CatId, label: "Backend / API",     icon: Server,  color: "#e84a2a", bg: "rgba(232,74,42,0.07)",  border: "rgba(232,74,42,0.18)",  desc: "APIs, databases & servers" },
   { id: "automation"  as CatId, label: "AI & Automation",   icon: Zap,     color: "#f59e0b", bg: "rgba(245,158,11,0.08)", border: "rgba(245,158,11,0.22)", desc: "LangFlow, n8n, Power Platform" },
-  { id: "custom"      as CatId, label: "Custom Work",       icon: Wrench,  color: "#6b7280", bg: "rgba(107,114,128,0.07)",border: "rgba(107,114,128,0.18)",desc: "Something else entirely" },
+  { id: "custom"      as CatId, label: "Custom Work",       icon: Wrench,  color: "#8B5CF6", bg: "rgba(139,92,246,0.08)", border: "rgba(139,92,246,0.2)", desc: "Something else entirely" },
 ];
 
 const emptyForm = {
@@ -378,10 +378,10 @@ export default function Contact() {
             <AnimatePresence>
               {selectedCat && (
                 <motion.div
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  transition={{ duration: 0.25 }}
+                  transition={{ duration: 0.2 }}
                   style={{ flex: 1, display: "flex", flexDirection: "column" }}
                 >
                   <form onSubmit={submit}
@@ -390,10 +390,10 @@ export default function Contact() {
                     {/* Category-specific section */}
                     <AnimatePresence mode="wait">
                       <motion.div key={selectedCat}
-                        initial={{ opacity: 0, x: 10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -10 }}
-                        transition={{ duration: 0.22 }}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.18 }}
                         style={{ display: "flex", flexDirection: "column", gap: 16 }}>
 
                         <SectionDivider label={`${activeCat?.label} Details`} color={activeCat?.color} />
@@ -478,7 +478,7 @@ export default function Contact() {
 
                         {/* Custom */}
                         {selectedCat === "custom" && (
-                          <div style={{ padding: "14px 16px", borderRadius: 12, background: "rgba(107,114,128,0.06)", border: "1px solid rgba(107,114,128,0.14)" }}>
+                          <div style={{ padding: "14px 16px", borderRadius: 12, background: "rgba(139,92,246,0.06)", border: "1px solid rgba(139,92,246,0.16)" }}>
                             <p style={{ fontSize: 13, color: "var(--text-2)", lineHeight: 1.65 }}>
                               Describe your project in the notes below — I&apos;ll reply with a tailored plan.
                             </p>

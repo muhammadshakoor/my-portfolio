@@ -443,7 +443,7 @@ export default function Hero() {
             <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
           </div>
 
-          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 10 }}>
+          <div className="hero-socials" style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 10 }}>
             {socials.map(({ icon: Icon, href, label, color, bg, border }) => (
               <div key={label} style={{ position: "relative" }}>
                 <motion.a
@@ -456,6 +456,7 @@ export default function Hero() {
                   onMouseLeave={() => setHoveredSocial(null)}
                   whileHover={{ scale: 1.1, y: -5, boxShadow: "0 8px 24px rgba(13,13,13,0.08)" }}
                   whileTap={{ scale: 0.94 }}
+                  className="hero-social-icon"
                   style={{
                     width: 46, height: 46, borderRadius: 12,
                     display: "flex", alignItems: "center", justifyContent: "center",
@@ -597,6 +598,32 @@ export default function Hero() {
 
           .hero-cta-buttons {
             justify-content: center;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .hero-socials {
+            gap: 8px !important;
+            max-width: 320px;
+          }
+
+          .hero-social-icon {
+            width: 40px !important;
+            height: 40px !important;
+            border-radius: 10px !important;
+          }
+        }
+
+        @media (max-width: 360px) {
+          .hero-socials {
+            gap: 6px !important;
+            max-width: 280px;
+          }
+
+          .hero-social-icon {
+            width: 36px !important;
+            height: 36px !important;
+            border-radius: 9px !important;
           }
         }
       `}</style>
