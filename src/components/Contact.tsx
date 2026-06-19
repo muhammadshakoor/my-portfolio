@@ -144,44 +144,46 @@ export default function Contact() {
     }));
   };
 
-  const buildMessage = () => {
-    const lines = [`SERVICE REQUEST`, `Category: ${activeCat?.label}`, ``];
-    if (selectedCat === "fullstack") {
-      if (form.projectType) lines.push(`Project Type: ${form.projectType}`);
-      if (form.techStack.length) lines.push(`Tech Stack: ${form.techStack.join(", ")}`);
-      if (form.features.length) lines.push(`Features: ${form.features.join(", ")}`);
-    } else if (selectedCat === "frontend") {
-      if (form.framework) lines.push(`Framework: ${form.framework}`);
-      if (form.hasDesign) lines.push(`Design: ${form.hasDesign}`);
-    } else if (selectedCat === "backend") {
-      if (form.apiType) lines.push(`API Type: ${form.apiType}`);
-      if (form.database) lines.push(`Database: ${form.database}`);
-      if (form.deployment) lines.push(`Deployment: ${form.deployment}`);
-    } else if (selectedCat === "automation") {
-      if (form.tools.length) lines.push(`Tools/Platforms: ${form.tools.join(", ")}`);
-      if (form.currentSystem) lines.push(`Current System: ${form.currentSystem}`);
-      if (form.automationGoal) lines.push(`Goal: ${form.automationGoal}`);
-    }
-    lines.push(``, `Timeline: ${form.timeline || "Not specified"}`, `Budget: ${form.budget || "Not specified"}`);
-    if (form.message) lines.push(``, `Notes:`, form.message);
-    return lines.join("\n");
-  };
-
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!selectedCat) return;
     setStatus("sending");
+
+    // Build individual field payload — every key shows up in the Web3Forms email
+    const payload: Record<string, string> = {
+      access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "",
+      from_name: form.name,
+      name: form.name,
+      email: form.email,
+      subject: `${activeCat?.label} Request from ${form.name}`,
+      service_type: activeCat?.label ?? "",
+      timeline: form.timeline || "Not specified",
+      budget: form.budget || "Not specified",
+      message: form.message || "(no additional notes)",
+    };
+
+    if (selectedCat === "fullstack") {
+      if (form.projectType)       payload.project_type = form.projectType;
+      if (form.techStack.length)  payload.tech_stack   = form.techStack.join(", ");
+      if (form.features.length)   payload.features     = form.features.join(", ");
+    } else if (selectedCat === "frontend") {
+      if (form.framework)  payload.framework   = form.framework;
+      if (form.hasDesign)  payload.has_design  = form.hasDesign;
+    } else if (selectedCat === "backend") {
+      if (form.apiType)    payload.api_type    = form.apiType;
+      if (form.database)   payload.database    = form.database;
+      if (form.deployment) payload.deployment  = form.deployment;
+    } else if (selectedCat === "automation") {
+      if (form.tools.length)      payload.tools           = form.tools.join(", ");
+      if (form.currentSystem)     payload.current_system  = form.currentSystem;
+      if (form.automationGoal)    payload.automation_goal = form.automationGoal;
+    }
+
     try {
       const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY,
-          from_name: "Portfolio Contact Form",
-          name: form.name, email: form.email,
-          subject: `${activeCat?.label} Request from ${form.name}`,
-          message: buildMessage(),
-        }),
+        body: JSON.stringify(payload),
       });
       const data = await res.json();
       if (data.success) {
