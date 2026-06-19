@@ -170,7 +170,7 @@ export const projects: Project[] = [
     border: "rgba(192,38,211,0.18)",
     featured: true,
     github: "https://github.com/muhammadshakoor/cosmetics-store",
-    live: "#",
+    live: "https://cosmetics-store-g8nt.vercel.app/",
     caseStudy: {
       role: "Full Stack Developer — Freelance",
       timeline: "2022 — 2023",
