@@ -7,6 +7,11 @@ export const CATEGORIES = [
   "Web Development",
   "Backend",
   "Frontend",
+  "DevOps",
+  "Database",
+  "TypeScript",
+  "Security",
+  "Career",
 ] as const;
 
 export type Category = (typeof CATEGORIES)[number];
@@ -39,5 +44,30 @@ export const CATEGORY_STYLES: Record<
     color: "#4ade80",
     bg: "rgba(74,222,128,0.08)",
     border: "rgba(74,222,128,0.2)",
+  },
+  DevOps: {
+    color: "#f472b6",
+    bg: "rgba(244,114,182,0.08)",
+    border: "rgba(244,114,182,0.2)",
+  },
+  Database: {
+    color: "#facc15",
+    bg: "rgba(250,204,21,0.08)",
+    border: "rgba(250,204,21,0.2)",
+  },
+  TypeScript: {
+    color: "#60a5fa",
+    bg: "rgba(96,165,250,0.08)",
+    border: "rgba(96,165,250,0.2)",
+  },
+  Security: {
+    color: "#f87171",
+    bg: "rgba(248,113,113,0.08)",
+    border: "rgba(248,113,113,0.2)",
+  },
+  Career: {
+    color: "#34d399",
+    bg: "rgba(52,211,153,0.08)",
+    border: "rgba(52,211,153,0.2)",
   },
 };
