@@ -6,7 +6,7 @@ export const ALL_POSTS_QUERY = `
     "date": publishedAt,
     category,
     excerpt,
-    tags,
+    "tags": coalesce(tags, []),
     readTime
   }
 `;
@@ -18,7 +18,7 @@ export const POST_BY_SLUG_QUERY = `
     "date": publishedAt,
     category,
     excerpt,
-    tags,
+    "tags": coalesce(tags, []),
     readTime,
     body
   }
