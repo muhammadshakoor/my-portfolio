@@ -40,6 +40,12 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# sanity
+/dist
+/.sanity
+
 # local logs
 *.log
 dev.log
+
+.vercel
