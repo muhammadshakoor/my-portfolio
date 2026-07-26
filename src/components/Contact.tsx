@@ -33,6 +33,8 @@ const CATS = [
   { id: "custom"      as CatId, label: "Custom Work",       icon: Wrench,  color: "#8B5CF6", bg: "rgba(139,92,246,0.08)", border: "rgba(139,92,246,0.2)", desc: "Something else entirely" },
 ];
 
+const DEFAULT_CAT: CatId = "fullstack";
+
 const emptyForm = {
   name: "", email: "", timeline: "", budget: "", message: "",
   projectType: "", techStack: [] as string[], features: [] as string[],
@@ -116,9 +118,12 @@ export default function Contact() {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
-  const [selectedCat, setSelectedCat] = useState<CatId | null>(null);
+  // Full Stack App is pre-selected so visitors land on a usable form instead of
+  // an empty section; the other services are opened by clicking their card.
+  const [selectedCat, setSelectedCat] = useState<CatId | null>(DEFAULT_CAT);
   const [form, setForm] = useState(emptyForm);
   const [status, setStatus] = useState<Status>("idle");
+  const [botField, setBotField] = useState("");
 
   const activeCat = CATS.find((c) => c.id === selectedCat);
 
@@ -147,11 +152,29 @@ export default function Contact() {
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!selectedCat) return;
+
+    // Honeypot: real people never fill a field they cannot see.
+    if (botField) {
+      setStatus("sent");
+      setSelectedCat(DEFAULT_CAT);
+      setForm(emptyForm);
+      setTimeout(() => setStatus("idle"), 5000);
+      return;
+    }
+
+    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
+    if (!accessKey) {
+      // Never leave a visitor with a dead form — hand them off to email instead.
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 6000);
+      return;
+    }
+
     setStatus("sending");
 
     // Build individual field payload — every key shows up in the Web3Forms email
     const payload: Record<string, string> = {
-      access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "",
+      access_key: accessKey,
       from_name: form.name,
       name: form.name,
       email: form.email,
@@ -188,7 +211,9 @@ export default function Contact() {
       const data = await res.json();
       if (data.success) {
         setStatus("sent");
-        setSelectedCat(null);
+        // Back to the default service rather than an empty section — the toast
+        // is what confirms the send.
+        setSelectedCat(DEFAULT_CAT);
         setForm(emptyForm);
         setTimeout(() => setStatus("idle"), 5000);
       } else { setStatus("error"); setTimeout(() => setStatus("idle"), 4000); }
@@ -489,6 +514,28 @@ export default function Contact() {
                       </motion.div>
                     </AnimatePresence>
 
+                    {/* Honeypot — hidden from people, irresistible to bots */}
+                    <input
+                      type="text"
+                      name="company_website"
+                      value={botField}
+                      onChange={(e) => setBotField(e.target.value)}
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden
+                      style={{
+                        position: "absolute",
+                        width: 1,
+                        height: 1,
+                        padding: 0,
+                        margin: -1,
+                        overflow: "hidden",
+                        clipPath: "inset(50%)",
+                        whiteSpace: "nowrap",
+                        border: 0,
+                      }}
+                    />
+
                     {/* Common fields */}
                     <SectionDivider label="Your Details" />
 
@@ -577,6 +624,8 @@ export default function Contact() {
       <AnimatePresence>
         {(status === "sent" || status === "error") && (
           <motion.div
+            role="status"
+            aria-live="polite"
             initial={{ opacity: 0, y: -24, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -16, scale: 0.95 }}
@@ -633,9 +682,20 @@ export default function Contact() {
                   {status === "sent" ? "Request Sent!" : "Submission Failed"}
                 </p>
                 <p style={{ fontSize: 12.5, color: "var(--text-2)", lineHeight: 1.5, fontWeight: 300 }}>
-                  {status === "sent"
-                    ? "Your message is on its way. I'll reply within 24 hours."
-                    : "Something went wrong. Please try again or email me directly."}
+                  {status === "sent" ? (
+                    "Your message is on its way. I'll reply within 24 hours."
+                  ) : (
+                    <>
+                      Something went wrong. Please try again, or email me directly at{" "}
+                      <a
+                        href="mailto:muhammadshakoor86@gmail.com"
+                        style={{ color: "#dc2626", fontWeight: 600, wordBreak: "break-all" }}
+                      >
+                        muhammadshakoor86@gmail.com
+                      </a>
+                      .
+                    </>
+                  )}
                 </p>
               </div>
 
