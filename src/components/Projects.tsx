@@ -2,8 +2,9 @@
 
 import { useState, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { Star, ArrowUpRight, BookOpen, ExternalLink } from "lucide-react";
+import { Star, ArrowUpRight, BookOpen, ExternalLink, Lock } from "lucide-react";
 import { FaGithub } from "react-icons/fa6";
 import { projects, categories, type Project } from "@/data/projects";
 
@@ -37,7 +38,24 @@ function TechPill({
   );
 }
 
-/* Browser-chrome frame so emoji thumbnails read as product shots */
+/* Real screenshot or designed cover art, sized by the card it sits in.
+   `sizes` keeps Next from shipping a 1400px file to a 260px grid card. */
+function ProjectVisual({ p, sizes }: { p: Project; sizes: string }) {
+  return (
+    <Image
+      src={p.image!}
+      alt={`${p.title} — ${p.sub}`}
+      fill
+      sizes={sizes}
+      style={{
+        objectFit: "cover",
+        objectPosition: p.imageAnchor === "top" ? "top center" : "center",
+      }}
+    />
+  );
+}
+
+/* Fallback for entries with no image yet: browser chrome around the emoji. */
 function BrowserFrame({ p, emojiSize }: { p: Project; emojiSize: number }) {
   return (
     <div
@@ -120,6 +138,27 @@ function BrowserFrame({ p, emojiSize }: { p: Project; emojiSize: number }) {
 function CardLinks({ p, small }: { p: Project; small?: boolean }) {
   const fontSize = small ? 11 : 12;
   const iconSize = small ? 12 : 14;
+  const hasDemo = p.live !== "#";
+  // With neither a demo nor a repo, one "Private project" label beats two
+  // separate badges saying the same thing.
+  const fullyPrivate = !hasDemo && !p.github;
+
+  const mutedLabel = (icon: React.ReactNode, text: string, title: string) => (
+    <span
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: small ? 5 : 6,
+        fontSize,
+        color: "var(--text-3)",
+        fontWeight: 500,
+      }}
+      title={title}
+    >
+      {icon}
+      {text}
+    </span>
+  );
 
   return (
     <div
@@ -149,47 +188,67 @@ function CardLinks({ p, small }: { p: Project; small?: boolean }) {
         <ArrowUpRight size={iconSize - 2} />
       </Link>
 
-      {p.live !== "#" && (
-        <a
-          href={p.live}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: small ? 5 : 6,
-            fontSize,
-            color: p.color,
-            fontWeight: 600,
-            textDecoration: "none",
-          }}
-          onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.75"; }}
-          onMouseLeave={(e) => { e.currentTarget.style.opacity = "1"; }}
-        >
-          <ExternalLink size={iconSize} />
-          Live Demo
-        </a>
-      )}
+      {fullyPrivate ? (
+        mutedLabel(
+          <Lock size={iconSize - 2} />,
+          "Private project",
+          "Client-owned — source and demo are not publicly available",
+        )
+      ) : (
+        <>
+          {hasDemo ? (
+            <a
+              href={p.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: small ? 5 : 6,
+                fontSize,
+                color: p.color,
+                fontWeight: 600,
+                textDecoration: "none",
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.75"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.opacity = "1"; }}
+            >
+              <ExternalLink size={iconSize} />
+              Live Demo
+            </a>
+          ) : (
+            mutedLabel(null, "Private / NDA", "Demo not publicly available")
+          )}
 
-      <a
-        href={p.github}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: small ? 5 : 6,
-          fontSize,
-          color: "var(--text-2)",
-          fontWeight: 500,
-          textDecoration: "none",
-        }}
-        onMouseEnter={(e) => { e.currentTarget.style.color = "var(--text-1)"; }}
-        onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-2)"; }}
-      >
-        <FaGithub size={iconSize} />
-        {small ? "Source" : "Source Code"}
-      </a>
+          {p.github ? (
+            <a
+              href={p.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: small ? 5 : 6,
+                fontSize,
+                color: "var(--text-2)",
+                fontWeight: 500,
+                textDecoration: "none",
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = "var(--text-1)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-2)"; }}
+            >
+              <FaGithub size={iconSize} />
+              {small ? "Source" : "Source Code"}
+            </a>
+          ) : (
+            mutedLabel(
+              <Lock size={iconSize - 2} />,
+              "Private repo",
+              "Source code is not publicly available",
+            )
+          )}
+        </>
+      )}
     </div>
   );
 }
@@ -233,7 +292,11 @@ function FeaturedCard({ p, index }: { p: Project; index: number }) {
           position: "relative",
         }}
       >
-        <BrowserFrame p={p} emojiSize={64} />
+        {p.image ? (
+          <ProjectVisual p={p} sizes="(max-width: 900px) 92vw, 460px" />
+        ) : (
+          <BrowserFrame p={p} emojiSize={64} />
+        )}
 
         {p.featured && (
           <div
@@ -362,7 +425,11 @@ function GridCard({ p, i }: { p: Project; i: number }) {
           borderBottom: "1px solid var(--border)",
         }}
       >
-        <BrowserFrame p={p} emojiSize={42} />
+        {p.image ? (
+          <ProjectVisual p={p} sizes="(max-width: 420px) 92vw, 320px" />
+        ) : (
+          <BrowserFrame p={p} emojiSize={42} />
+        )}
       </div>
 
       <div

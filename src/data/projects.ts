@@ -10,12 +10,28 @@ export type Project = {
   bg: string;
   border: string;
   featured: boolean;
-  github: string;
+  /** Card/hero visual under /public/projects. Real screenshot where the product
+   *  is publicly reachable, designed cover art otherwise. Falls back to the
+   *  emoji browser frame when absent. */
+  image?: string;
+  /** Crop anchor. Cover art is centre-composed, so it defaults to "center";
+   *  screenshots put their content up top and need "top". Wrong anchor slices
+   *  the title off in the short grid-card thumbnails. */
+  imageAnchor?: "top" | "center";
+  /** Omitted when the repository is private — better than linking to a 404. */
+  github?: string;
   live: string;
   caseStudy: {
     role: string;
     timeline: string;
+    /** Set on team projects so the page states team size up front. */
+    team?: string;
+    /** Credit line for forked/derived work. */
+    basedOn?: string;
     overview: string[];
+    /** My specific scope on a team project — deliberately narrower than the
+     *  feature list above, which describes the product as a whole. */
+    contributions?: string[];
     challenges: { title: string; detail: string }[];
     outcomes: string[];
   };
@@ -34,7 +50,8 @@ export const projects: Project[] = [
     bg: "rgba(232,74,42,0.07)",
     border: "rgba(232,74,42,0.18)",
     featured: true,
-    github: "https://github.com/muhammadshakoor/STC-Forecasting-Frontend",
+    image: "/projects/stc-pl-forecasting.jpg",
+    // Client repository is private.
     live: "#",
     caseStudy: {
       role: "Frontend Developer — Blutech Consulting",
@@ -79,7 +96,8 @@ export const projects: Project[] = [
     bg: "rgba(3,105,161,0.07)",
     border: "rgba(3,105,161,0.18)",
     featured: true,
-    github: "https://github.com/insaf-blutech/LeadGeneration_Frontend",
+    image: "/projects/bank-lead-generation.jpg",
+    // Client repository is private.
     live: "#",
     caseStudy: {
       role: "Full Stack Developer — Blutech Consulting",
@@ -113,47 +131,65 @@ export const projects: Project[] = [
     },
   },
   {
-    slug: "langflow-btc",
+    slug: "entellica",
     emoji: "⚙️",
-    title: "LangFlow BTC",
-    sub: "AI Workflow Platform with Enterprise Controls",
-    desc: "A production-ready fork of LangFlow rebranded for enterprise use. Features a full admin portal with per-user token budgets, role-based permissions, live agent monitoring, external database connections, Portkey AI gateway for caching and routing, and Langfuse observability — all self-hosted on PostgreSQL.",
-    tags: ["LangFlow", "FastAPI", "React", "PostgreSQL", "Docker", "Portkey", "Langfuse", "OpenAI"],
+    title: "Entellica",
+    sub: "Enterprise AI-Agent Orchestration Platform",
+    desc: "A visual, node-based builder where non-engineers compose LLM workflows, paired with an operator console for running agents and an admin portal for governance. Built by a team of 9 on top of the open-source Langflow, with a large custom layer for permissions, token budgets, and policy-checked database access.",
+    tags: ["React", "TypeScript", "FastAPI", "PostgreSQL", "React Flow", "Zustand", "Python", "Docker"],
     cat: "AI/ML",
     color: "#6C3CF5",
     bg: "rgba(108,60,245,0.1)",
     border: "rgba(108,60,245,0.22)",
     featured: true,
-    github: "https://github.com/muhammadshakoor/LangFlowBTC",
+    image: "/projects/entellica.jpg",
+    // Repository is private — no source link rather than a dead one.
     live: "#",
     caseStudy: {
-      role: "Full Stack Developer — Personal Project",
-      timeline: "2024",
+      role: "Frontend / UI Contributor — Blutech Consulting",
+      timeline: "May 2026 — July 2026 (active)",
+      team: "9 contributors · 155 commits",
+      basedOn:
+        "Built on the open-source langflow-ai/langflow (v1.9.1), rebranded across user-visible surfaces and extended with a custom feature layer of roughly 58,700 added lines across 605 files.",
       overview: [
-        "LangFlow BTC is a production-ready enterprise fork of LangFlow, rebranded and extended with a full admin portal. It adds per-user token budgets, role-based permissions, and live agent monitoring on top of LangFlow's visual AI pipeline builder.",
-        "The platform is fully self-hosted on PostgreSQL with a Portkey AI gateway for model caching and routing across providers, and Langfuse observability for tracing every agent run — giving enterprise teams control and cost visibility they don't get from hosted LangFlow.",
+        "Entellica is an enterprise AI-agent orchestration platform: a drag-and-drop canvas where non-engineers compose LLM workflows, an operator console for running and monitoring those agents, and an admin portal for governance. It began as a fork of the open-source Langflow and grew a substantial custom layer on top.",
+        "The product surface splits in two. The flow editor stays close to upstream Langflow, while a second surface at /operations layers on a workspace shell, agent library, live run view, and data-connector management — so operators can run agents without ever opening the graph editor. Behind both sits a governance layer: centrally managed provider credentials, per-user model allow/deny lists, and token budgets enforced at request time.",
+        "This was a team project of nine contributors. My own scope was the frontend/UI layer; the feature set described here is the product as a whole, not a list of what I personally wrote.",
       ],
+      // NOTE: Awaiting Muhammad's specific contribution bullets before this
+      // renders — the section is hidden while empty rather than guessed at.
       challenges: [
         {
-          title: "Per-user token budgets",
+          title: "SQL access policy enforced at the AST level",
           detail:
-            "Each user gets a token allowance enforced at the gateway layer via Portkey. Budgets are tracked in PostgreSQL and checked before every LLM call, preventing runaway costs in shared environments.",
+            "Agents can query 10 external database types — PostgreSQL, MySQL, SQL Server, Oracle, SQLite, Snowflake, Hive, Redshift, ClickHouse, BigQuery. Every query is parsed with sqlglot before execution and checked against a per-connection policy: read-only enforcement, statement/schema/table allowlists, and row caps. Parsing the actual syntax tree, rather than pattern-matching strings, is what closes off both injection and privilege escalation through a user-facing query endpoint. A connection with no policy attached falls back to a safe read-only default, so the endpoint is never an open SQL shell.",
         },
         {
-          title: "Live agent monitoring",
+          title: "Dynamic model registry replacing hardcoded lists",
           detail:
-            "Enterprise users need to see running pipelines in real time. A WebSocket-backed monitoring panel streams agent status, token counts, and error events as workflows execute.",
+            "A model_definition table sources models three ways — built-in, auto-discovered from provider APIs, and admin-added — across OpenAI, Anthropic, Google, Ollama, watsonx, DeepSeek, xAI, and HuggingFace. Admins get full CRUD and per-provider sync, and the catalog is cached for 60 seconds with a fallback to static constants when the database is unreachable, so provider changes never require a redeploy.",
         },
         {
-          title: "Portkey + Langfuse integration",
+          title: "Live agent monitoring over Server-Sent Events",
           detail:
-            "Routing AI calls through Portkey adds caching and provider fallbacks; every call is also traced in Langfuse, giving a full audit trail of inputs, outputs, latency, and cost per run.",
+            "A single SSE stream broadcasts per-flow execution events — token counts, vertex completion, errors, and build lifecycle — to a real-time dashboard, with multiple subscribers able to watch the same run concurrently.",
+        },
+        {
+          title: "Alembic migrations against a shared Postgres instance",
+          detail:
+            "Nine developers running migrations against one shared database is a recipe for corrupted revision graphs. The fix combined advisory locks and deadlock retries at runtime with an automated revision-graph checker in pre-commit that fails the commit on duplicate revision IDs or multiple heads.",
+        },
+        {
+          title: "Keeping a large fork mergeable with upstream",
+          detail:
+            "Carrying roughly 59,000 lines of custom code on a fast-moving open-source base means every upstream release is a potential conflict. Custom work was kept in separable modules and new surfaces wherever possible, rather than threaded through files upstream edits frequently.",
         },
       ],
       outcomes: [
-        "Self-hosted AI workflow platform with full admin controls",
-        "Per-user token budgets enforced at the gateway layer",
-        "Complete observability via Langfuse tracing on every agent run",
+        "Operator console, admin portal, and agent APIs total ~24,000 lines across 77 files",
+        "Every external database query parsed and policy-checked before it executes",
+        "Provider credentials centrally managed, so end users never handle API keys",
+        "Token budgets enforced per user at request time, with HTTP 429 on breach",
       ],
     },
   },
@@ -169,7 +205,8 @@ export const projects: Project[] = [
     bg: "rgba(192,38,211,0.07)",
     border: "rgba(192,38,211,0.18)",
     featured: true,
-    github: "https://github.com/muhammadshakoor/cosmetics-store",
+    image: "/projects/cosmetics-store.jpg",
+    imageAnchor: "top",
     live: "https://cosmetics-store-g8nt.vercel.app/",
     caseStudy: {
       role: "Full Stack Developer — Freelance",
@@ -214,7 +251,8 @@ export const projects: Project[] = [
     bg: "rgba(91,60,245,0.08)",
     border: "rgba(91,60,245,0.18)",
     featured: true,
-    github: "https://github.com/muhammadshakoor/smart-guest",
+    image: "/projects/smart-guest.jpg",
+    github: "https://github.com/muhammadshakoor/smart-guest-hotel",
     live: "#",
     caseStudy: {
       role: "Full Stack Developer — Freelance",
@@ -259,8 +297,10 @@ export const projects: Project[] = [
     bg: "rgba(91,60,245,0.08)",
     border: "rgba(91,60,245,0.18)",
     featured: true,
+    image: "/projects/crud-app.jpg",
     github: "https://github.com/muhammadshakoor/crud_app",
-    live: "https://crud-app-drab-ten.vercel.app",
+    // Previous Vercel deployment is gone; re-add once redeployed.
+    live: "#",
     caseStudy: {
       role: "Full Stack Developer — Personal Project",
       timeline: "2024",
@@ -299,6 +339,7 @@ export const projects: Project[] = [
     bg: "rgba(91,60,245,0.08)",
     border: "rgba(91,60,245,0.18)",
     featured: true,
+    image: "/projects/mnist-cnn-kitti-object-detection.jpg",
     github: "https://github.com/muhammadshakoor/mnist-cnn-kitti-object-detection",
     live: "#",
     caseStudy: {
@@ -344,7 +385,8 @@ export const projects: Project[] = [
     bg: "rgba(0,168,130,0.08)",
     border: "rgba(0,168,130,0.18)",
     featured: false,
-    github: "https://github.com/muhammadshakoor",
+    image: "/projects/rest-api-boilerplate.jpg",
+    // Private repository.
     live: "#",
     caseStudy: {
       role: "Backend Developer — Personal Project",
@@ -389,7 +431,8 @@ export const projects: Project[] = [
     bg: "rgba(0,168,130,0.08)",
     border: "rgba(0,168,130,0.18)",
     featured: false,
-    github: "https://github.com/muhammadshakoor/loginpage",
+    image: "/projects/jwt-auth-system.jpg",
+    // Private repository.
     live: "#",
     caseStudy: {
       role: "Backend Developer — Personal Project",

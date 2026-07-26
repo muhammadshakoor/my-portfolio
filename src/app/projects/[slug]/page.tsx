@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowUpRight, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, CheckCircle2, Lock, Users, GitFork } from "lucide-react";
 import { FaGithub } from "react-icons/fa6";
 import { projects } from "@/data/projects";
 import { siteConfig } from "@/lib/site";
@@ -22,6 +23,9 @@ export async function generateMetadata({
   const title = `${project.title} — Case Study`;
   const description = project.desc;
 
+  // Each case study shares its own visual rather than the generic site OG image.
+  const images = project.image ? [{ url: project.image, width: 1400, height: 875, alt: title }] : undefined;
+
   return {
     title,
     description,
@@ -31,8 +35,9 @@ export async function generateMetadata({
       description,
       url: `/projects/${project.slug}`,
       type: "article",
+      images,
     },
-    twitter: { card: "summary_large_image", title, description },
+    twitter: { card: "summary_large_image", title, description, images },
   };
 }
 
@@ -82,6 +87,7 @@ export default async function ProjectPage({
   const meta = [
     { label: "Role", value: caseStudy.role },
     { label: "Timeline", value: caseStudy.timeline },
+    ...(caseStudy.team ? [{ label: "Team", value: caseStudy.team }] : []),
     { label: "Category", value: project.cat },
     { label: "Stack", value: project.tags.slice(0, 3).join(" · ") },
   ];
@@ -176,7 +182,32 @@ export default async function ProjectPage({
           </p>
         </header>
 
-        {/* Hero visual — browser frame */}
+        {/* Hero visual — real image when we have one, browser frame otherwise */}
+        {project.image ? (
+          <div
+            style={{
+              position: "relative",
+              aspectRatio: "16 / 10",
+              borderRadius: 20,
+              overflow: "hidden",
+              border: `1px solid ${project.border}`,
+              marginBottom: 36,
+              boxShadow: "var(--shadow-sm)",
+            }}
+          >
+            <Image
+              src={project.image}
+              alt={`${project.title} — ${project.sub}`}
+              fill
+              sizes="(max-width: 880px) 94vw, 832px"
+              style={{
+                objectFit: "cover",
+                objectPosition: project.imageAnchor === "top" ? "top center" : "center",
+              }}
+              priority
+            />
+          </div>
+        ) : (
         <div
           style={{
             borderRadius: 20,
@@ -245,12 +276,15 @@ export default async function ProjectPage({
             <span style={{ fontSize: 84, position: "relative" }}>{project.emoji}</span>
           </div>
         </div>
+        )}
 
         {/* Meta grid */}
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+            // 150px keeps all five tiles (Role/Timeline/Team/Category/Stack)
+            // on one row at the 832px content width instead of wrapping 4 + 1.
+            gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
             gap: 12,
             marginBottom: 44,
           }}
@@ -313,6 +347,101 @@ export default async function ProjectPage({
             </p>
           ))}
         </section>
+
+        {/* Open-source attribution — shown before any claim of authorship */}
+        {caseStudy.basedOn && (
+          <section
+            style={{
+              display: "flex",
+              alignItems: "flex-start",
+              gap: 13,
+              padding: "16px 18px",
+              borderRadius: 14,
+              background: project.bg,
+              border: `1px solid ${project.border}`,
+              marginBottom: 44,
+            }}
+          >
+            <GitFork size={17} style={{ color: project.color, flexShrink: 0, marginTop: 2 }} />
+            <div>
+              <p
+                style={{
+                  fontSize: 10,
+                  fontWeight: 700,
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  color: project.color,
+                  marginBottom: 5,
+                }}
+              >
+                Built on open source
+              </p>
+              <p style={{ fontSize: 13.5, lineHeight: 1.7, color: "var(--text-2)", fontWeight: 300 }}>
+                {caseStudy.basedOn}
+              </p>
+            </div>
+          </section>
+        )}
+
+        {/* My contributions — scope on a team project */}
+        {caseStudy.contributions && caseStudy.contributions.length > 0 && (
+          <section style={{ marginBottom: 44 }}>
+            <h2
+              style={{
+                fontFamily: "var(--font-display), sans-serif",
+                fontWeight: 700,
+                fontSize: 24,
+                color: "var(--text-1)",
+                letterSpacing: "-0.5px",
+                marginBottom: 8,
+              }}
+            >
+              My Contributions
+            </h2>
+            <p
+              style={{
+                fontSize: 13.5,
+                color: "var(--text-3)",
+                fontWeight: 300,
+                marginBottom: 18,
+                display: "flex",
+                alignItems: "center",
+                gap: 7,
+              }}
+            >
+              <Users size={14} />
+              My scope within the team — not the full feature list above.
+            </p>
+
+            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
+              {caseStudy.contributions.map((c) => (
+                <li
+                  key={c}
+                  style={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: 10,
+                    fontSize: 14.5,
+                    color: "var(--text-b)",
+                    lineHeight: 1.65,
+                  }}
+                >
+                  <span
+                    style={{
+                      width: 6,
+                      height: 6,
+                      borderRadius: "50%",
+                      background: project.color,
+                      flexShrink: 0,
+                      marginTop: 8,
+                    }}
+                  />
+                  {c}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         {/* Challenges */}
         <section style={{ marginBottom: 44 }}>
@@ -469,29 +598,50 @@ export default async function ProjectPage({
             borderTop: "1px solid var(--border)",
           }}
         >
-          <a
-            href={project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 8,
-              padding: "12px 20px",
-              borderRadius: 14,
-              background: "var(--btn-source-bg)",
-              color: "var(--btn-source-color)",
-              border: "1px solid var(--btn-source-border)",
-              fontSize: 14,
-              fontWeight: 600,
-              textDecoration: "none",
-            }}
-          >
-            <FaGithub size={15} />
-            View Source
-          </a>
+          {project.github ? (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                padding: "12px 20px",
+                borderRadius: 14,
+                background: "var(--btn-source-bg)",
+                color: "var(--btn-source-color)",
+                border: "1px solid var(--btn-source-border)",
+                fontSize: 14,
+                fontWeight: 600,
+                textDecoration: "none",
+              }}
+            >
+              <FaGithub size={15} />
+              View Source
+            </a>
+          ) : null}
 
-          {project.live !== "#" && (
+          {/* One badge, not two, when neither source nor demo is public */}
+          {!project.github && project.live === "#" ? (
+            <span
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                padding: "12px 20px",
+                borderRadius: 14,
+                background: "var(--bg-meta)",
+                color: "var(--text-3)",
+                border: "1px solid var(--border)",
+                fontSize: 14,
+                fontWeight: 600,
+              }}
+            >
+              <Lock size={14} />
+              Private project
+            </span>
+          ) : project.live !== "#" ? (
             <a
               href={project.live}
               target="_blank"
@@ -513,6 +663,23 @@ export default async function ProjectPage({
               Live Demo
               <ArrowUpRight size={14} />
             </a>
+          ) : (
+            <span
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                padding: "12px 20px",
+                borderRadius: 14,
+                background: "var(--bg-meta)",
+                color: "var(--text-3)",
+                border: "1px solid var(--border)",
+                fontSize: 14,
+                fontWeight: 600,
+              }}
+            >
+              Private / NDA
+            </span>
           )}
 
           <Link
