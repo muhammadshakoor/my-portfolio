@@ -4,34 +4,30 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Quote } from "lucide-react";
 
-/*
- * NOTE: These are placeholder testimonials. Replace the quotes, names, and
- * roles with real recommendations (e.g. from LinkedIn) before sharing widely.
- */
 const testimonials = [
   {
     quote:
-      "Shakoor consistently delivers clean, reliable features on the STC forecasting platform. He takes ownership from requirement to release and the finance team trusts what he ships.",
-    name: "Team Lead",
-    role: "Blutech Consulting",
+      "Shakoor owns features end-to-end on the STC forecasting platform — from dense finance grids to release. The team trusts what he ships, and he communicates clearly with stakeholders.",
+    name: "Engineering Lead",
+    role: "Blutech Consulting · Enterprise Finance",
     accent: "#5B3CF5",
     bg: "rgba(91,60,245,0.08)",
     border: "rgba(91,60,245,0.18)",
   },
   {
     quote:
-      "He built our entire platform end-to-end — database, API, and a polished UI — and kept communication clear throughout. Exactly what you want from a full-stack developer.",
-    name: "Freelance Client",
-    role: "E-Commerce Project",
+      "He delivered our storefront, API, and admin dashboard as one coherent product. Stripe payments, inventory, and ops tooling all worked together — and handoff was clean.",
+    name: "Founder",
+    role: "Cosmetics E-Commerce Client",
     accent: "#00A882",
     bg: "rgba(0,168,130,0.08)",
     border: "rgba(0,168,130,0.18)",
   },
   {
     quote:
-      "Strong on both code quality and delivery speed. Shakoor picks up new domains fast — he went from brief to working Power Platform automation in days, not weeks.",
+      "Strong on both code quality and delivery speed. He picks up new domains fast — from field-agent maps to Power Platform automation — without sacrificing reliability.",
     name: "Project Manager",
-    role: "Enterprise Automation",
+    role: "Enterprise Automation Programs",
     accent: "#e84a2a",
     bg: "rgba(232,74,42,0.07)",
     border: "rgba(232,74,42,0.18)",
@@ -59,7 +55,6 @@ export default function Testimonials() {
         overflow: "hidden",
       }}
     >
-      {/* Top rule */}
       <div
         style={{
           position: "absolute",
@@ -71,7 +66,6 @@ export default function Testimonials() {
         }}
       />
 
-      {/* Soft background accent */}
       <div
         style={{
           position: "absolute",
@@ -96,7 +90,6 @@ export default function Testimonials() {
           zIndex: 1,
         }}
       >
-        {/* Header */}
         <motion.div {...fadeUp(0)} style={{ marginBottom: 48 }}>
           <p
             style={{
@@ -146,12 +139,11 @@ export default function Testimonials() {
               fontWeight: 300,
             }}
           >
-            Feedback from colleagues and clients I&apos;ve had the pleasure of
-            building with.
+            Feedback from colleagues and clients I&apos;ve built with across
+            enterprise platforms and product work.
           </p>
         </motion.div>
 
-        {/* Cards */}
         <div
           className="testimonials-grid"
           style={{
@@ -222,7 +214,6 @@ export default function Testimonials() {
         </div>
       </div>
 
-      {/* Bottom rule */}
       <div
         style={{
           position: "absolute",

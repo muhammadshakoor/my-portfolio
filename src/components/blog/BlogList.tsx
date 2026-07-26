@@ -251,7 +251,28 @@ export default function BlogList({ posts }: { posts: PostMeta[] }) {
         )}
 
         {/* Grid */}
-        {filtered.length === 0 ? (
+        {posts.length === 0 ? (
+          <div
+            style={{
+              textAlign: "center",
+              padding: "80px 24px",
+              color: "var(--text-2)",
+              maxWidth: 480,
+              margin: "0 auto 96px",
+            }}
+          >
+            <p style={{ fontSize: 16, marginBottom: 8, color: "var(--text-1)", fontWeight: 600 }}>
+              No posts yet
+            </p>
+            <p style={{ fontSize: 13.5, color: "var(--text-3)", lineHeight: 1.7 }}>
+              Add Markdown files under <code style={{ color: "var(--text-2)" }}>content/posts/</code>{" "}
+              or publish via Sanity Studio at{" "}
+              <Link href="/studio" style={{ color: "#5B3CF5" }}>/studio</Link>.
+              Set <code style={{ color: "var(--text-2)" }}>NEXT_PUBLIC_SANITY_PROJECT_ID</code> in{" "}
+              <code style={{ color: "var(--text-2)" }}>.env.local</code> to sync from the CMS.
+            </p>
+          </div>
+        ) : filtered.length === 0 ? (
           <div
             style={{
               textAlign: "center",

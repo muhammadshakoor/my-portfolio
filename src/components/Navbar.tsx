@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
@@ -22,6 +22,14 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const { theme, toggle } = useTheme();
   const router = useRouter();
+  const pathname = usePathname();
+
+  // Scroll-spy only applies to the one-page home route; on /blog and
+  // /projects/* the path itself decides what is highlighted.
+  const onHome = pathname === "/";
+  const routeActive = links.find(
+    (l) => l.href.startsWith("/") && pathname.startsWith(l.href),
+  )?.href;
 
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 28, restDelta: 0.001 });
@@ -29,10 +37,12 @@ export default function Navbar() {
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 60);
+      if (!onHome) return;
 
       const navHeight = 90;
       let current = "";
       for (const { href } of links) {
+        if (!href.startsWith("#")) continue;
         const el = document.getElementById(href.slice(1));
         if (!el) continue;
         if (el.getBoundingClientRect().top <= navHeight) {
@@ -45,7 +55,7 @@ export default function Navbar() {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [onHome]);
 
   useEffect(() => {
     if (!open) return;
@@ -63,13 +73,22 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClick);
   }, [open]);
 
+  // What the nav should highlight right now: the route on sub-pages, the
+  // scrolled-to section on the home page.
+  const currentActive = onHome ? active : routeActive ?? "";
+
   const go = (href: string) => {
-    setActive(href);
     setOpen(false);
     if (href.startsWith("/")) {
       router.push(href);
-    } else {
+      return;
+    }
+    setActive(href);
+    if (onHome) {
       document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+    } else {
+      // Section anchors are meaningless off the home page — go there first.
+      router.push(`/${href}`);
     }
   };
 
@@ -138,12 +157,13 @@ export default function Navbar() {
           {/* Desktop nav links */}
           <nav aria-label="Main navigation" style={{ display: "flex", alignItems: "center", gap: 8 }}>
             {links.map((l) => {
-              const isActive = active === l.href;
+              const isActive = currentActive === l.href;
 
               return (
                 <button
                   key={l.href}
                   onClick={() => go(l.href)}
+                  aria-current={isActive ? "page" : undefined}
                   className="relative text-sm rounded-xl transition-colors duration-200"
                   style={{
                     minHeight: 32,
@@ -334,11 +354,12 @@ export default function Navbar() {
             }}
           >
             {links.map((l) => {
-              const isActive = active === l.href;
+              const isActive = currentActive === l.href;
               return (
                 <button
                   key={l.href}
                   onClick={() => go(l.href)}
+                  aria-current={isActive ? "page" : undefined}
                   className="w-full text-left rounded-xl text-sm font-medium transition-colors duration-150"
                   style={{
                     padding: "12px 16px",

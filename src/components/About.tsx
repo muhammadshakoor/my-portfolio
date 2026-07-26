@@ -14,8 +14,8 @@ import {
 
 /* ─── Data ─────────────────────────────────────────────────────────── */
 const stats = [
-  { n: "2+", label: "Years Exp.", color: "#5B3CF5" },
-  { n: "10+", label: "Projects", color: "#00A882" },
+  { n: "3+", label: "Years Exp.", color: "#5B3CF5" },
+  { n: "9+", label: "Projects", color: "#00A882" },
   { n: "15+", label: "Technologies", color: "#e84a2a" },
   { n: "100%", label: "Commitment", color: "#c026d3" },
 ];

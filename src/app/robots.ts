@@ -6,6 +6,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
+      // The embedded Sanity Studio is an authoring tool, not public content.
+      disallow: ["/studio", "/studio/"],
     },
     sitemap: `${siteConfig.url}/sitemap.xml`,
   };

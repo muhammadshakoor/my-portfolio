@@ -2,10 +2,9 @@
 
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowDown, Download, Briefcase, Code2 } from "lucide-react";
 import { FaGithub, FaLinkedinIn, FaXTwitter, FaWhatsapp, FaFacebook, FaInstagram, FaThreads } from "react-icons/fa6";
-import { useTheme } from "@/context/ThemeContext";
 
 const roles = [
   "Full Stack Developer",
@@ -13,14 +12,6 @@ const roles = [
   "Power Platform Specialist",
   "Node.js Developer",
   "Automation Engineer",
-];
-
-const roleColors: { dark: string; light: string }[] = [
-  { dark: "#818CF8", light: "#5B3CF5" },   // Full Stack Developer — indigo/purple
-  { dark: "#00C8FF", light: "#0284C7" },   // React & TypeScript Expert — cyan/sky
-  { dark: "#FB923C", light: "#c2410c" },   // Power Platform Specialist — orange
-  { dark: "#2DD4BF", light: "#0f766e" },   // Node.js Developer — teal
-  { dark: "#F472B6", light: "#be185d" },   // Automation Engineer — pink
 ];
 
 type Dot = {
@@ -101,7 +92,7 @@ const socials = [
 ];
 
 export default function Hero() {
-  const { theme } = useTheme();
+  const reduceMotion = useReducedMotion();
   const [roleIdx, setRoleIdx] = useState(0);
   const [text, setText] = useState("");
   const [typing, setTyping] = useState(true);
@@ -171,13 +162,13 @@ export default function Hero() {
       <div className="hero-orb" style={{ width: 380, height: 380, bottom: "16%", right: -90, background: "rgba(0,200,255,0.12)", animationDelay: "3s" }} />
       <div className="hero-orb" style={{ width: 280, height: 280, top: "50%", left: "50%", transform: "translate(-50%, -50%)", background: "rgba(0,168,130,0.08)", animationDelay: "1.5s" }} />
 
-      {/* Floating dots */}
+      {/* Floating dots — held still when the visitor prefers reduced motion */}
       {dots.map((d) => (
         <motion.div
           key={d.id}
           className="absolute rounded-full pointer-events-none"
           style={{ left: `${d.x}%`, top: `${d.y}%`, width: d.size, height: d.size, background: d.color, opacity: 0.28 }}
-          animate={{ y: [0, -18, 0], opacity: [0.18, 0.45, 0.18] }}
+          animate={reduceMotion ? undefined : { y: [0, -18, 0], opacity: [0.18, 0.45, 0.18] }}
           transition={{ duration: d.dur, repeat: Infinity, delay: d.delay, ease: "easeInOut" }}
         />
       ))}
@@ -261,7 +252,7 @@ export default function Hero() {
           >
             <span style={{ color: "var(--accent-highlight)" }}>Muhammad</span>
             <br />
-            <span style={{ color: theme === "dark" ? "#E2EDF5" : "#0D0D0D" }}>Shakoor</span>
+            <span style={{ color: "var(--hero-surname)" }}>Shakoor</span>
           </motion.h1>
 
           {/* Typewriter */}
@@ -270,7 +261,13 @@ export default function Hero() {
             className="hero-typewriter"
             style={{ height: "52px", display: "flex", alignItems: "center", marginBottom: "28px" }}
           >
-            <span style={{ fontSize: "clamp(1rem, 2.2vw, 1.3rem)", fontWeight: 600, color: roleColors[roleIdx][theme] }}>
+            {/* The animation is decorative; screen readers get the full list once
+                instead of one announcement per keystroke. */}
+            <span className="sr-only">{roles.join(" · ")}</span>
+            <span
+              aria-hidden
+              style={{ fontSize: "clamp(1rem, 2.2vw, 1.3rem)", fontWeight: 600, color: `var(--role-${roleIdx})` }}
+            >
               {text}
               <span className="cursor-blink" style={{ color: "#5B3CF5", marginLeft: "2px" }}>|</span>
             </span>
@@ -423,7 +420,7 @@ export default function Hero() {
               <Code2 size={16} style={{ color: "#2DD4BF" }} />
             </div>
             <div>
-              <div style={{ fontSize: 17, fontWeight: 800, color: "var(--text-1)", lineHeight: 1 }}>8+</div>
+              <div style={{ fontSize: 17, fontWeight: 800, color: "var(--text-1)", lineHeight: 1 }}>9+</div>
               <div style={{ fontSize: 10, color: "var(--text-2)", fontWeight: 500, marginTop: 2 }}>Projects</div>
             </div>
           </motion.div>
@@ -509,7 +506,8 @@ export default function Hero() {
       >
         <motion.button
           onClick={() => document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" })}
-          animate={{ y: [0, 8, 0] }}
+          aria-label="Scroll to the About section"
+          animate={reduceMotion ? undefined : { y: [0, 8, 0] }}
           transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
           style={{
             display: "flex", flexDirection: "column", alignItems: "center", gap: "5px",
