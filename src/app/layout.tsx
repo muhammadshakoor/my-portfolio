@@ -63,17 +63,18 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  icons: {
-    icon: "/logo.png",
-    apple: "/logo.png",
-  },
+  // Icons come from app/icon.png + app/apple-icon.png (file convention).
+  // Pointing them at /logo.png shipped a 1.36 MB favicon on every page load.
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#FAFAF7",
-  colorScheme: "light",
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#060d1a" },
+    { media: "(prefers-color-scheme: light)", color: "#FAFAF7" },
+  ],
+  colorScheme: "dark light",
 };
 
 const jsonLd = {
