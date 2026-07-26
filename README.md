@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Muhammad Shakoor — Portfolio
 
-## Getting Started
+Personal portfolio for a Full Stack Developer & Automation Engineer at Blutech Consulting (Islamabad, Pakistan).
 
-First, run the development server:
+Built with **Next.js 16**, **React 19**, **Tailwind CSS v4**, **Framer Motion**, and **Sanity** (blog).
+
+## Features
+
+- Single-page portfolio: Hero, About, Skills, Projects, Experience, Testimonials, Contact
+- Project case studies at `/projects/[slug]`
+- Blog at `/blog` — Sanity CMS with local Markdown fallback (`content/posts/`)
+- Embedded Sanity Studio at `/studio`
+- Dark / light theme
+- Contact form via Web3Forms + WhatsApp float
+- SEO: sitemap, robots, Open Graph, JSON-LD
+
+## Prerequisites
+
+- Node.js 20+ recommended
+- npm
+
+## Setup
+
+```bash
+npm install
+cp .env.example .env.local
+```
+
+Edit `.env.local`:
+
+| Variable | Required | Purpose |
+|---|---|---|
+| `NEXT_PUBLIC_WEB3FORMS_KEY` | For contact form | [web3forms.com](https://web3forms.com) access key |
+| `NEXT_PUBLIC_SANITY_PROJECT_ID` | Optional | Blog CMS (defaults can use local Markdown) |
+| `NEXT_PUBLIC_SANITY_DATASET` | Optional | Defaults to `production` |
+| `NEXT_PUBLIC_SITE_URL` | Optional | Canonical URL (local default: `http://localhost:3003`) |
+
+## Run locally
+
+Dev server runs on **port 3003** (not 3000):
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3003](http://localhost:3003).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build   # production build
+npm start       # serve build on port 3003
+npm run lint    # ESLint
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Content
 
-## Learn More
+| What | Where |
+|---|---|
+| Site identity / SEO | `src/lib/site.ts` |
+| Projects & case studies | `src/data/projects.ts` |
+| Experience / About / Hero copy | `src/components/*.tsx` |
+| Blog (CMS) | Sanity Studio → `/studio` |
+| Blog (local fallback) | `content/posts/*.md` |
 
-To learn more about Next.js, take a look at the following resources:
+## Deploy
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Designed for **Vercel**. Set the same env vars in the project settings. `VERCEL_PROJECT_PRODUCTION_URL` is used automatically when `NEXT_PUBLIC_SITE_URL` is unset.
