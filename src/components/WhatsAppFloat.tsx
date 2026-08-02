@@ -14,11 +14,12 @@ export default function WhatsAppFloat() {
       style={{
         position: "fixed",
         bottom: 28,
-        right: 28,
+        // Left corner: the Zanderio chat widget owns bottom-right (z-index 2147483647)
+        left: 28,
         zIndex: 999,
         display: "flex",
         flexDirection: "column",
-        alignItems: "flex-end",
+        alignItems: "flex-start",
         gap: 10,
       }}
     >
