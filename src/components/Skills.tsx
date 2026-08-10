@@ -115,7 +115,7 @@ export default function Skills() {
       id="skills"
       ref={ref}
       style={{
-        padding: "96px 0 100px",
+        padding: "var(--section-pad-top) 0 var(--section-pad-bottom)",
         background: "var(--bg-section)",
         position: "relative",
         overflow: "hidden",
@@ -173,7 +173,7 @@ export default function Skills() {
         }}
       >
         {/* Header */}
-        <motion.div {...fadeUp(0)} style={{ marginBottom: 52 }}>
+        <motion.div {...fadeUp(0)} style={{ marginBottom: "clamp(30px, 3.8vw, 52px)" }}>
           <p
             style={{
               display: "inline-flex",

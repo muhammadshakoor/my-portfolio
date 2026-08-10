@@ -123,6 +123,19 @@ html { scroll-behavior: smooth; }
   --role-4: #be185d;
 }
 
+/* ── Vertical rhythm ──────────────────────────────────────────────────
+   Section padding used to be a hard 96px/100px, so every viewport — a
+   360px phone, or a phone with "Desktop site" on — paid full desktop
+   whitespace between sections. These scale with the viewport instead. */
+:root {
+  --section-pad-top: clamp(52px, 6.5vw, 96px);
+  --section-pad-bottom: clamp(56px, 7vw, 100px);
+  /* Cap on the hero's full-height rule. In desktop-site mode the layout
+     viewport is ~980px wide and scaled down, which inflates 100vh to
+     ~2000px+ and leaves a screenful of dead space around the content. */
+  --hero-min-height: min(100svh, 920px);
+}
+
 body {
   background: var(--bg-body);
   background-attachment: fixed;

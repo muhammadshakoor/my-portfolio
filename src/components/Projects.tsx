@@ -534,7 +534,7 @@ export default function Projects() {
       id="projects"
       ref={ref}
       style={{
-        padding: "96px 0 100px",
+        padding: "var(--section-pad-top) 0 var(--section-pad-bottom)",
         background: "var(--bg-section)",
         position: "relative",
         overflow: "hidden",

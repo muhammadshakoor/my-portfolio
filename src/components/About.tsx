@@ -104,7 +104,7 @@ export default function About() {
       id="about"
       ref={ref}
       style={{
-        padding: "96px 0 100px",
+        padding: "var(--section-pad-top) 0 var(--section-pad-bottom)",
         background: "var(--bg-section)",
         position: "relative",
         overflow: "hidden",
@@ -132,7 +132,7 @@ export default function About() {
         }}
       >
         {/* ── Section header ── */}
-        <motion.div {...fadeUp(0)} style={{ marginBottom: 56 }}>
+        <motion.div {...fadeUp(0)} style={{ marginBottom: "clamp(32px, 4vw, 56px)" }}>
           <p
             style={{
               display: "inline-flex",

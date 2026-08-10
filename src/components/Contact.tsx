@@ -248,7 +248,7 @@ export default function Contact() {
 
   return (
     <section id="contact" ref={ref}
-      style={{ padding: "96px 0 100px", background: "var(--bg-section)", position: "relative", overflow: "hidden" }}>
+      style={{ padding: "var(--section-pad-top) 0 var(--section-pad-bottom)", background: "var(--bg-section)", position: "relative", overflow: "hidden" }}>
 
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: "linear-gradient(90deg, transparent, var(--divider), transparent)" }} />
       <div style={{ position: "absolute", width: 380, height: 380, borderRadius: "50%", background: "rgba(91,60,245,0.06)", filter: "blur(75px)", top: 70, left: -150, pointerEvents: "none" }} />
@@ -258,7 +258,7 @@ export default function Contact() {
         style={{ maxWidth: 1100, margin: "0 auto", padding: "0 48px", position: "relative", zIndex: 1 }}>
 
         {/* Header */}
-        <motion.div {...fadeUp(0)} style={{ marginBottom: 52 }}>
+        <motion.div {...fadeUp(0)} style={{ marginBottom: "clamp(30px, 3.8vw, 52px)" }}>
           <p style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 11, fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", color: "#5B3CF5", marginBottom: 12 }}>
             <span style={{ width: 20, height: 2, background: "#5B3CF5", borderRadius: 1, display: "inline-block" }} />
             Get In Touch

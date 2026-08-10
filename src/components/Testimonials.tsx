@@ -49,7 +49,7 @@ export default function Testimonials() {
       id="testimonials"
       ref={ref}
       style={{
-        padding: "96px 0 100px",
+        padding: "var(--section-pad-top) 0 var(--section-pad-bottom)",
         background: "var(--bg-section)",
         position: "relative",
         overflow: "hidden",
@@ -90,7 +90,7 @@ export default function Testimonials() {
           zIndex: 1,
         }}
       >
-        <motion.div {...fadeUp(0)} style={{ marginBottom: 48 }}>
+        <motion.div {...fadeUp(0)} style={{ marginBottom: "clamp(28px, 3.5vw, 48px)" }}>
           <p
             style={{
               display: "inline-flex",

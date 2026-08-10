@@ -86,7 +86,7 @@ export default function Experience() {
       id="experience"
       ref={ref}
       style={{
-        padding: "96px 0 100px",
+        padding: "var(--section-pad-top) 0 var(--section-pad-bottom)",
         background: "transparent",
         position: "relative",
         overflow: "hidden",
@@ -144,7 +144,7 @@ export default function Experience() {
         }}
       >
         {/* Header */}
-        <motion.div {...fadeUp(0)} style={{ marginBottom: 54 }}>
+        <motion.div {...fadeUp(0)} style={{ marginBottom: "clamp(30px, 4vw, 54px)" }}>
           <p
             style={{
               display: "inline-flex",

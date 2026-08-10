@@ -141,8 +141,8 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
-      style={{ background: "var(--bg-section)" }}
+      className="relative flex items-center justify-center overflow-hidden"
+      style={{ background: "var(--bg-section)", minHeight: "var(--hero-min-height)" }}
     >
       {/* Top rule */}
       <div
@@ -179,7 +179,7 @@ export default function Hero() {
         style={{
           maxWidth: 1100,
           margin: "0 auto",
-          padding: "108px 48px 72px",
+          padding: "clamp(96px, 10vw, 108px) 48px clamp(44px, 6vw, 72px)",
           display: "flex",
           flexDirection: "column",
           alignItems: "stretch",

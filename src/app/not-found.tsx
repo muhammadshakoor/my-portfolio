@@ -20,11 +20,11 @@ export default function NotFound() {
   return (
     <main
       style={{
-        minHeight: "100vh",
+        minHeight: "min(100svh, 920px)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        padding: "96px 24px",
+        padding: "clamp(72px, 8vw, 96px) 24px",
         background: "var(--bg-section)",
       }}
     >
