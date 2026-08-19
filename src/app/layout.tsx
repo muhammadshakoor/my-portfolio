@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { siteConfig } from "@/lib/site";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
+import ScrollToTop from "@/components/ScrollToTop";
 import { ThemeProvider } from "@/context/ThemeContext";
 import "./globals.css";
 
@@ -141,6 +142,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider>
           {children}
           <WhatsAppFloat />
+          <ScrollToTop />
         </ThemeProvider>
         <Analytics />
         <SpeedInsights />
