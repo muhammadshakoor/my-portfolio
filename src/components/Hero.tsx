@@ -3,8 +3,9 @@
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowDown, Download, Briefcase, Code2 } from "lucide-react";
-import { FaGithub, FaLinkedinIn, FaXTwitter, FaWhatsapp, FaFacebook, FaInstagram, FaThreads } from "react-icons/fa6";
+import { ArrowDown, Download, Briefcase, Code2, Mail } from "lucide-react";
+import { FaGithub, FaLinkedinIn, FaXTwitter, FaWhatsapp } from "react-icons/fa6";
+import { siteConfig } from "@/lib/site";
 
 const roles = [
   "Full Stack Developer",
@@ -58,34 +59,10 @@ const socials = [
     border: "rgba(37,211,102,0.22)",
   },
   {
-    icon: FaFacebook,
-    href: "https://www.facebook.com/muhammad.shakoor.786",
-    label: "Facebook",
-    color: "#1877F2",
-    bg: "rgba(24,119,242,0.08)",
-    border: "rgba(24,119,242,0.22)",
-  },
-  {
-    icon: FaInstagram,
-    href: "https://www.instagram.com/muhammadshakoor_official",
-    label: "Instagram",
-    color: "#E1306C",
-    bg: "rgba(225,48,108,0.08)",
-    border: "rgba(225,48,108,0.22)",
-  },
-  {
-    icon: FaThreads,
-    href: "https://www.threads.net/@muhammadshakoor_official",
-    label: "Threads",
-    color: "var(--text-1)",
-    bg: "var(--icon-bw-bg)",
-    border: "var(--icon-bw-border)",
-  },
-  {
-    icon: Download,
-    href: "/resume.pdf",
-    label: "Resume",
-    color: "#00A882",
+    icon: Mail,
+    href: `mailto:${siteConfig.email}`,
+    label: "Email",
+    color: "#2DD4BF",
     bg: "rgba(0,168,130,0.08)",
     border: "rgba(0,168,130,0.18)",
   },
@@ -132,11 +109,11 @@ export default function Hero() {
     return () => { if (timer.current) clearTimeout(timer.current); };
   }, [text, typing, roleIdx]);
 
-  const fadeUp = (delay = 0) => ({
-    initial: { opacity: 0, y: 28 },
-    animate: { opacity: 1, y: 0 },
-    transition: { delay, duration: 0.6 },
-  });
+  // Entrance animations are plain CSS (see .hero-fade below), not Framer:
+  // Framer server-renders them at opacity 0 and only reveals them after
+  // hydration, so the name and photo — the LCP candidates — stayed invisible
+  // until all the page JS had loaded.
+  const fade = (delay: number): React.CSSProperties => ({ animationDelay: `${delay}s` });
 
   return (
     <section
@@ -191,7 +168,7 @@ export default function Hero() {
         {/* LEFT: Text */}
         <div className="hero-left" style={{ flex: 1, minWidth: 0 }}>
           {/* Status badge */}
-          <motion.div {...fadeUp(0.1)} className="hero-badge" style={{ marginBottom: "36px" }}>
+          <div className="hero-badge hero-fade" style={{ marginBottom: "36px", ...fade(0.05) }}>
             <span
               style={{
                 display: "inline-flex",
@@ -216,12 +193,13 @@ export default function Hero() {
               />
               Available for work · Islamabad, Pakistan
             </span>
-          </motion.div>
+          </div>
 
           {/* Greeting */}
-          <motion.p
-            {...fadeUp(0.2)}
+          <p
+            className="hero-fade"
             style={{
+              ...fade(0.1),
               color: "#5B3CF5",
               fontSize: "11px",
               fontWeight: 500,
@@ -235,12 +213,13 @@ export default function Hero() {
           >
             <span style={{ width: 20, height: 2, background: "#5B3CF5", borderRadius: 1, display: "inline-block" }} />
             Hi, I&apos;m
-          </motion.p>
+          </p>
 
           {/* Name */}
-          <motion.h1
-            {...fadeUp(0.3)}
+          <h1
+            className="hero-fade"
             style={{
+              ...fade(0.15),
               fontFamily: "var(--font-display), sans-serif",
               fontWeight: 700,
               lineHeight: 1.04,
@@ -253,13 +232,12 @@ export default function Hero() {
             <span style={{ color: "var(--accent-highlight)" }}>Muhammad</span>
             <br />
             <span style={{ color: "var(--hero-surname)" }}>Shakoor</span>
-          </motion.h1>
+          </h1>
 
           {/* Typewriter */}
-          <motion.div
-            {...fadeUp(0.4)}
-            className="hero-typewriter"
-            style={{ height: "52px", display: "flex", alignItems: "center", marginBottom: "28px" }}
+          <div
+            className="hero-typewriter hero-fade"
+            style={{ ...fade(0.2), height: "52px", display: "flex", alignItems: "center", marginBottom: "28px" }}
           >
             {/* The animation is decorative; screen readers get the full list once
                 instead of one announcement per keystroke. */}
@@ -271,12 +249,13 @@ export default function Hero() {
               {text}
               <span className="cursor-blink" style={{ color: "#5B3CF5", marginLeft: "2px" }}>|</span>
             </span>
-          </motion.div>
+          </div>
 
           {/* Bio */}
-          <motion.p
-            {...fadeUp(0.5)}
+          <p
+            className="hero-bio hero-fade"
             style={{
+              ...fade(0.25),
               color: "var(--text-2)",
               fontSize: "clamp(0.9rem, 1.6vw, 1rem)",
               lineHeight: 1.75,
@@ -291,10 +270,10 @@ export default function Hero() {
             <span style={{ color: "#818CF8", fontWeight: 600 }}>React</span>,{" "}
             <span style={{ color: "#2DD4BF", fontWeight: 600 }}>Node.js</span>, and{" "}
             <span style={{ color: "#FB923C", fontWeight: 600 }}>Power Platform</span>.
-          </motion.p>
+          </p>
 
           {/* Buttons */}
-          <motion.div {...fadeUp(0.6)} className="hero-cta-buttons" style={{ display: "flex", flexWrap: "wrap", gap: "14px" }}>
+          <div className="hero-cta-buttons hero-fade" style={{ ...fade(0.3), display: "flex", flexWrap: "wrap", gap: "14px" }}>
             <button
               onClick={() => document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" })}
               style={{
@@ -308,9 +287,8 @@ export default function Hero() {
               <Briefcase size={16} /> View My Work
             </button>
             <a
-              href="https://github.com/muhammadshakoor"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/resume.pdf"
+              download="Muhammad_Shakoor_Resume.pdf"
               style={{
                 display: "inline-flex", alignItems: "center", gap: "8px",
                 padding: "13px 22px", borderRadius: 14,
@@ -319,21 +297,19 @@ export default function Hero() {
                 textDecoration: "none",
               }}
             >
-              <FaGithub size={16} /> GitHub Profile
+              <Download size={16} /> Download Résumé
             </a>
-          </motion.div>
+          </div>
         </div>
 
         {/* RIGHT: Profile image */}
-        <motion.div
-          initial={{ opacity: 0, x: 40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          className="hero-image-col"
-          style={{ flexShrink: 0, position: "relative", width: 340, marginTop: 118 }}
+        <div
+          className="hero-image-col hero-fade"
+          style={{ ...fade(0.1), flexShrink: 0, position: "relative", width: 340, marginTop: 118 }}
         >
           {/* Decorative rotated background */}
           <div
+            className="hero-image-backdrop"
             style={{
               position: "absolute",
               inset: -10,
@@ -345,6 +321,7 @@ export default function Hero() {
 
           {/* Image */}
           <div
+            className="hero-image-frame"
             style={{
               position: "relative",
               borderRadius: 28,
@@ -358,17 +335,17 @@ export default function Hero() {
               src="/profile.jpg"
               alt="Muhammad Shakoor"
               fill
+              sizes="(max-width: 860px) 168px, 340px"
               style={{ objectFit: "cover", objectPosition: "top center" }}
               priority
             />
           </div>
 
           {/* Badge: Experience */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.9 }}
+          <div
+            className="hero-stat-badge hero-fade"
             style={{
+              ...fade(0.5),
               position: "absolute",
               bottom: -26, left: -24,
               background: "var(--badge-bg)",
@@ -389,17 +366,16 @@ export default function Hero() {
               <Briefcase size={16} style={{ color: "#818CF8" }} />
             </div>
             <div>
-              <div style={{ fontSize: 17, fontWeight: 800, color: "var(--text-1)", lineHeight: 1 }}>3+</div>
+              <div style={{ fontSize: 17, fontWeight: 800, color: "var(--text-1)", lineHeight: 1 }}>{siteConfig.stats.years}</div>
               <div style={{ fontSize: 10, color: "var(--text-2)", fontWeight: 500, marginTop: 2 }}>Years Exp.</div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Badge: Projects */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 1.1 }}
+          <div
+            className="hero-stat-badge hero-fade"
             style={{
+              ...fade(0.6),
               position: "absolute",
               top: -26, right: -24,
               background: "var(--badge-bg)",
@@ -420,17 +396,17 @@ export default function Hero() {
               <Code2 size={16} style={{ color: "#2DD4BF" }} />
             </div>
             <div>
-              <div style={{ fontSize: 17, fontWeight: 800, color: "var(--text-1)", lineHeight: 1 }}>9+</div>
+              <div style={{ fontSize: 17, fontWeight: 800, color: "var(--text-1)", lineHeight: 1 }}>{siteConfig.stats.projects}</div>
               <div style={{ fontSize: 10, color: "var(--text-2)", fontWeight: 500, marginTop: 2 }}>Projects</div>
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
         </div>{/* /hero-columns */}
 
         {/* CONNECT — full-width centered below both columns */}
-        <motion.div
-          {...fadeUp(0.7)}
-          style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "16px" }}
+        <div
+          className="hero-fade"
+          style={{ ...fade(0.4), display: "flex", flexDirection: "column", alignItems: "center", gap: "16px" }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "14px", width: "180px" }}>
             <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
@@ -448,7 +424,6 @@ export default function Hero() {
                   target={href.startsWith("http") ? "_blank" : undefined}
                   rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
                   aria-label={label}
-                  download={label === "Resume" ? "Muhammad_Shakoor_Resume.pdf" : undefined}
                   onMouseEnter={() => setHoveredSocial(label)}
                   onMouseLeave={() => setHoveredSocial(null)}
                   whileHover={{ scale: 1.1, y: -5, boxShadow: "0 8px 24px rgba(13,13,13,0.08)" }}
@@ -475,7 +450,7 @@ export default function Hero() {
                     pointerEvents: "none", zIndex: 50,
                     boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
                   }}>
-                    {label === "Resume" ? "Download Resume" : label}
+                    {label}
                     <div style={{
                       position: "absolute",
                       top: "100%", left: "50%",
@@ -490,11 +465,12 @@ export default function Hero() {
               </div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Scroll indicator */}
       <motion.div
+        className="hero-scroll"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5 }}
@@ -551,6 +527,17 @@ export default function Hero() {
           50% { opacity: 0.35; }
         }
 
+        .hero-fade { animation: heroFadeUp 0.6s ease-out both; }
+
+        @keyframes heroFadeUp {
+          from { opacity: 0; transform: translateY(24px); }
+          to   { opacity: 1; transform: none; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .hero-fade, .hero-orb { animation: none; }
+        }
+
         .cursor-blink { animation: blink 1s step-end infinite; }
 
         @keyframes blink {
@@ -568,7 +555,7 @@ export default function Hero() {
           .hero-columns {
             flex-direction: column-reverse !important;
             align-items: center !important;
-            gap: 44px !important;
+            gap: 28px !important;
             margin-bottom: 28px !important;
             text-align: center;
           }
@@ -589,10 +576,21 @@ export default function Hero() {
             justify-content: center !important;
           }
 
+          /* Phones: a compact portrait so name, role and CTAs fit on the
+             first screen instead of sitting under a full-height photo. */
           .hero-image-col {
-            width: 260px !important;
+            width: 168px !important;
             margin-top: 0 !important;
           }
+
+          .hero-image-frame { border-radius: 22px !important; }
+          .hero-image-backdrop { border-radius: 28px !important; }
+          .hero-stat-badge { display: none !important; }
+          .hero-scroll { display: none !important; }
+
+          .hero-badge { margin-bottom: 20px !important; }
+          .hero-typewriter { height: 40px !important; margin-bottom: 18px !important; }
+          .hero-bio { margin-bottom: 28px !important; }
 
           .hero-cta-buttons {
             justify-content: center;

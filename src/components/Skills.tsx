@@ -239,6 +239,7 @@ export default function Skills() {
             <motion.div
               key={cat.name}
               {...fadeUp(0.1 + ci * 0.12)}
+              className="skills-category"
               style={{
                 background: "var(--bg-card)",
                 border: "1px solid var(--border)",
@@ -322,6 +323,7 @@ export default function Skills() {
                       y: -5,
                       boxShadow: "0 10px 24px rgba(13,13,13,0.08)",
                     }}
+                    className="skill-tile"
                     style={{
                       minHeight: 104,
                       display: "flex",
@@ -337,6 +339,7 @@ export default function Skills() {
                     }}
                   >
                     <div
+                      className="skill-icon"
                       style={{
                         width: 44,
                         height: 44,
@@ -400,15 +403,39 @@ export default function Skills() {
             width: 100% !important;
           }
 
+          /* Two columns of 104px tiles made this section ~2,700px tall on
+             phones; four compact columns keep every icon readable at a third
+             of the scroll. */
           .skills-grid {
-            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+            gap: 8px !important;
+          }
+
+          .skills-category {
+            padding: 18px !important;
+          }
+
+          .skill-tile {
+            min-height: 0 !important;
+            padding: 12px 4px !important;
+            gap: 7px !important;
+            border-radius: 12px !important;
+          }
+
+          .skill-icon {
+            width: 36px !important;
+            height: 36px !important;
+            border-radius: 10px !important;
+          }
+
+          .skill-tile span {
+            font-size: 10.5px !important;
           }
         }
 
-        @media (max-width: 420px) {
+        @media (max-width: 340px) {
           .skills-grid {
-            grid-template-columns: 1fr 1fr !important;
-            gap: 10px !important;
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
           }
         }
       `}</style>

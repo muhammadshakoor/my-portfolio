@@ -11,6 +11,7 @@ export default function WhatsAppFloat() {
 
   return (
     <div
+      className="wa-float"
       style={{
         position: "fixed",
         bottom: 28,
@@ -78,6 +79,7 @@ export default function WhatsAppFloat() {
         transition={{ type: "spring", stiffness: 260, damping: 20, delay: 2 }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.93 }}
+        className="wa-button"
         style={{
           width: 60,
           height: 60,
@@ -93,12 +95,14 @@ export default function WhatsAppFloat() {
       >
         {/* Pulse ring */}
         <span
+          className="wa-pulse"
           style={{
             position: "absolute",
             inset: 0,
             borderRadius: "50%",
             background: "rgba(37,211,102,0.35)",
-            animation: "waPulse 2.2s ease-out infinite",
+            // A few pulses draw the eye; an endless one competes with the content.
+            animation: "waPulse 2.2s ease-out 3s 4",
           }}
         />
         <FaWhatsapp size={30} color="#fff" />
@@ -109,6 +113,17 @@ export default function WhatsAppFloat() {
           0%   { transform: scale(1);   opacity: 0.7; }
           70%  { transform: scale(1.55); opacity: 0; }
           100% { transform: scale(1.55); opacity: 0; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .wa-pulse { animation: none !important; }
+        }
+
+        /* Phones: smaller and tucked into the corner so it covers less text. */
+        @media (max-width: 640px) {
+          .wa-float { left: 14px !important; bottom: 14px !important; }
+          .wa-button { width: 48px !important; height: 48px !important; }
+          .wa-button svg { width: 24px; height: 24px; }
         }
       `}</style>
     </div>
