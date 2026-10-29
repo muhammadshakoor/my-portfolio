@@ -15,6 +15,11 @@ export const siteConfig = {
   email: "muhammadshakoor86@gmail.com",
   location: "Islamabad, Pakistan",
   company: "Blutech Consulting",
+  // Shown in Hero and About — keep them in one place so they can't drift apart.
+  stats: {
+    years: "3+",
+    projects: "9+",
+  },
   twitterHandle: "@Muhamma45190755",
   links: {
     github: "https://github.com/muhammadshakoor",

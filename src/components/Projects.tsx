@@ -4,9 +4,14 @@ import { useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { Star, ArrowUpRight, BookOpen, ExternalLink, Lock } from "lucide-react";
+import { ArrowUpRight, BookOpen, ExternalLink, Lock } from "lucide-react";
 import { FaGithub } from "react-icons/fa6";
-import { projects, categories, type Project } from "@/data/projects";
+import type { Project as FullProject } from "@/data/projects";
+
+/* Cards never show case-study text, so the server strips it before handing
+   the list to this client component — keeps it out of the homepage bundle. */
+export type ProjectCard = Omit<FullProject, "caseStudy">;
+type Project = ProjectCard;
 
 function TechPill({
   tag,
@@ -298,29 +303,6 @@ function FeaturedCard({ p, index }: { p: Project; index: number }) {
           <BrowserFrame p={p} emojiSize={64} />
         )}
 
-        {p.featured && (
-          <div
-            style={{
-              position: "absolute",
-              top: 42,
-              right: 14,
-              display: "flex",
-              alignItems: "center",
-              gap: 5,
-              padding: "5px 11px",
-              borderRadius: "999px",
-              fontSize: 10,
-              fontWeight: 700,
-              background: "rgba(251,191,36,0.16)",
-              border: "1px solid rgba(251,191,36,0.32)",
-              color: "#b7791f",
-              zIndex: 2,
-            }}
-          >
-            <Star size={9} fill="currentColor" />
-            Featured
-          </div>
-        )}
       </div>
 
       {/* Details */}
@@ -512,7 +494,13 @@ function GridCard({ p, i }: { p: Project; i: number }) {
   );
 }
 
-export default function Projects() {
+export default function Projects({
+  projects,
+  categories,
+}: {
+  projects: ProjectCard[];
+  categories: string[];
+}) {
   const [active, setActive] = useState("All");
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
@@ -709,7 +697,7 @@ export default function Projects() {
                     marginBottom: 16,
                   }}
                 >
-                  Other Noteworthy Projects
+                  More Projects
                 </p>
 
                 <div

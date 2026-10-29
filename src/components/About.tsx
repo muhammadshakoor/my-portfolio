@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import {
   MapPin,
@@ -11,13 +12,15 @@ import {
   Radio,
   Zap,
 } from "lucide-react";
+import { siteConfig } from "@/lib/site";
 
 /* ─── Data ─────────────────────────────────────────────────────────── */
 const stats = [
-  { n: "3+", label: "Years Exp.", color: "#5B3CF5" },
-  { n: "9+", label: "Projects", color: "#00A882" },
+  { n: siteConfig.stats.years, label: "Years Exp.", color: "#5B3CF5" },
+  { n: siteConfig.stats.projects, label: "Projects", color: "#00A882" },
   { n: "15+", label: "Technologies", color: "#e84a2a" },
-  { n: "100%", label: "Commitment", color: "#c026d3" },
+  // Matches the "Within 24 hours" response promise in the Contact section.
+  { n: "24h", label: "Reply Time", color: "#c026d3" },
 ];
 
 const chips = [
@@ -225,18 +228,21 @@ export default function About() {
                   width: 96,
                   height: 96,
                   borderRadius: 22,
-                  background:
-                    "linear-gradient(135deg, rgba(91,60,245,0.12), rgba(0,168,130,0.1))",
-                  border: "1px solid rgba(91,60,245,0.18)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: 44,
+                  overflow: "hidden",
+                  position: "relative",
+                  border: "2px solid rgba(91,60,245,0.25)",
+                  boxShadow: "0 8px 24px rgba(91,60,245,0.15)",
                   marginBottom: 20,
                   flexShrink: 0,
                 }}
               >
-                👨‍💻
+                <Image
+                  src="/profile.jpg"
+                  alt=""
+                  fill
+                  sizes="96px"
+                  style={{ objectFit: "cover", objectPosition: "top center" }}
+                />
               </div>
 
               <p
@@ -268,7 +274,7 @@ export default function About() {
                 style={{
                   width: "100%",
                   height: 1,
-                  background: "rgba(255,255,255,0.08)",
+                  background: "var(--border)",
                   marginBottom: 16,
                 }}
               />
@@ -293,7 +299,7 @@ export default function About() {
                   },
                   {
                     icon: <Clock size={13} />,
-                    text: "2+ Years Experience",
+                    text: `${siteConfig.stats.years} Years Experience`,
                   },
                 ].map(({ icon, text }) => (
                   <div
@@ -695,19 +701,24 @@ export default function About() {
             padding-left: 22px !important;
             padding-right: 22px !important;
           }
-
-          .about-highlights-grid {
-            grid-template-columns: 1fr !important;
-          }
         }
 
+        /* Stats sit in one row of four on phones (2x2 cards were ~200px of
+           mostly padding), and the short highlight / service cards stay two-up. */
         @media (max-width: 520px) {
           .about-stats-grid {
-            grid-template-columns: 1fr 1fr !important;
+            grid-template-columns: repeat(4, 1fr) !important;
+            grid-template-rows: auto !important;
+            gap: 8px !important;
           }
 
-          .about-services-grid {
-            grid-template-columns: 1fr !important;
+          .about-stats-grid > div {
+            padding: 12px 4px !important;
+          }
+
+          .about-stats-grid p:last-child {
+            font-size: 9px !important;
+            letter-spacing: 0.02em !important;
           }
         }
       `}</style>
