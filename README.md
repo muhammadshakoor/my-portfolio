@@ -51,12 +51,14 @@ npm start       # serve build on port 3003
 npm run lint    # ESLint
 ```
 
+CI (`.github/workflows/ci.yml`) runs `npm ci`, lint and build on every pull request. If you change dependencies, commit the updated `package-lock.json` or `npm ci` will fail.
+
 ## Content
 
 | What | Where |
 |---|---|
-| Site identity / SEO | `src/lib/site.ts` |
-| Projects & case studies | `src/data/projects.ts` |
+| Site identity / SEO, headline stats (years, projects) | `src/lib/site.ts` |
+| Projects & case studies (`featured: true` = large card on the homepage) | `src/data/projects.ts` |
 | Experience / About / Hero copy | `src/components/*.tsx` |
 | Blog (CMS) | Sanity Studio → `/studio` |
 | Blog (local fallback) | `content/posts/*.md` |
